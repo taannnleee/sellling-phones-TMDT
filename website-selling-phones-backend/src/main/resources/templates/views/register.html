@@ -23,6 +23,19 @@
             display: none; /* Ban đầu ẩn form nổi bọt */
         }
 
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-group-left {
+            flex: 1;
+        }
+
+        .input-group-right {
+            flex: 1;
+            margin-left: 20px; /* Khoảng cách giữa các trường nhập liệu */
+        }
     </style>
 </head>
 <body>
@@ -33,22 +46,21 @@
 <form class="row w-800" action="/customer_authentication/register" method="post">
     <div class="col">
         <h3>Register</h3>
-
-
-        <input type="text" placeholder="First name" name="firstName">
-        <input type="text" placeholder="Last name" name="lastName">
-        <input type="text" placeholder="Phone" name="phoneNumber">
-        <input type="email" placeholder="Email" name="email">
-        <input type="password" placeholder="Password" name="passHash">
-        <input type="password" placeholder="Confirm password" name="repeatPassword">
-
-        <input type="text" placeholder="City" name="city">
-        <input type="text" placeholder="District" name="district">
-        <input type="text" placeholder="Stress" name="stress">
+        <div class="input-group">
+            <div class="input-group-left">
+                <input type="text" placeholder="First name" name="firstName">
+                <input type="text" placeholder="Last name" name="lastName">
+                <input type="text" placeholder="Phone" name="phoneNumber">
+                <input type="email" placeholder="Email" name="email">
+                <input type="password" placeholder="Password" name="passHash">
+                <input type="password" placeholder="Confirm password" name="repeatPassword">
+            </div>
+        </div>
 
         <div id="bubbleForm" class="bubble-form">
-           <a>Vui lòng điền đầy đủ các thông tin</a>
+           <a>Please fill in the information</a>
         </div>
+        <div id="successMessage" class="success-message">Đăng nhập thành công!</div>
 
         <div class="checkbox-wrapper">
             <label class="checkbox">
@@ -64,6 +76,9 @@
         <div>
             <h1><a href="/customer_authentication/login"><i id="homeIcon" class="fa-solid fa-house "></i></a></h1>
         </div>
+            <input type="text" placeholder="City" name="city">
+            <input type="text" placeholder="District" name="district">
+            <input type="text" placeholder="Stress" name="stress">
         <div>
             <img class="img-fluid" src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2021/01/ngam-nhin-hinh-anh-nha-hang-smartphone-man-hinh-cuon-lg-rollable.jpg" alt="Image not available">
         </div>

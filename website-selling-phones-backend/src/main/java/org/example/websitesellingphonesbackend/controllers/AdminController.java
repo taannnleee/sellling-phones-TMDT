@@ -25,32 +25,41 @@ public class AdminController {
 
     @Autowired
     ProductDetailService productDetailService;
-    @GetMapping("/admin")
+        @GetMapping("/admin")
     public String Login(Model model) {
         try {
-            return "views/adminviews/admin";
+            return "view/viewAdmin";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
         }
     }
-
-    @GetMapping("/product_details")
-    public String ViewDetails(Model model) {
-        try {
-            return "views/chitietsanpham";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
-            return "views/error";
-        }
-    }
-    @GetMapping("/create_products")
-    public String CreateProduct(Model model) {
-        try {
-            return "views/adminviews/createProductJson";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
-            return "views/error";
-        }
-    }
+//    @GetMapping("/admin")
+//    public String Login(Model model) {
+//        try {
+//            return "views/adminviews/admin";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
+//            return "views/error";
+//        }
+//    }
+//
+//    @GetMapping("/product_details")
+//    public String ViewDetails(Model model) {
+//        try {
+//            return "views/chitietsanpham";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
+//            return "views/error";
+//        }
+//    }
+//    @GetMapping("/create_products")
+//    public String CreateProduct(Model model) {
+//        try {
+//            return "views/adminviews/createProductJson";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
+//            return "views/error";
+//        }
+//    }
 }
