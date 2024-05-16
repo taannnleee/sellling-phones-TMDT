@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/invoice.css}"/>
+</head>
+<body>
+<div class="container mt-6 mb-7">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-xl-7">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2>
+                        Hey <span th:text="${order.customer.firstName}"></span>,
+                    </h2>
+                    <p class="fs-sm">
+                        This is the total price <strong th:text="${order.total}"></strong> (USD) you made to order.
+                    </p>
+
+                    <div class="border-top border-gray-200 pt-4 mt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-muted mb-2">Payment No.</div>
+                                <strong th:text="${order.orderId}"></strong>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <div class="text-muted mb-2">Payment Date</div>
+                                <strong th:text="${order.orderDate}"></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-top border-gray-200 mt-4 py-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-muted mb-2">Customer</div>
+                                <strong th:text="${order.customer.firstName + ' ' + order.customer.lastName}">
+                                </strong>
+                                <p class="fs-sm">
+                                    <!--                                    <div class="text-muted mb-2">Địa Chỉ</div>-->
+                                    <!--                                    <span th:text="${order.customer.addresss}"></span>-->
+                                    <br>
+                                <div class="text-muted mb-2">Email</div>
+                                <a href="#!" class="text-purple" th:text="${order.customer.email}">
+                                </a>
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <div class="text-muted mb-2">Payment To</div>
+                                <strong>
+                                    Lê Tân, Trung Phạm, Diệu Đặng, Phúc Công
+                                </strong>
+                                <p class="fs-sm">
+                                <div class="text-muted mb-2">Địa Chỉ</div>
+                                13A, Đường 12D, Chân Phúc Cẩm, Long Thạnh Mỹ, Thủ Đức
+                                <br>
+                                <div class="text-muted mb-2">Email</div>
+                                <a href="#!" class="text-purple">trungpham160503@gmail.com
+                                </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="table border-bottom border-gray-200 mt-3">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm px-0">Product</th>
+                            <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Quantity</th>
+                            <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="lineItem : ${order.orderDetailLines}">
+                        <tr>
+                            <td class="px-0" th:text="${lineItem.product.productDetail.name}"></td>
+                            <td class="text-end px-0" th:text="${lineItem.quanlity}"></td>
+                            <td class="text-end px-0" th:text="${lineItem.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="mt-5">
+                        <div class="d-flex justify-content-end mt-3">
+                            <h5 class="me-3">Total:</h5>
+                            <h3 class="text-success" th:text="${order.total}"></h3>
+                        </div>
+                    </div>
+                    <h2 style="text-align: center;">Cảm ơn quý khách đã mua hàng. Chúc quý khách một ngày tốt đẹp</h2>
+                </div>
+                <a href="#!"
+                   class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light"
+                   th:href="@{/home}">
+    <span class="svg-icon text-white me-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"
+             viewBox="0 0 512 512"><title>ionicons-v5-g</title><path d="M336,208V113a80,80,0,0,0-160,0v95"
+                                                                     style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path><rect
+                x="96" y="208" width="320" height="272" rx="48" ry="48"
+                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></rect></svg>
+    </span>
+                    Buy Continue
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

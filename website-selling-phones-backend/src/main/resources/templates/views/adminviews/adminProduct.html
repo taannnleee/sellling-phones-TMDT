@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Admin - Thế giới điện thoại</title>
+    <link rel="shortcut icon" href="../../../static/img/favicon.ico" />
+
+    <!-- Load font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+    <!-- Chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+    <!-- Our files -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/progress.css}" />
+
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/admin.js"></script>
+    <style>
+        .button {
+            background-color: #333; /* Màu nền */
+            color: #fff; /* Màu chữ */
+            padding: 10px 20px; /* Kích thước lề */
+            border-radius: 5px; /* Bo tròn góc */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+        }
+
+        .button:hover {
+            background-color: #555; /* Màu nền khi di chuột qua */
+        }
+
+        .button .nav-item {
+            list-style-type: none; /* Ẩn dấu chấm trước nút */
+        }
+
+        .button .nav-link {
+            text-decoration: none; /* Ẩn gạch chân của liên kết */
+            color: inherit; /* Màu chữ kế thừa từ cha */
+        }
+
+        .button .nav-link i {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h2>SmartPhone Store - Admin</h2>
+</header>
+<div class="sanpham">
+    <table id="uniqueTable"  class="table-outline hideImg">
+        <tr>
+            <th title="Sắp xếp" style="width: 5%" onclick="sortProductsTable('stt')">Stt <i class="fa fa-sort"></i></th>
+            <th title="Sắp xếp" style="width: 10%" onclick="sortProductsTable('masp')">Mã <i class="fa fa-sort"></i></th>
+            <th title="Sắp xếp" style="width: 40%" onclick="sortProductsTable('ten')">Tên <i class="fa fa-sort"></i></th>
+            <th title="Sắp xếp" style="width: 15%" onclick="sortProductsTable('gia')">Giá <i class="fa fa-sort"></i></th>
+            <th title="Sắp xếp" style="width: 15%" onclick="sortProductsTable('mau')">Màu sắc <i class="fa fa-sort"></i></th>
+            <th style="width: 15%">Hành động</th>
+        </tr>
+        <tr th:each="product, iterStat : ${listProduct}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${product.productDetail.productDetailId}"></td>
+            <td style="width: 40%">
+                <a th:text="${product.productDetail.name}"></a>
+                <img th:src="@{${product.productDetail.imageUrl}}" th:alt="${product.productDetail.name}"></img>
+            </td>
+            <td th:text="${product.productDetail.price}"></td>
+            <td th:text="${product.productDetail.color}"></td>
+            <td style="width: 15%">
+                <div class="tooltip"
+                     th:data-product-id="${product.productDetail.productDetailId}"
+                     th:data-product-name="${product.productDetail.name}"
+                     th:data-product-category="${product.productDetail.category}"
+                     th:data-product-image-url="${product.productDetail.imageUrl}"
+                     th:data-product-description="${product.productDetail.description}"
+                     th:data-product-price="${product.productDetail.price}"
+                     th:data-product-color="${product.productDetail.color}"
+                     th:data-product-screen="${product.productDetail.screen}"
+                     th:data-product-os="${product.productDetail.os}"
+                     th:data-product-camara="${product.productDetail.camara}"
+                     th:data-product-camara-front="${product.productDetail.camaraFront}"
+                     th:data-product-cpu="${product.productDetail.cpu}"
+                     th:data-product-ram="${product.productDetail.ram}"
+                     th:data-product-rom="${product.productDetail.rom}"
+                     th:data-product-micro-usb="${product.productDetail.microUSB}"
+                     th:data-product-battery="${product.productDetail.battery}">
+                    <i class="fa fa-wrench" onclick="addKhungSuaSanPham(this.parentElement)"></i>
+                    <span class="tooltiptext">Sửa</span>
+                </div>
+                <div class="tooltip"
+                     th:data-product-id="${product.productDetail.productDetailId}"
+                     th:data-product-name="${product.productDetail.name}">
+                    <i class="fa fa-trash" onclick="xoaSanPham(this.parentElement.dataset)"></i>
+                    <span class="tooltiptext">Xóa</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="table-footer">
+        <select name="kieuTimSanPham">
+            <option value="ma">Tìm theo mã</option>
+            <option value="ten">Tìm theo tên</option>
+        </select>
+        <input type="text" placeholder="Tìm kiếm..." onkeyup="timKiemSanPham(this)">
+        <button onclick="document.getElementById('khungThemSanPham').style.transform = 'scale(1)';">
+            <i class="fa fa-plus-square"></i>
+            Thêm sản phẩm
+        </button>
+    </div>
+
+    <div id="khungThemSanPham" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Thêm Sản Phẩm</th>
+            </tr>
+            <tr>
+                <td>Tên sản phẩm:</td>
+                <td><input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Hãng:</td>
+                <td>
+                    <select id ="category">
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Oppo">Oppo</option>
+                        <option value="Nokia">Nokia</option>
+                        <option value="Huawei">Huawei</option>
+                        <option value="Xiaomi">Xiaomi</option>
+                        <option value="Realme">Realme</option>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Philips">Philips</option>
+                        <option value="Mobell">Mobell</option>
+                        <option value="Mobiistar">Mobiistar</option>
+                        <option value="Itel">Itel</option>
+                        <option value="Coolpad">Coolpad</option>
+                        <option value="HTC">HTC</option>
+                        <option value="Motorola">Motorola</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hình:</td>
+                <td>
+                    <img class="hinhDaiDien" id="anhDaiDienSanPhamThem" src="">
+                    <input type="file" id="image" accept="image/*" onchange="capNhatAnhSanPham(this.files, 'anhDaiDienSanPhamThem')">
+                    <input type="hidden" id="imageUrl" name="imageUrl">
+                </td>
+            </tr>
+            <tr>
+                <td>Mô tả sản phẩm:</td>
+                <td><input type="text" id="description"></td>
+            </tr>
+            <tr>
+                <td>Giá tiền:</td>
+                <td><input type="text" id="price"></td>
+            </tr>
+            <tr>
+                <td>Màu sắc:</td>
+                <td>
+                    <select id="color">
+                        <option value="BLACK">BLACK</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="BLUE">BLUE</option>
+                        <option value="RED">RED</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">Thông số kĩ thuật</th>
+            </tr>
+            <tr>
+                <td>Màn hình:</td>
+                <td><input type="text" id="screen"></td>
+            </tr>
+            <tr>
+                <td>Hệ điều hành:</td>
+                <td><input type="text" id="os"></td>
+            </tr>
+            <tr>
+                <td>Camara sau:</td>
+                <td><input type="text" id="camara"></td>
+            </tr>
+            <tr>
+                <td>Camara trước:</td>
+                <td><input type="text" id="camaraFront"></td>
+            </tr>
+            <tr>
+                <td>CPU:</td>
+                <td><input type="text" id="cpu"></td>
+            </tr>
+            <tr>
+                <td>RAM:</td>
+                <td><input type="text" id="ram"></td>
+            </tr>
+            <tr>
+                <td>Bộ nhớ trong:</td>
+                <td><input type="text" id="rom"></td>
+            </tr>
+            <tr>
+                <td>Thẻ nhớ:</td>
+                <td><input type="text" id="microUSB"></td>
+            </tr>
+            <tr>
+                <td>Dung lượng Pin:</td>
+                <td><input type="text" id="battery"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="themSanPham()">THÊM</button> </td>
+            </tr>
+        </table>
+    </div>
+    <div id="khungSuaSanPham" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Sửa Sản Phẩm</th>
+            </tr>
+            <tr>
+                <td>Mã sản phẩm:</td>
+                <td><input type="text" id="maspSua"></td>
+            </tr>
+            <tr>
+                <td>Tên sản phẩm:</td>
+                <td><input type="text" id="nameSua"></td>
+            </tr>
+            <tr>
+                <td>Hãng:</td>
+                <td>
+                    <select id ="categorySua">
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Oppo">Oppo</option>
+                        <option value="Nokia">Nokia</option>
+                        <option value="Huawei">Huawei</option>
+                        <option value="Xiaomi">Xiaomi</option>
+                        <option value="Realme">Realme</option>
+                        <option value="Vivo">Vivo</option>
+                        <option value="Philips">Philips</option>
+                        <option value="Mobell">Mobell</option>
+                        <option value="Mobiistar">Mobiistar</option>
+                        <option value="Itel">Itel</option>
+                        <option value="Coolpad">Coolpad</option>
+                        <option value="HTC">HTC</option>
+                        <option value="Motorola">Motorola</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hình:</td>
+                <td>
+                    <img class="hinhDaiDien" id="anhDaiDienSanPhamSua" src="">
+                    <input type="file" id="imageSua" accept="image/*" onchange="capNhatAnhSanPham(this.files, 'anhDaiDienSanPhamThem')">
+                    <input type="hidden" id="imageUrlSua" name="imageUrl">
+                </td>
+            </tr>
+            <tr>
+                <td>Mô tả sản phẩm:</td>
+                <td><input type="text" id="descriptionSua"></td>
+            </tr>
+            <tr>
+                <td>Giá tiền:</td>
+                <td><input type="text" id="priceSua"></td>
+            </tr>
+            <tr>
+                <td>Màu sắc:</td>
+                <td>
+                    <select id="colorSua">
+                        <option value="BLACK">Black</option>
+                        <option value="WHITE">WHITE</option>
+                        <option value="BLUE">Blue</option>
+                        <option value="RED">Red</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">Thông số kĩ thuật</th>
+            </tr>
+            <tr>
+                <td>Màn hình:</td>
+                <td><input type="text" id="screenSua"></td>
+            </tr>
+            <tr>
+                <td>Hệ điều hành:</td>
+                <td><input type="text" id="osSua"></td>
+            </tr>
+            <tr>
+                <td>Camara sau:</td>
+                <td><input type="text" id="camaraSua"></td>
+            </tr>
+            <tr>
+                <td>Camara trước:</td>
+                <td><input type="text" id="camaraFrontSua"></td>
+            </tr>
+            <tr>
+                <td>CPU:</td>
+                <td><input type="text" id="cpuSua"></td>
+            </tr>
+            <tr>
+                <td>RAM:</td>
+                <td><input type="text" id="ramSua"></td>
+            </tr>
+            <tr>
+                <td>Bộ nhớ trong:</td>
+                <td><input type="text" id="romSua"></td>
+            </tr>
+            <tr>
+                <td>Thẻ nhớ:</td>
+                <td><input type="text" id="microUSBSua"></td>
+            </tr>
+            <tr>
+                <td>Dung lượng Pin:</td>
+                <td><input type="text" id="batterySua"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="suaSanPham()">Lưu</button> </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="button" onclick="toggleButton(this)">
+    <li class="nav-item">
+        <a class="nav-link"><i class="fa fa-th-large"></i> Chuyển sang trang quản lý khách hàng</a>
+    </li>
+</div>
+<script>
+    function toggleButton(btn) {
+        btn.classList.toggle("toggled");
+        if (btn.classList.contains("toggled")) {
+            window.location.href = "/admin/customer";
+        } else {
+            window.location.href = "/adminProduct";
+        }
+    }
+</script>
+</body>
+</html>

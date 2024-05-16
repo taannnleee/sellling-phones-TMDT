@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Admin - Thế giới điện thoại</title>
+    <link rel="shortcut icon" href="../../../static/img/favicon.ico"/>
+
+    <!-- Load font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+    <!-- Chart JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+    <!-- Our files -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/progress.css}"/>
+
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/admin.js"></script>
+    <style>
+        .button {
+            background-color: #333; /* Màu nền */
+            color: #fff; /* Màu chữ */
+            padding: 10px 20px; /* Kích thước lề */
+            border-radius: 5px; /* Bo tròn góc */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+        }
+
+        .button:hover {
+            background-color: #555; /* Màu nền khi di chuột qua */
+        }
+
+        .button .nav-item {
+            list-style-type: none; /* Ẩn dấu chấm trước nút */
+        }
+
+        .button .nav-link {
+            text-decoration: none; /* Ẩn gạch chân của liên kết */
+            color: inherit; /* Màu chữ kế thừa từ cha */
+        }
+
+        .button .nav-link i {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+        }
+    </style>
+
+</head>
+
+<body>
+<header>
+    <h2>SmartPhone Store - Admin</h2>
+</header>
+    <div class="khachhang">
+        <table id="uniqueTable" class="table-outline hideImg">
+            <tr>
+                <th title="Sắp xếp" style="width: 5%" onclick="sortKhachHangTable('stt')">Stt <i class="fa fa-sort"></i>
+                </th>
+                <th title="Sắp xếp" style="width: 15%" onclick="sortKhachHangTable('hoten')">Họ tên <i
+                        class="fa fa-sort"></i></th>
+                <th title="Sắp xếp" style="width: 20%" onclick="sortKhachHangTable('email')">Email <i
+                        class="fa fa-sort"></i></th>
+                <th title="Sắp xếp" style="width: 20%" onclick="sortKhachHangTable('sodt')">Số Điện thoại <i
+                        class="fa fa-sort"></i></th>
+                <th style="width: 15%">Hành động</th>
+            </tr>
+            <tr th:each="customer, iterStat : ${customers}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${customer.firstName} + ' ' + ${customer.lastName}"></td>
+                <td th:text="${customer.email}"></td>
+                <td th:text="${customer.phoneNumber}"></td>
+                <td style="width: 15%">
+                    <div class="tooltip"
+                         th:data-customer-id="${customer.customerId}"
+                         th:data-first-name="${customer.firstName}"
+                         th:data-last-name="${customer.lastName}"
+                         th:data-email="${customer.email}"
+                         th:data-phone-number="${customer.phoneNumber}"
+                         th:data-pass-hash="${customer.passHash}">
+                        <i class="fa fa-wrench" onclick="addKhungSuaKhachHang(this.parentElement)"></i>
+                        <span class="tooltiptext">Sửa</span>
+                    </div>
+                    <div class="tooltip"
+                         th:data-customer-id="${customer.customerId}"
+                         th:data-customer-name="${customer.firstName} + ' ' + ${customer.lastName}">
+                        <i class="fa fa-trash" onclick="xoaKhachHang(this.parentElement.dataset)"></i>
+                        <span class="tooltiptext">Xóa</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="table-footer">
+            <select name="kieuTimKhachHang">
+                <option value="ten">Tìm theo họ tên</option>
+                <option value="email">Tìm theo email</option>
+                <option value="taikhoan">Tìm theo tài khoản</option>
+            </select>
+            <input type="text" placeholder="Tìm kiếm..." onkeyup="if (event.keyCode === 13) timKiemNguoiDung(this)">
+            <button onclick="document.getElementById('khungThemKhachHang').style.transform = 'scale(1)';">
+                <i class="fa fa-plus-square"></i>
+                Thêm khách hàng
+            </button>
+        </div>
+    </div>
+    <div id="khungThemKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Thêm Khách Hàng</th>
+            </tr>
+            <tr>
+                <td>Họ:</td>
+                <td><input type="text" id="firstName"></td>
+            </tr>
+            <tr>
+                <td>Tên:</td>
+                <td><input type="text" id="lastName"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu:</td>
+                <td><input type="password" id="password"></td>
+            </tr>
+            <tr>
+                <td>Số Điện Thoại:</td>
+                <td><input type="text" id="phoneNumber"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="themKhachHang()">THÊM</button> </td>
+            </tr>
+        </table>
+    </div>
+    <div id="khungSuaKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Sửa Khách Hàng</th>
+            </tr>
+            <tr>
+                <td>Mã khách hàng:</td>
+                <td><input type="text" id="customerIdSua"></td>
+            </tr>
+            <tr>
+                <td>Họ:</td>
+                <td><input type="text" id="firstNameSua"></td>
+            </tr>
+            <tr>
+                <td>Tên:</td>
+                <td><input type="text" id="lastNameSua"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="emailSua"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu:</td>
+                <td><input type="password" id="passwordSua"></td>
+            </tr>
+            <tr>
+                <td>Số Điện Thoại:</td>
+                <td><input type="text" id="phoneNumberSua"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="suaKhachHang()">LƯU</button> </td>
+            </tr>
+        </table>
+    </div>
+<div class="button" onclick="toggleButton(this)">
+    <li class="nav-item">
+        <a class="nav-link"><i class="fa fa-th-large"> Chuyển sang trang quản lý sản Phẩm</i></a>
+    </li>
+</div>
+
+
+<script>
+    function toggleButton(btn) {
+        btn.classList.toggle("toggled");
+        if (btn.classList.contains("toggled")) {
+            window.location.href = "/adminProduct";
+        } else {
+            window.location.href = "/admin/customer";
+        }
+    }
+</script>
+</body>
+</html>

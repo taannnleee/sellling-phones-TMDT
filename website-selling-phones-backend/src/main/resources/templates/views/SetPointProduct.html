@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <title>Thế giới điện thoại</title>
+
+    <!-- Load font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/topnav.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/taikhoan.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/gioHang.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home_products.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/chitietsanpham.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}" />
+
+    <!-- js -->
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/giohang.js"></script>
+
+</head>
+
+<body>
+<section style="min-height: 85vh">
+    <script> addTopNav(); </script>
+
+    <section style="min-height: 85vh">
+        <header>
+            <div th:replace="~{view/header :: header}"></div>
+        </header>
+    <h2>Sản phẩm đặc cọc</h2>
+    <table class="listDacCoc">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th>Thời gian</th>
+            <th>Xóa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lineSetPointProduct, iterStat : ${lineSetPointProductList}">
+            <td th:text="${iterStat.index+1}"></td>
+            <td th:text="${lineSetPointProduct.product.productDetail.name}"></td> <!-- Thay đổi để hiển thị tên sản phẩm -->
+            <td th:text="${lineSetPointProduct.price}"></td> <!-- Thay đổi để hiển thị giá -->
+            <td class="soluong">
+                <form action="load-setpointproduct/decreaseQuantity" method="post">
+                    <input type="hidden" name="productId" th:value="${lineSetPointProduct.product.productID}" />
+                    <button class="minus-button" type="submit"><i class="fa fa-minus"></i></button>
+                </form>
+                <input class="quantity-input" size="1" th:value="${lineSetPointProduct.quanlity}" readonly>
+                <form action="load-setpointproduct/increaseQuantity" method="post">
+                    <input type="hidden" name="productId" th:value="${lineSetPointProduct.product.productID}" />
+                    <button class="plus-button" type="submit"><i class="fa fa-plus"></i></button>
+                </form>
+            </td>
+
+            <td th:text="${lineSetPointProduct.price * lineSetPointProduct.quanlity}"></td>
+            <td th:text="${lineSetPointProduct.depositDate}"></td>
+
+            <td>
+                <a th:href="@{/setpointproduct/load-setpointproduct/removeItem/{lineSetPointProductId}(lineSetPointProductId=${lineSetPointProduct.id})}">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+
+        </tr>
+        <tr style="font-weight:bold; text-align:center">
+            <td class="xoaHet">
+                <a th:href="@{/setpointproduct/load-setpointproduct/removeAllItem/{cartId}(cartId=${cart.getCartId()})}">
+                    Xóa hết
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</section>
+
+
+
+<div class="footer"><script>addFooter();</script></div>
+
+<i class="fa fa-arrow-up" id="goto-top-page" onclick="gotoTop()"></i>
+</body>
+
+</html>

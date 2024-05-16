@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh sản phẩm</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thế giới điện thoại</title>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <!-- Load font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+    <!-- owl carousel libraries cho hình nhỏ -->
+    <link rel="stylesheet" type="text/css" th:href="@{/js/owlcarousel/owl.carousel.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/js/owlcarousel/owl.theme.default.min.css}" />
+
+    <script src="/js/Jquery/Jquery.min.js"></script>
+    <script src="/js/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- our files -->
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/topnav.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/taikhoan.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/trangchu.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home_products.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/chitietsanpham.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+        }
+        .Xoa {
+            background-color: #4CAF50; /* Màu nền */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+    <!-- js -->
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/chitietsanpham.js"></script>
+
+</head>
+<body>
+<script> addTopNav(); </script>
+
+<section style="min-height: 85vh">
+    <header>
+        <div th:replace="~{view/header :: header}"></div>
+    </header>
+<h2>So sánh sản phẩm</h2>
+<div class="comparison">
+    <table class="comparison-table">
+        <tr>
+            <th>Thông số</th>
+            <th th:each="product : ${listProduct}" th:text="${product.productDetail.name}"></th>
+        </tr>
+        <tr>
+            <td>Màn hình</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.screen}"></td>
+        </tr>
+        <tr>
+            <td>Hệ điều hành</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.os}"></td>
+        </tr>
+        <tr>
+            <td>Camera sau</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.camara}"></td>
+        </tr>
+        <tr>
+            <td>Camera trước</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.camaraFront}"></td>
+        </tr>
+        <tr>
+            <td>CPU</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.cpu}"></td>
+        </tr>
+        <tr>
+            <td>RAM</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.ram}"></td>
+        </tr>
+        <tr>
+            <td>Bộ nhớ trong</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.rom}"></td>
+        </tr>
+        <tr>
+            <td>Thẻ nhớ</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.microUSB}"></td>
+        </tr>
+        <tr>
+            <td>Dung lượng pin</td>
+            <td th:each="product : ${listProduct}" th:text="${product.productDetail.battery}"></td>
+        </tr>
+        <div class="area_order">
+            <form th:action="@{/product-detail/compare_products/delete}" method="post">
+                <button type="submit" class="Xoa">
+                    <b><i class="fa fa-trash"></i> Xóa tất tất cả sản phẩm trong bảng </b>
+                </button>
+            </form>
+        </div>
+    </table>
+
+</div>
+</body>
+</html>
