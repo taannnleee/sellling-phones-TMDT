@@ -42,7 +42,7 @@ public class Customer implements Serializable {
     @Enumerated(EnumType.STRING)
     private ERole role;
 
-    @OneToOne( mappedBy = "customer",cascade = CascadeType.ALL)
+    @OneToOne( mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address addresss;
 
     @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL)
