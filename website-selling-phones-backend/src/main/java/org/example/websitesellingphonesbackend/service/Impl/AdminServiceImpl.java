@@ -41,9 +41,9 @@ public class AdminServiceImpl implements AdminService {
         return false;
     }
     @Override
-    public boolean checkAdmin(String  email) {
+    public boolean checkAdmin(String  email, String password) {
         try {
-            Admin admin_exist = adminRepository.findByEmail(email).orElse(null);
+            Admin admin_exist = adminRepository.findByEmailAndPassHash(email, password).orElse(null);
             if(admin_exist!=null){
                 return true;
             }
