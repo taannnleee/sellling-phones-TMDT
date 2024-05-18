@@ -18,7 +18,7 @@
     </div>
     <hr>
     <ul class="app-menu">
-        <li><a class="app-menu__item active" href="/admin_authentication/admin"><i class='app-menu__icon bx bx-tachometer'></i><span
+        <li><a class="app-menu__item " href="/admin_authentication/admin"><i class='app-menu__icon bx bx-tachometer'></i><span
                 class="app-menu__label">Bảng điều khiển</span></a></li>
         <li><a class="app-menu__item " href="/admin_authentication/admin/customer"><i class='app-menu__icon bx bx-id-card'></i>
             <span class="app-menu__label">Quản lý khách hàng</span></a></li>
@@ -45,6 +45,37 @@
 
     </ul>
 </aside>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var menuItems = document.querySelectorAll('.app-menu__item');
+
+        // Lấy mục menu hiện tại từ localStorage
+        var activeMenuItem = localStorage.getItem('activeMenuItem');
+
+        if (activeMenuItem) {
+            var activeElement = document.querySelector(`.app-menu__item[href="${activeMenuItem}"]`);
+            if (activeElement) {
+                activeElement.classList.add('active');
+            }
+        }
+
+        menuItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                // Xóa class active khỏi tất cả các mục
+                menuItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+
+                // Thêm class active vào mục được click
+                this.classList.add('active');
+
+                // Lưu href của mục được click vào localStorage
+                localStorage.setItem('activeMenuItem', this.getAttribute('href'));
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>

@@ -19,40 +19,40 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
-<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css}"/>-->
-<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/progress.css}"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/progress.css}"/>
 
-<!--    <script src="/data/products.js"></script>-->
-<!--    <script src="/js/classes.js"></script>-->
-<!--    <script src="/js/dungchung.js"></script>-->
-<!--    <script src="/js/admin.js"></script>-->
-<!--    <style>-->
-<!--        .button {-->
-<!--            background-color: #333; /* Màu nền */-->
-<!--            color: #fff; /* Màu chữ */-->
-<!--            padding: 10px 20px; /* Kích thước lề */-->
-<!--            border-radius: 5px; /* Bo tròn góc */-->
-<!--            cursor: pointer;-->
-<!--            transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */-->
-<!--        }-->
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/admin.js"></script>
+    <style>
+        .button {
+            background-color: #333; /* Màu nền */
+            color: #fff; /* Màu chữ */
+            padding: 10px 20px; /* Kích thước lề */
+            border-radius: 5px; /* Bo tròn góc */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+        }
 
-<!--        .button:hover {-->
-<!--            background-color: #555; /* Màu nền khi di chuột qua */-->
-<!--        }-->
+        .button:hover {
+            background-color: #555; /* Màu nền khi di chuột qua */
+        }
 
-<!--        .button .nav-item {-->
-<!--            list-style-type: none; /* Ẩn dấu chấm trước nút */-->
-<!--        }-->
+        .button .nav-item {
+            list-style-type: none; /* Ẩn dấu chấm trước nút */
+        }
 
-<!--        .button .nav-link {-->
-<!--            text-decoration: none; /* Ẩn gạch chân của liên kết */-->
-<!--            color: inherit; /* Màu chữ kế thừa từ cha */-->
-<!--        }-->
+        .button .nav-link {
+            text-decoration: none; /* Ẩn gạch chân của liên kết */
+            color: inherit; /* Màu chữ kế thừa từ cha */
+        }
 
-<!--        .button .nav-link i {-->
-<!--            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */-->
-<!--        }-->
-<!--    </style>-->
+        .button .nav-link i {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+        }
+    </style>
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl">
@@ -81,23 +81,41 @@
                             <th>Tên</th>
                             <th>Họ</th>
                             <th>Email</th>
+                            <th>PassWord</th>
                             <th>Số điện thoại</th>
-                            <th>Thành phố</th>
-                            <th>Huyện</th>
-                            <th>Đường</th>
+                            <th style="width: 15%">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="customer : ${customers}">
+                        <th:block th:each="customer , iterStat : ${customers}">
                             <tr>
-                                <td th:text="${customer.customerId}"></td>
+                                <td th:text="${iterStat.count}"></td>
                                 <td th:text="${customer.firstName}"></td>
                                 <td th:text="${customer.lastName}"></td>
                                 <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.passHash}"></td>
                                 <td th:text="${customer.phoneNumber}"></td>
-                                <td th:text="${customer.addresss.city}"></td>
-                                <td th:text="${customer.addresss.district}"></td>
-                                <td th:text="${customer.addresss.stress}"></td>
+
+
+                                <td>
+                                    <div style="display: flex;align-items: center;gap: 10px;" >
+                                        <div
+                                                th:data-customer-id="${customer.customerId}"
+                                                th:data-first-name="${customer.firstName}"
+                                                th:data-last-name="${customer.lastName}"
+                                                th:data-email="${customer.email}"
+                                                th:data-phone-number="${customer.phoneNumber}"
+                                                th:data-pass-hash="${customer.passHash}">
+                                            <i class="fa fa-wrench" onclick="addKhungSuaKhachHang(this.parentElement)"></i>
+                                        </div>
+
+                                        <div
+                                                th:data-customer-id="${customer.customerId}"
+                                                th:data-customer-name="${customer.firstName} + ' ' + ${customer.lastName}">
+                                            <i class="fa fa-trash" onclick="xoaKhachHang(this.parentElement.dataset)"></i>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </th:block>
                         </tbody>
@@ -108,12 +126,21 @@
     </div>
 
 
-    <button onclick="toggleAddCustomerForm()">
-        <i class="fa fa-plus-square"></i>
-        Thêm khách hàng
-    </button>
-    <div style="display: none" id="khungThemKhachHang" class="overlay">
-        <i class="fas fa-times close" onclick="toggleAddCustomerForm()"></i>
+    <div class="table-footer">
+        <select name="kieuTimKhachHang">
+            <option value="ten">Tìm theo họ tên</option>
+            <option value="email">Tìm theo email</option>
+            <option value="taikhoan">Tìm theo tài khoản</option>
+        </select>
+        <input type="text" placeholder="Tìm kiếm..." onkeyup="if (event.keyCode === 13) timKiemNguoiDung(this)">
+        <button onclick="document.getElementById('khungThemKhachHang').style.transform = 'scale(1)';">
+            <i class="fa fa-plus-square"></i>
+            Thêm khách hàng
+        </button>
+    </div>
+
+    <div id="khungThemKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
         <table class="overlayTable table-outline table-content table-header">
             <tr>
                 <th colspan="2">Thêm Khách Hàng</th>
@@ -139,45 +166,46 @@
                 <td><input type="text" id="phoneNumber"></td>
             </tr>
             <tr>
-<!--                <td colspan="2" class="table-footer"> <button onclick="themKhachHang()">THÊM</button> </td>-->
+                <td colspan="2" class="table-footer"> <button onclick="themKhachHang()">THÊM</button> </td>
             </tr>
         </table>
     </div>
-<!--    <div id="khungSuaKhachHang" class="overlay">-->
-<!--        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>-->
-<!--        <table class="overlayTable table-outline table-content table-header">-->
-<!--            <tr>-->
-<!--                <th colspan="2">Sửa Khách Hàng</th>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Mã khách hàng:</td>-->
-<!--                <td><input type="text" id="customerIdSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Họ:</td>-->
-<!--                <td><input type="text" id="firstNameSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Tên:</td>-->
-<!--                <td><input type="text" id="lastNameSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Email:</td>-->
-<!--                <td><input type="text" id="emailSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Mật khẩu:</td>-->
-<!--                <td><input type="password" id="passwordSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>Số Điện Thoại:</td>-->
-<!--                <td><input type="text" id="phoneNumberSua"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td colspan="2" class="table-footer"> <button onclick="suaKhachHang()">LƯU</button> </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </div>-->
+<!--    Khung sửa thông tin khách hàng-->
+    <div id="khungSuaKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Sửa Khách Hàng</th>
+            </tr>
+            <tr>
+                <td>Mã khách hàng:</td>
+                <td><input type="text" id="customerIdSua"></td>
+            </tr>
+            <tr>
+                <td>Họ:</td>
+                <td><input type="text" id="firstNameSua"></td>
+            </tr>
+            <tr>
+                <td>Tên:</td>
+                <td><input type="text" id="lastNameSua"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="emailSua"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu:</td>
+                <td><input type="password" id="passwordSua"></td>
+            </tr>
+            <tr>
+                <td>Số Điện Thoại:</td>
+                <td><input type="text" id="phoneNumberSua"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="suaKhachHang()">LƯU</button> </td>
+            </tr>
+        </table>
+    </div>
 </main>
 
 

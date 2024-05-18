@@ -41,7 +41,9 @@ public class AdminController {
     @GetMapping("/product")
     public String adminProduct(Model model) {
         try {
-            return "view/viewAdmin";
+            List<Product> products =  productService.getAllProducts();
+            model.addAttribute("products", products);
+            return "views/adminviews/product-admin";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";

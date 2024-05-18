@@ -41,11 +41,11 @@ public class ProductDetail implements Serializable {
     @Column(name = "os")
     private String os;
 
-    @Column(name = "camara")
-    private String camara;
+    @Column(name = "camera")
+    private String camera;
 
-    @Column(name = "camaraFront")
-    private String camaraFront;
+    @Column(name = "cameraFront")
+    private String cameraFront;
 
     @Column(name = "cpu")
     private String cpu;
@@ -62,8 +62,8 @@ public class ProductDetail implements Serializable {
     @Column(name = "battery")
     private String battery;
 
-    @Enumerated(EnumType.STRING)
-    private EColor color;
+    @Column(name = "color")
+    private String color;
 
 
     @OneToOne(mappedBy = "productDetail", fetch = FetchType.EAGER)
