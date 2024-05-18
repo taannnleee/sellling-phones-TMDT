@@ -71,6 +71,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         // Tạo mới product
         Product product = new Product();
         product.setProductDetail(productDetail);
+        product.setStatus("on");
         product.setCategory(category);
 
         // Lưu productDetail và product vào database

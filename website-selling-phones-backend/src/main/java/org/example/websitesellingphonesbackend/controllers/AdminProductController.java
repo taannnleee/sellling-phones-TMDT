@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.websitesellingphonesbackend.DTO.ProductDetailDTO;
 import org.example.websitesellingphonesbackend.Enum.EMessage;
+import org.example.websitesellingphonesbackend.entities.Category;
 import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.entities.ProductDetail;
 import org.example.websitesellingphonesbackend.helper.HandleSaveUploadFile;
 import org.example.websitesellingphonesbackend.service.AccountService;
+import org.example.websitesellingphonesbackend.service.CategoryService;
 import org.example.websitesellingphonesbackend.service.Impl.ProductDetailServiceImpl;
 import org.example.websitesellingphonesbackend.service.ProductDetailService;
 import org.example.websitesellingphonesbackend.service.ProductService;
@@ -34,6 +36,9 @@ public class AdminProductController {
 
     private final ProductDetailServiceImpl productDetailService;
 
+    @Autowired
+    CategoryService categoryService;
+
 
     @GetMapping("/create")
     public String handleCreateGetProduct(HttpSession session, Model model  ) {
@@ -42,6 +47,8 @@ public class AdminProductController {
             model.addAttribute("addProductSuccessMessage", true); // Thêm thông báo vào model
             session.removeAttribute("addProductSuccessMessage"); // Xóa thông báo từ session sau khi đã sử dụng
         }
+        List<Category> categories =  categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
         return "views/adminviews/create-product-admin";
     }
 
@@ -58,4 +65,17 @@ public class AdminProductController {
             return "views/error";
         }
     }
+
+    @GetMapping("/update/{id}")
+    public String pageUpdateProduct(@PathVariable("id") Long id, Model model) {
+        Product currentProduct = productService.getProductById(id);
+
+        if (currentProduct != null) {
+            model.addAttribute("newProduct", currentProduct);
+            return "views/adminviews/update-product-admin";
+        }
+        model.addAttribute("error", "error");
+        return "views/error";
+    }
+
 }

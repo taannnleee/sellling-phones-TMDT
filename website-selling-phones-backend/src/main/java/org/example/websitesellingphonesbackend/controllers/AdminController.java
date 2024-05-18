@@ -41,7 +41,7 @@ public class AdminController {
     @GetMapping("/product")
     public String adminProduct(Model model) {
         try {
-            List<Product> products =  productService.getAllProducts();
+            List<Product> products =  productService.getAllProductsByStatus("on");
             model.addAttribute("products", products);
             return "views/adminviews/product-admin";
         } catch (Exception e) {

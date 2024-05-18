@@ -19,6 +19,6 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getAllProduct() {
-        return productServiceImpl.getAllProducts();
+        return productServiceImpl.getAllProductsByStatus("on");
     }
 }

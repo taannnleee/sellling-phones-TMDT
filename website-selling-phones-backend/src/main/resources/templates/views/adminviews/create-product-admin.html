@@ -201,12 +201,6 @@
                             <button type="button" id="addCategoryBtn" class="btn btn-primary">Thêm danh mục</button>
 
                         </div>
-<!--                        <div class="col-sm-4">-->
-<!--                            <div id="newCategoryContainer" style="display:none;">-->
-<!--                                <input type="text" id="newCategoryInput" class="form-control" placeholder="Danh mục mới">-->
-<!--                                <button type="button" id="saveCategoryBtn" class="btn btn-success">Lưu danh mục</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div class="col-sm-5">
                             <div id="newCategoryContainer" style="display: none; overflow: hidden;">
                                 <input type="text" id="newCategoryInput" class="form-control" placeholder="Danh mục mới" style="float: left; width: 60%; margin-right: 5%;"> <!-- Sử dụng margin-right để tạo khoảng cách -->
@@ -270,22 +264,10 @@
 
                         <div class="form-group col-md-3">
                             <label for="category" class="control-label">Danh mục</label>
-                            <select name="" id="category" th:name="category" class="form-control" required>
-                                <option value="Apple">Apple</option>
-                                <option value="Samsung">Samsung</option>
-                                <option value="Oppo">Oppo</option>
-                                <option value="Nokia">Nokia</option>
-                                <option value="Huawei">Huawei</option>
-                                <option value="Xiaomi">Xiaomi</option>
-                                <option value="Realme">Realme</option>
-                                <option value="Vivo">Vivo</option>
-                                <option value="Philips">Philips</option>
-                                <option value="Mobell">Mobell</option>
-                                <option value="Mobiistar">Mobiistar</option>
-                                <option value="Itel">Itel</option>
-                                <option value="Coolpad">Coolpad</option>
-                                <option value="HTC">HTC</option>
-                                <option value="Motorola">Motorola</option>
+                            <select  id="category" th:name="category" class="form-control" >
+                                <option value="">-- Chọn danh mục --</option>
+                                <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}">
+                                </option>
                             </select>
                         </div>
 

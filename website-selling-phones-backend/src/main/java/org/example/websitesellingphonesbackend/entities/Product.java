@@ -29,7 +29,8 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
-
+    @Column(name = "status")
+    private String status;
 
     @OneToMany(mappedBy = "product")
     private List<LineItem> listLineItem;
