@@ -6,4 +6,5 @@ import org.example.websitesellingphonesbackend.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findByCategoryName(String category);
+
 }

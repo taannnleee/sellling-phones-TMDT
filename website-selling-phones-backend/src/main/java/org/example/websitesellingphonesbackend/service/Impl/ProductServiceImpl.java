@@ -1,5 +1,6 @@
 package org.example.websitesellingphonesbackend.service.Impl;
 
+import org.example.websitesellingphonesbackend.entities.Category;
 import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.repositories.ProductRepository;
 import org.example.websitesellingphonesbackend.service.ProductService;
@@ -46,5 +47,8 @@ public class ProductServiceImpl implements ProductService {
     }
     public Product getProductByProductDetailId(Long productDetailId) {
         return productRepository.findByProductDetailProductDetailId(productDetailId);
+    }
+    public int countProductByCategoryAndStatus(Category category, String string) {
+        return productRepository.countProductByCategoryAndStatus(category, string);
     }
 }

@@ -1,21 +1,21 @@
 package org.example.websitesellingphonesbackend.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.websitesellingphonesbackend.entities.Category;
 import org.example.websitesellingphonesbackend.entities.Customer;
 import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.entities.ProductDetail;
-import org.example.websitesellingphonesbackend.service.AccountService;
-import org.example.websitesellingphonesbackend.service.CustomerService;
+import org.example.websitesellingphonesbackend.service.*;
 import org.example.websitesellingphonesbackend.service.Impl.ProductDetailServiceImpl;
-import org.example.websitesellingphonesbackend.service.ProductDetailService;
-import org.example.websitesellingphonesbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +29,8 @@ public class AdminController {
     ProductDetailService productDetailService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    CategoryService categoryService;
     @GetMapping()
     public String admin(Model model) {
         try {
@@ -71,12 +73,15 @@ public class AdminController {
     }
     @GetMapping("/category")
     public String category(Model model) {
-        try {
-            return "view/viewAdmin";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
-            return "views/error";
+        List<Category> categories = categoryService.getAllCategories();
+        Map<Long, Integer> productCountMap = new HashMap<>();
+        for (Category category : categories) {
+            int productCount = productService.countProductByCategoryAndStatus(category, "on");
+            productCountMap.put(category.getCategoryId(), productCount);
         }
+        model.addAttribute("categories", categories);
+        model.addAttribute("productCountMap", productCountMap);
+        return "views/adminviews/category-admin";
     }
     @GetMapping("/statistics")
     public String statistics(Model model) {
