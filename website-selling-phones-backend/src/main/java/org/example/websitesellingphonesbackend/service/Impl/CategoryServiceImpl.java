@@ -44,4 +44,12 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
     }
+
+    @Override
+    public boolean isCategoryExistsAndStatusOn(String name) {
+        return this.categoryRepository.existsCategoriesByCategoryNameAndStatus(name, "on");
+    }
+    public Category saveCategory(Category category) {
+        return this.categoryRepository.save(category);
+    }
 }

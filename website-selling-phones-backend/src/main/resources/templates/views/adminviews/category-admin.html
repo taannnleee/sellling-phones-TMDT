@@ -19,6 +19,34 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
+    <style>
+        .bubble-form {
+            position: fixed;
+            top: 35px;
+            right: 20px;
+            background-color: #3e8e41;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Ban đầu ẩn */
+            z-index: 9999; /* Đảm bảo nằm trên các thành phần khác */
+        }
+
+        .close1 {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close1:hover,
+        .close1:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl">
@@ -27,6 +55,10 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <div th:replace="~{view/sidebarAdmin :: sidebarAdmin}"></div>
+<div id="bubbleForm" class="bubble-form">
+    <span class="close1" onclick="closeBubble()">&times;</span>
+    <p>Thêm danh mục thành công!</p>
+</div>
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
@@ -140,6 +172,37 @@
                 form.submit();
             }
         });
+    }
+</script>
+<script>
+    // Mở hộp thoại nổi lên
+    function openBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "block";
+        // Đóng khung sau 2 giây
+        setTimeout(function() {
+            closeBubble();
+        }, 2000); // 2000 miligiây = 2 giây
+    }
+
+    // Đóng hộp thoại nổi lên
+    function closeBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "none";
+    }
+
+    // Xử lý sự kiện khi click ra ngoài hộp thoại
+    window.onclick = function(event) {
+        var bubbleForm = document.getElementById("bubbleForm");
+        if (event.target == bubbleForm) {
+            closeBubble(); // Nếu click ra ngoài hộp thoại, đóng nó lại
+        }
+    }
+</script>
+<script th:inline="javascript">
+    var addCategorySuccessMessage = /*[[${addCategorySuccessMessage}]]*/ false; // Đảm bảo rằng addCategorySuccessMessage là boolean
+    if (addCategorySuccessMessage) {
+        openBubble(); // Hiển thị hộp thoại nếu đăng nhập thành công
     }
 </script>
 <!-- Essential javascripts for application to work-->

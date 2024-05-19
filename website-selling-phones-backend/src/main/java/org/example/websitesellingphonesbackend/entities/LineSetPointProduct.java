@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Setter
 public class LineSetPointProduct implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "quanlity")
