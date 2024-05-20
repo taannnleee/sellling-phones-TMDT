@@ -14,8 +14,8 @@ public interface ProductDetailService {
     void addProduct(ProductDetailDTO productDetailDTO, String imageProduct);
     void updateProduct(Long id, ProductDetail productDetail, Category category, String imageProduct);
 
-    List<ProductDetail> timKiemTheoTen(String ten);
-    List<ProductDetail> timKiemTheoGiaTien( double giaMin, double giaMax);
-    List<ProductDetail> timKiemTheoCongTySanXuat(String tenCongTy);
+    List<ProductDetail> timKiemTheoTen(String ten,List<ProductDetail> list);
+    List<ProductDetail> timKiemTheoGiaTien( double giaMin, double giaMax,List<ProductDetail> list);
+    List<ProductDetail> timKiemTheoCongTySanXuat(String tenCongTy,List<ProductDetail> list);
     List<ProductDetail> getProductsContainingName(String productName);
 }
