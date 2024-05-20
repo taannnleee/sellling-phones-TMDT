@@ -36,7 +36,7 @@ public class CheckoutController {
         Customer customer = (Customer) session.getAttribute("customer");
         try {
             Cart cart = cartService.getCartByCartId(cartId);
-//            orderService.insertOrder(cart,customer,paymentType);
+            Order_Product order = orderService.insertOrder(cart,customer,paymentType);
 //            List<Order_Product> orders = orderService.getOrdersByCustomer(customer);
 //            model.addAttribute("orders", orders);
 //            if (!orders.isEmpty()) {
@@ -46,11 +46,10 @@ public class CheckoutController {
 //                }
 //            }
 
-            String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
-            String vnpayUrl = vnPayService.createOrder(50000, "ok", baseUrl);
-//            System.out.println("hihi"+vnpayUrl);
-            return "redirect:" + vnpayUrl;
-//            return "views/invoice";
+//            String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
+//            String vnpayUrl = vnPayService.createOrder(Math.round(order.getTotal()), "Welcomme", baseUrl);
+//            return "redirect:" + vnpayUrl;
+            return  "views/success";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
             return "views/error";

@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     LineItemService lineItemService;
 
     @Override
-    public void insertOrder(Cart cart, Customer customer, String paymentType){
+    public Order_Product insertOrder(Cart cart, Customer customer, String paymentType){
         try {
 
 
@@ -95,10 +95,12 @@ public class OrderServiceImpl implements OrderService {
             lineItemService.deleteAllLineItemByCart(cart);
 
 
+            return order;
         } catch (Exception e) {
             // Xử lý ngoại lệ
             e.printStackTrace();
         }
+        return null;
     }
     @Override
     public List<Order_Product> getOrdersByCustomer(Customer customer) {
