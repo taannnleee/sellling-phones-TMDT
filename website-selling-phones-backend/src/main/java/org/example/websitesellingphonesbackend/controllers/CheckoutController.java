@@ -2,6 +2,7 @@ package org.example.websitesellingphonesbackend.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.websitesellingphonesbackend.config.VNPayService;
 import org.example.websitesellingphonesbackend.entities.Cart;
 import org.example.websitesellingphonesbackend.entities.Customer;
 import org.example.websitesellingphonesbackend.entities.LineItem;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -26,21 +28,29 @@ public class CheckoutController {
     CartService cartService;
     @Autowired
     OrderService orderService;
+    @Autowired
+    private VNPayService vnPayService;
+
     @PostMapping()
     public String checkout(HttpSession session,@RequestParam("paymentType") String paymentType, @RequestParam("cartId") Long cartId, Model model) {
         Customer customer = (Customer) session.getAttribute("customer");
         try {
             Cart cart = cartService.getCartByCartId(cartId);
-            orderService.insertOrder(cart,customer,paymentType);
-            List<Order_Product> orders = orderService.getOrdersByCustomer(customer);
-            model.addAttribute("orders", orders);
-            if (!orders.isEmpty()) {
-                Order_Product order = orders.get(orders.size() - 1);
-                if (order.getOrderDetailLines() != null) {
-                    model.addAttribute("order", order);
-                }
-            }
-            return "views/invoice";
+//            orderService.insertOrder(cart,customer,paymentType);
+//            List<Order_Product> orders = orderService.getOrdersByCustomer(customer);
+//            model.addAttribute("orders", orders);
+//            if (!orders.isEmpty()) {
+//                Order_Product order = orders.get(orders.size() - 1);
+//                if (order.getOrderDetailLines() != null) {
+//                    model.addAttribute("order", order);
+//                }
+//            }
+
+            String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
+            String vnpayUrl = vnPayService.createOrder(50000, "ok", baseUrl);
+//            System.out.println("hihi"+vnpayUrl);
+            return "redirect:" + vnpayUrl;
+//            return "views/invoice";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
             return "views/error";
