@@ -30,4 +30,7 @@ public class UserService {
     public void deleteCustomer(Long customerId) {
         customerRepository.deleteById(customerId);
     }
+    public void updateCustomer(Customer customer){
+        customerRepository.save(customer);
+    }
 }

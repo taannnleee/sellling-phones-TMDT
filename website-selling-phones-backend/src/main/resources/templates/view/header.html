@@ -34,7 +34,7 @@
                 <div class="tools-member">
                     <div class="member">
                         <div th:if="${session.customer != null}">
-                            <a href="nguoidung.html">
+                            <a th:href="@{/nguoidung/getProfile}">
                                 <i class="fa fa-user"></i>
                                 Tài khoản
                             </a>
