@@ -19,13 +19,45 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
+    <style>
+
+        .bubble-form {
+            position: fixed;
+            top: 35px;
+            right: 20px;
+            background-color: #3e8e41;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Ban đầu ẩn */
+            z-index: 9999; /* Đảm bảo nằm trên các thành phần khác */
+        }
+
+        .close1 {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close1:hover,
+        .close1:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl">
 <!-- Navbar-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <div th:replace="~{view/sidebarAdmin :: sidebarAdmin}"></div>
-
+<div id="bubbleForm" class="bubble-form">
+    <span class="close1" onclick="closeBubble()">&times;</span>
+    <p>Thêm sảm phẩm thành công!</p>
+</div>
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
@@ -57,8 +89,8 @@
 
                                 <select style="width: 190px;height: 33px;" class="form-control" name="categoryId">
                                     <option value="">Chọn danh mục</option>
-                                    <th:block th:each="category : ${categories}">
-                                        <option th:value="${category.id}" th:text="${category.name}"></option>
+                                    <th:block th:each="category : ${categories}" th:if="${category.status == 'on'}">
+                                        <option th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
                                     </th:block>
                                 </select>
                                 <div class="col-sm-2">
@@ -71,7 +103,7 @@
                         <div class="col-sm-2" >
                             <!-- Form tìm kiếm -->
                             <form style="display: flex; flex-direction: row;border-color: rgb(171, 165, 165);"
-                                  th:action="@{/admin/product}" method="post">
+                                  th:action="@{/admin_authentication/admin/product}" method="post">
                                 <div class="col-sm-2">
                                     <input style="width: 150px;height: 33px;border-radius: 4px;border-color: rgb(171, 165, 165);"
                                            type="text" name="productName" placeholder="Nhập tên sản phẩm">
@@ -99,22 +131,15 @@
 
                         </thead>
                         <tbody>
-                        <th:block th:each="product : ${products}" >
+                        <th:block th:each="product : ${products}" th:if="${product.status == 'on'}" >
                             <tr>
                                 <td th:text="${product.productID}"></td>
-                                <td th:text="${product.productID}"></td>
-                                <td th:text="${product.productID}"></td>
-                                <td th:text="${product.productID}"></td>
-                                <td th:text="${product.productID}"></td>
-                                <td th:text="${product.productID}"></td>
+                                <td><img th:src="@{/images/product/{image}(image=${product.productDetail.imageUrl})}" alt="" width="100px;"></td>
+                                <td th:text="${product.productDetail.name}"></td>
+                                <td th:text="${product.productDetail.description}"></td>
+                                <td th:text="${product.productDetail.price}"></td>
+                                <td th:text="${product.category.categoryName}"></td>
 
-
-
-<!--                                <td><img th:src="@{/images/product/{image}(image=${product.image})}" alt="" width="100px;"></td>-->
-<!--                                <td th:text="${product.name}"></td>-->
-<!--                                <td th:text="${product.description}"></td>-->
-<!--                                <td th:text="${product.price}"></td>-->
-<!--                                <td th:text="${product.category.name}"></td>-->
                                 <td>
                                     <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
                                             onclick="myFunction(this, '${product.id}')">
@@ -137,6 +162,37 @@
         </div>
     </div>
 </main>
+<script>
+    // Mở hộp thoại nổi lên
+    function openBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "block";
+        // Đóng khung sau 2 giây
+        setTimeout(function() {
+            closeBubble();
+        }, 2000); // 2000 miligiây = 2 giây
+    }
+
+    // Đóng hộp thoại nổi lên
+    function closeBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "none";
+    }
+
+    // Xử lý sự kiện khi click ra ngoài hộp thoại
+    window.onclick = function(event) {
+        var bubbleForm = document.getElementById("bubbleForm");
+        if (event.target == bubbleForm) {
+            closeBubble(); // Nếu click ra ngoài hộp thoại, đóng nó lại
+        }
+    }
+</script>
+<script th:inline="javascript">
+    var addProductSuccessMessage = /*[[${addProductSuccessMessage}]]*/ false; // Đảm bảo rằng loginSuccessMessage là boolean
+    if (addProductSuccessMessage) {
+        openBubble(); // Hiển thị hộp thoại nếu đăng nhập thành công
+    }
+</script>
 <script>
     function myFunction(button, productId) {
         event.preventDefault();
@@ -211,6 +267,7 @@
         }
     }
 </script>
+
 </body>
 
 </html>

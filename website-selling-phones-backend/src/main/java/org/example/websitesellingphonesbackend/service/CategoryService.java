@@ -9,7 +9,10 @@ public interface CategoryService {
     Category getCategoryById(Long id);
     Category createCategory(Category category);
     Category updateCategory(Long id, Category category);
-    void deleteCategory(Long id);
+    void deleteCategory(Category category);
     boolean isCategoryExistsAndStatusOn(String name);
     Category saveCategory(Category category);
+    void deleteAllCategory();
+    List<Category> getCategoriesByStatus(String string);
+    List<Category> findCategoriesByCategoryNameContaining(String categoryName);
 }

@@ -15,4 +15,11 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     List<Product> getAllByStatus(String status);
     int countProductByCategoryAndStatus(Category category, String string);
 
+    List<Product> getAllByCategoryAndStatus(Category category, String status);
+
+    List<Product> getAllByCategory(Category category);
+    List<Product> findProductsByCategoryCategoryId(Long id);
+    int countProductByCategoryCategoryId(long id);
+
+
 }

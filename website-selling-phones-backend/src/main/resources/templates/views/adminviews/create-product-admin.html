@@ -143,33 +143,6 @@
         transform: rotate(-45deg);
         margin-top: -2px;
     }
-
-     .bubble-form {
-         position: fixed;
-         top: 35px;
-         right: 20px;
-         background-color: #3e8e41;
-         border: 1px solid #ccc;
-         border-radius: 5px;
-         padding: 20px;
-         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-         display: none; /* Ban đầu ẩn */
-         z-index: 9999; /* Đảm bảo nằm trên các thành phần khác */
-     }
-
-    .close1 {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close1:hover,
-    .close1:focus {
-        color: black;
-        text-decoration: none;
-    }
 </style>
 
 <!-- Sidebar menu-->
@@ -187,10 +160,7 @@
             <li class="breadcrumb-item"><a href="#">Thêm sản phẩm</a></li>
         </ul>
     </div>
-    <div id="bubbleForm" class="bubble-form">
-        <span class="close1" onclick="closeBubble()">&times;</span>
-        <p>Thêm sảm phẩm thành công!</p>
-    </div>
+
     <div class="row">
         <div class="col-md-12">
             <form class="tile" th:action="@{/admin_authentication/admin/product/create}" method="post"
@@ -214,52 +184,52 @@
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label class="control-label">Tên sản phẩm</label>
-                            <input name="name" id="name" type="text" required>
+                            <input  class="form-control" name="name" id="name" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Mô tả sản phẩm</label>
-                            <input name="description" id="description" type="text" required>
+                            <input  class="form-control" name="description" id="description" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Giá sản phẩm</label>
-                            <input name="price" id="price" type="text" required>
+                            <input  class="form-control" name="price" id="price" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Màn hình</label>
-                            <input name="screen" id="screen" type="text" required>
+                            <input  class="form-control" name="screen" id="screen" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Hệ thống</label>
-                            <input name="os" id="os" type="text" required>
+                            <input  class="form-control" name="os" id="os" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Camera</label>
-                            <input name="camera" id="camera" type="text" required>
+                            <input class="form-control" name="camera" id="camera" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Camera trước</label>
-                            <input name="cameraFront" id="cameraFront" type="text" required>
+                            <input class="form-control" name="cameraFront" id="cameraFront" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">CPU</label>
-                            <input name="cpu" id="cpu" type="text" required>
+                            <input class="form-control" name="cpu" id="cpu" type="text" required>
                         </div>
 
                         <div class="form-group col-md-3">
                             <label class="control-label">RAM</label>
-                            <input name="ram" id="ram" type="text" required>
+                            <input class="form-control" name="ram" id="ram" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">ROM</label>
-                            <input name="rom" id="rom" type="text" required>
+                            <input class="form-control" name="rom" id="rom" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">microUSB</label>
-                            <input name="microUSB" id="microUSB" type="text" required>
+                            <input class="form-control" name="microUSB" id="microUSB" type="text" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="control-label">Battery</label>
-                            <input name="battery" id="battery" type="text" required>
+                            <input class="form-control" name="battery" id="battery" type="text" required>
                         </div>
 
 
@@ -267,14 +237,15 @@
                             <label for="category" class="control-label">Danh mục</label>
                             <select  id="category" th:name="category" class="form-control" >
                                 <option value="">-- Chọn danh mục --</option>
-                                <option th:each="category : ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}">
+                                <option th:each="category : ${categories}" th:if="${category.status == 'on'}" th:value="${category.categoryName}" th:text="${category.categoryName}">
                                 </option>
+
                             </select>
                         </div>
 
                         <div class="form-group col-md-3">
                             <label for="color" class="control-label">Màu sắc</label>
-                            <select id="color" name="color">
+                            <select id="color" name="color" class="form-control">
                                 <option value="BLACK">BLACK</option>
                                 <option value="WHITE">WHITE</option>
                                 <option value="BLUE">BLUE</option>
@@ -329,37 +300,7 @@
     });
 
 </script>
-<script>
-    // Mở hộp thoại nổi lên
-    function openBubble() {
-        var bubbleForm = document.getElementById("bubbleForm");
-        bubbleForm.style.display = "block";
-        // Đóng khung sau 2 giây
-        setTimeout(function() {
-            closeBubble();
-        }, 2000); // 2000 miligiây = 2 giây
-    }
 
-    // Đóng hộp thoại nổi lên
-    function closeBubble() {
-        var bubbleForm = document.getElementById("bubbleForm");
-        bubbleForm.style.display = "none";
-    }
-
-    // Xử lý sự kiện khi click ra ngoài hộp thoại
-    window.onclick = function(event) {
-        var bubbleForm = document.getElementById("bubbleForm");
-        if (event.target == bubbleForm) {
-            closeBubble(); // Nếu click ra ngoài hộp thoại, đóng nó lại
-        }
-    }
-</script>
-<script th:inline="javascript">
-    var addProductSuccessMessage = /*[[${addProductSuccessMessage}]]*/ false; // Đảm bảo rằng loginSuccessMessage là boolean
-    if (addProductSuccessMessage) {
-        openBubble(); // Hiển thị hộp thoại nếu đăng nhập thành công
-    }
-</script>
 <script>
     $(document).ready(function() {
         // Hiển thị ô nhập khi nhấn nút "Thêm danh mục"
@@ -372,13 +313,22 @@
         $('#saveCategoryBtn').click(function() {
             var newCategory = $('#newCategoryInput').val().trim();
             if (newCategory) {
-                // Thêm danh mục mới vào select
-                $('#category').append('<option value="' + newCategory + '">' + newCategory + '</option>');
-                // Chọn danh mục mới
-                $('#category').val(newCategory);
-                // Ẩn và làm trống ô nhập
-                $('#newCategoryContainer').hide();
-                $('#newCategoryInput').val('');
+                // Kiểm tra xem danh mục đã tồn tại trong combobox chưa
+                var categoryExists = $('#category option').filter(function() {
+                    return $(this).text() === newCategory;
+                }).length > 0;
+
+                if (categoryExists) {
+                    alert('Danh mục đã tồn tại trong danh sách. Vui lòng chọn danh mục khác.');
+                } else {
+                    // Thêm danh mục mới vào select
+                    $('#category').append('<option value="' + newCategory + '">' + newCategory + '</option>');
+                    // Chọn danh mục mới
+                    $('#category').val(newCategory);
+                    // Ẩn và làm trống ô nhập
+                    $('#newCategoryContainer').hide();
+                    $('#newCategoryInput').val('');
+                }
             } else {
                 alert('Vui lòng nhập danh mục hợp lệ');
             }

@@ -13,4 +13,10 @@ public interface ProductService {
     void deleteProduct(Long id);
     Product getProductByProductDetailId(Long productDetailId);
     int countProductByCategoryAndStatus(Category category, String string);
+    List<Product> getAllByCategoryAndStatus(Category category, String status);
+    void save(Product product);
+    List<Product> getAllByCategory(Category category);
+    List<Product> getProductsByCategoryId(Long id);
+    List<Product> getAllProduct();
+    int countProductByCategoryCategoryId(long id);
 }

@@ -8,7 +8,7 @@
             const avatarFile = $("#avatarFile");
             const currentImage = $("#currentImage").val();
             if (currentImage) {
-                $("#avatarPreview").attr("src", "/resources/images/product/" + currentImage);
+                $("#avatarPreview").attr("src", "/resources/images/category/" + currentImage);
                 $("#avatarPreview").css({ "display": "block" });
             }
             avatarFile.change(function (e) {
@@ -150,83 +150,56 @@
     }
 </style>
 
-
-<!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <div th:replace="~{view/sidebarAdmin :: sidebarAdmin}"></div>
 
 <main class="app-content" xmlns:th="http://www.thymeleaf.org">
+    <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">Danh sách danh mục</li>
+            <li class="breadcrumb-item"><a href="#">Sửa danh mục</a></li>
+        </ul>
+    </div>
     <div style="background-color: rgb(198, 69, 69);color: white;" th:if="${error}" class="alert alert-danger"
          role="alert">
         <span th:text="${error}"></span>
     </div>
-    <div class="app-title">
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item">Danh sách sản phẩm</li>
-            <li class="breadcrumb-item"><a href="#">Sửa sản phẩm</a></li>
-        </ul>
-    </div>
     <div class="row">
         <div class="col-md-12">
-            <form class="tile" th:action="@{/admin_authentication/admin/product/update}"  th:object="${newProduct}"   method="post"
+            <form class="tile" th:action="@{/admin_authentication/admin/category/update}" th:object="${newCategory}" method="post"
                   enctype="multipart/form-data">
-                <h3 class="tile-title">Update sản phẩm<h3>
+                <h3 class="tile-title">Sửa danh mục</h3>
                 <div class="tile-body">
-                    <div class="row element-button">
-                        <div class="col-sm-2">
-                            <a href="/admin/category/create" class="btn btn-add btn-sm"><i
-                                    class="fas fa-folder-plus"></i> Thêm danh
-                                mục</a>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label class="control-label">Mã sản phẩm</label>
-                            <input th:field="*{productID}" class="form-control" type="text" readonly>
+                            <label class="control-label">Mã danh mục</label>
+                            <input th:field="*{categoryId}" class="form-control" type="text" readonly>
                         </div>
                         <div class="form-group col-md-3">
-                            <label class="control-label">Tên sản phẩm</label>
-<!--                            <input th:field="*{productDetail.name}" class="form-control" type="text">-->
+                            <label class="control-label">Tên danh mục</label>
+                            <input th:field="*{categoryName}" class="form-control" type="text" required>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="exampleSelect1" class="control-label">Danh mục</label>
-<!--                            <select th:field="*{category.categoryName}" class="form-control" id="exampleSelect1">-->
-<!--                                <option value="">&#45;&#45; Chọn danh mục &#45;&#45;</option>-->
-<!--                                <option th:each="category : ${categories}" th:value="${category.name}"-->
-<!--                                        th:text="${category.name}">-->
-<!--                                </option>-->
-<!--                            </select>-->
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label">Giá bán</label>
-<!--                            <input th:field="*{productDetail.price}" class="form-control" type="text">-->
-                        </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Ảnh sản phẩm</label>
                             <div id="myfileupload">
                                 <input style="width: 250px;" class="form-control" type="file" id="avatarFile"
                                        accept=".png, .jpg, .jpeg" name="imageProduct" />
-                                <input type="hidden" id="currentImage" th:field="*{productDetail.imageUrl}" />
+                                <input required type="hidden" id="currentImage" th:field="*{urlImage}" />
                             </div>
                             <div id="thumbbox">
                                 <img height="450" width="400" alt="avatar preview" id="avatarPreview"
                                      style="display: none" />
                                 <a class="removeimg" href="javascript:"></a>
                             </div>
-
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Mô tả sản phẩm</label>
-<!--                            <textarea th:field="*{productDetail .description}" class="form-control" name="mota"-->
-<!--                                      id="mota"></textarea>-->
                         </div>
                     </div>
                 </div>
 
                 <button class="btn btn-save" type="submit">Lưu lại</button>
-                <a class="btn btn-cancel" th:href="@{/admin_authentication/admin/product}">Hủy bỏ</a>
+                <a class="btn btn-cancel" href="/admin_authentication/admin/category">Hủy bỏ</a>
+
             </form>
         </div>
     </div>

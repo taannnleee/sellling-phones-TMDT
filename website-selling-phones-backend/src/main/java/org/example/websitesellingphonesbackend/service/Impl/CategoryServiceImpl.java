@@ -2,8 +2,10 @@
 package org.example.websitesellingphonesbackend.service.Impl;
 
 import org.example.websitesellingphonesbackend.entities.Category;
+import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.repositories.CategoryRepository;
 import org.example.websitesellingphonesbackend.service.CategoryService;
+import org.example.websitesellingphonesbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,33 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
+    // xóa category là phải xóa product thuộc category đó
+
+    @Override
+    public void deleteAllCategory(){
+        List<Category> categories =  categoryRepository.findAll();
+        for (Category category: categories){
+            deleteCategory(category);
+        }
+    }
+    @Override
+    public void deleteCategory(Category category){
+        category.setStatus("off");
+        categoryRepository.save(category);
+        List<Product> products =  productService.getAllByCategory(category);
+        for (Product product : products) {
+            product.setStatus("off");
+            productService.save(product);
+        }
+    }
     @Override
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElse(null);
@@ -40,10 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
         return null;
     }
 
-    @Override
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
-    }
+
 
     @Override
     public boolean isCategoryExistsAndStatusOn(String name) {
@@ -51,5 +72,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
     public Category saveCategory(Category category) {
         return this.categoryRepository.save(category);
+    }
+    @Override
+    public List<Category> getCategoriesByStatus(String string) {
+        return this.categoryRepository.findCategoriesByStatus(string);
+    }
+
+    @Override
+    public List<Category> findCategoriesByCategoryNameContaining(String categoryName) {
+        return this.categoryRepository.findCategoriesByCategoryNameContaining(categoryName);
     }
 }

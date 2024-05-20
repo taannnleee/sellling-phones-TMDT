@@ -15,4 +15,5 @@ public interface ProductDetailService {
     List<ProductDetail> timKiemTheoTen(String ten);
     List<ProductDetail> timKiemTheoGiaTien( double giaMin, double giaMax);
     List<ProductDetail> timKiemTheoCongTySanXuat(String tenCongTy);
+    List<ProductDetail> getProductsContainingName(String productName);
 }

@@ -42,11 +42,6 @@ public class AdminProductController {
 
     @GetMapping("/create")
     public String handleCreateGetProduct(HttpSession session, Model model  ) {
-        String addProductSuccessMessage = (String) session.getAttribute("addProductSuccessMessage"); // Lấy thông báo từ session
-        if (addProductSuccessMessage != null) {
-            model.addAttribute("addProductSuccessMessage", true); // Thêm thông báo vào model
-            session.removeAttribute("addProductSuccessMessage"); // Xóa thông báo từ session sau khi đã sử dụng
-        }
         List<Category> categories =  categoryService.getAllCategories();
         model.addAttribute("categories", categories);
         return "views/adminviews/create-product-admin";
@@ -57,9 +52,10 @@ public class AdminProductController {
 
         try {
             String imageProduct = handleSaveUploadFile.handleSaveUploadFile(file, "product");
+
             productDetailService.addProduct(productDetailDTO, imageProduct);
             session.setAttribute("addProductSuccessMessage", "Tạo sản phẩm mới thành công");
-            return "redirect:/admin_authentication/admin/product/create";
+            return "redirect:/admin_authentication/admin/product";
         }catch (Exception e){
             model.addAttribute("error", "error"+ e);
             return "views/error";

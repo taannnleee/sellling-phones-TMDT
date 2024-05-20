@@ -66,6 +66,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             // Nếu chưa tồn tại, tạo mới
             category = new Category();
             category.setCategoryName(productDetail.getCategory());
+            category.setStatus("on");
             categoryRepository.save(category);
         }
         // Tạo mới product
@@ -147,5 +148,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<ProductDetail> getProductsContainingName(String productName) {
+        return this.productDetailRepository.findProductsByNameContaining(productName);
     }
 }

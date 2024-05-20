@@ -21,6 +21,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllByCategoryAndStatus(Category category, String status){
+        return productRepository.getAllByCategoryAndStatus(category,status);
+    }
+
+    @Override
+    public List<Product> getAllByCategory(Category category){
+        return productRepository.getAllByCategory(category);
+    }
+
+
+    @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
@@ -51,4 +62,23 @@ public class ProductServiceImpl implements ProductService {
     public int countProductByCategoryAndStatus(Category category, String string) {
         return productRepository.countProductByCategoryAndStatus(category, string);
     }
+    @Override
+    public void save(Product product){
+        productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> getProductsByCategoryId(Long id) {
+        return this.productRepository.findProductsByCategoryCategoryId(id);
+    }
+    @Override
+    public List<Product> getAllProduct() {
+        return this.productRepository.findAll();
+    }
+
+    @Override
+    public int countProductByCategoryCategoryId(long id) {
+        return this.productRepository.countProductByCategoryCategoryId(id);
+    }
+
 }
