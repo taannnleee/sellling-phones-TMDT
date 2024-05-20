@@ -7,6 +7,6 @@ import org.example.websitesellingphonesbackend.entities.Order_Product;
 import java.util.List;
 
 public interface OrderService {
-    void insertOrder(Cart cart, Customer customer, String paymentType);
+    Order_Product insertOrder(Cart cart, Customer customer, String paymentType);
     List<Order_Product> getOrdersByCustomer(Customer customer);
 }

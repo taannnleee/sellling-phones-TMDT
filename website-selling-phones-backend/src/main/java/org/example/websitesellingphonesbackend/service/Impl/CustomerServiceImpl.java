@@ -186,9 +186,10 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setEmail(customerDTO.getEmail());
+        customer.setDateOfBirth(customerDTO.getDateOfBirth());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
+        customer.setRole(customerDTO.getRole());
         customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
-        // Add other fields as needed
 
         customerRepository.save(customer);
     }
@@ -196,8 +197,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);
 
         if (existingCustomer != null) {
-            //id này được tạo tự động nên không thể thay đổi
-//            existingCustomer.setCustomerId(customerDTO.getCustomerId());
+            existingCustomer.setCustomerId(customerDTO.getCustomerId());
             existingCustomer.setFirstName(customerDTO.getFirstName());
             existingCustomer.setLastName(customerDTO.getLastName());
             existingCustomer.setEmail(customerDTO.getEmail());
@@ -208,6 +208,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.save(existingCustomer);
         }
     }
+
 
 
 }

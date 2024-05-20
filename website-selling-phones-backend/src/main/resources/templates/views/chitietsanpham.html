@@ -153,13 +153,11 @@
 
         <div class="chitietSanpham" style="margin-bottom: 100px">
             <h1>Điện thoại </h1>
-<<<<<<< HEAD
-            <div class="rowdetail group" >
-=======
-            <div class="rowdetail group" th:each="${products}">
->>>>>>> 0635301 (.....)
+
+            <div class="rowdetail group">
+                <div th:text="${product.productDetail.name}"></div>
                 <div class="picture">
-                    <img th:src="@{'/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
+                    <img th:src="@{'/img/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
                 <div class="price_sale">
                     <div class="area_price"> </div>
                     <div class="ship" style="display: none;">
@@ -195,7 +193,7 @@
                         </a>
                     </div>
                     <div class="datconsp">
-                         nameProduct là biến toàn cục được khởi tạo giá trị trong phanTich_URL_chiTietSanPham
+
                         <a class="datcoc" th:href="@{'/setpointproduct/add-to-setpointproduct/' + ${product.productID}}">
                             <b><i class="fa fa-cart-plus"></i> Thêm vào sản phẩm đặc cọc</b>
                             <p>Giữ sản phẩm tại cửa hàng</p>
@@ -224,19 +222,12 @@
                             <td th:text="${product.productDetail.os}"></td>
                         </tr>
                         <tr>
-<<<<<<< HEAD
                             <th>Camera sau</th>
                             <td th:text="${product.productDetail.camera}"></td>
                         </tr>
                         <tr>
                             <th>Camera trước</th>
-=======
-                            <th>Camara sau</th>
-                            <td th:text="${product.productDetail.camera}"></td>
-                        </tr>
-                        <tr>
-                            <th>Camara trước</th>
->>>>>>> 0635301 (.....)
+
                             <td th:text="${product.productDetail.cameraFront}"></td>
                         </tr>
                         <tr>
