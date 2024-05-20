@@ -53,14 +53,15 @@ function Product(productDetailId, name, imageUrl, price) {
 	this.name = name;
 	this.price = price;
 }
-
+// img th:src="@{/img/{image}(image=${category.urlImage})}" alt="NotFound"
 function addToWeb(p, ele, returnString) {
 	var price = `<strong>` + p.price + `&#8363;</strong>`;
 	var chitietSp = '/product-detail/' + p.productDetailId; // Đường dẫn đến trang chi tiết sản phẩm
 	var newLi =
 		`<li class="sanPham">
             <a href="` + chitietSp + `">
-                <img src="` + p.imageUrl + `" alt="" onclick="redirectToProductDetail('` + p.productDetailId + `')">
+                <img src="img/${p.imageUrl}" alt="" onclick="redirectToProductDetail('${p.productDetailId}')">
+
                 <h3>` + p.name + `</h3>
                 <div class="price">
                     ` + price + `

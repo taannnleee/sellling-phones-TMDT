@@ -128,13 +128,12 @@
                             <th>Danh mục</th>
                             <th>Chức năng</th>
                         </tr>
-
                         </thead>
                         <tbody>
                         <th:block th:each="product : ${products}" th:if="${product.status == 'on'}" >
                             <tr>
                                 <td th:text="${product.productID}"></td>
-                                <td><img th:src="@{/images/product/{image}(image=${product.productDetail.imageUrl})}" alt="" width="100px;"></td>
+                                <td><img th:src="@{/img/{image}(image=${product.productDetail.imageUrl})}" alt="NotFound" width="100px;"></td>
                                 <td th:text="${product.productDetail.name}"></td>
                                 <td th:text="${product.productDetail.description}"></td>
                                 <td th:text="${product.productDetail.price}"></td>
