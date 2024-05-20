@@ -196,7 +196,8 @@ public class CustomerServiceImpl implements CustomerService {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);
 
         if (existingCustomer != null) {
-            existingCustomer.setCustomerId(customerDTO.getCustomerId());
+            //id này được tạo tự động nên không thể thay đổi
+//            existingCustomer.setCustomerId(customerDTO.getCustomerId());
             existingCustomer.setFirstName(customerDTO.getFirstName());
             existingCustomer.setLastName(customerDTO.getLastName());
             existingCustomer.setEmail(customerDTO.getEmail());
@@ -207,7 +208,6 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.save(existingCustomer);
         }
     }
-
 
 
 }
