@@ -9,6 +9,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/passwordResult.css}" />
+    <style>
+        .bubble-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #3B5998;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999; /* Đảm bảo form nổi bọt nằm trên form gốc */
+            display: none; /* Ban đầu ẩn form nổi bọt */
+        }
+    </style>
 </head>
 <body>
 <div class="background">
@@ -28,12 +43,27 @@
 
     <label th:text="${result}"></label>
 
+    <div id="bubbleForm" class="bubble-form">
+        <a>Please fill in the information</a>
+    </div>
+
+
     <button type="submit">Login</button>
     <p><a href="/customer_authentication/changePassword">Change password</a></p>
     <p><a href="/customer_authentication/forgot-pass">Forgot password?</a></p>
     <p>Don't have an account? <a href="/customer_authentication/register">Register here</a></p>
 
 </form>
+<!--<script type="text/javascript">-->
+<!--    var result = document.querySelector("[th\\:text='${result}']").innerText;-->
+<!--    alert(result);-->
+<!--    if (result.trim() === "Đăng nhập thành công") {-->
+<!--        setTimeout(function() {-->
+<!--            window.location.href = "/index";-->
+<!--        }, 1000);-->
+<!--    }-->
+<!--</script>-->
+
 <script>
     var homeIcon = document.getElementById("homeIcon")
     homeIcon.addEventListener('mouseenter',()=>{
@@ -43,5 +73,35 @@
         homeIcon.classList.remove("fa-bounce")
     })
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.querySelector("form");
+        var bubbleForm = document.getElementById("bubbleForm");
+
+        form.addEventListener("submit", function(event) {
+            var inputs = form.querySelectorAll("input");
+            var allFieldsFilled = true;
+            inputs.forEach(function(input) {
+                if (input.value.trim() === "") {
+                    allFieldsFilled = false;
+                }
+            });
+
+            if (!allFieldsFilled) {
+                event.preventDefault();
+                bubbleForm.style.display = "block"; // Hiển thị form nổi bọt
+            }
+        });
+    });
+
+    // Sự kiện click vào vùng bên ngoài của form nổi bọt
+    document.addEventListener("click", function(event) {
+        // Kiểm tra xem người dùng đã click vào vùng bên ngoài của form nổi bọt hay không
+        if (!bubbleForm.contains(event.target) && bubbleForm.style.display === "block") {
+            bubbleForm.style.display = "none"; // Ẩn form nổi bọt
+        }
+    });
+</script>
+
 </body>
 </html>

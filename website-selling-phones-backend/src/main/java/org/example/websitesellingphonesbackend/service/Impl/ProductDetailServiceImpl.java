@@ -41,24 +41,24 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         productDetailRepository.deleteById(id);
     }
 
-    public void addProduct(ProductDetailDTO productDetailDTO) {
+    public void addProduct(ProductDetailDTO productDetailDTO, String imageProduct) {
         ProductDetail productDetail = new ProductDetail();
-        productDetail.setProductDetailId(productDetailDTO.getId());
         productDetail.setName(productDetailDTO.getName());
         productDetail.setCategory(productDetailDTO.getCategory());
-        productDetail.setImageUrl(productDetailDTO.getImageUrl());
+        productDetail.setImageUrl(imageProduct);
         productDetail.setDescription(productDetailDTO.getDescription());
         productDetail.setPrice(productDetailDTO.getPrice());
         productDetail.setScreen(productDetailDTO.getScreen());
         productDetail.setOs(productDetailDTO.getOs());
-        productDetail.setCamara(productDetailDTO.getCamara());
-        productDetail.setCamaraFront(productDetailDTO.getCamaraFront());
+        productDetail.setCamera(productDetailDTO.getCamara());
+        productDetail.setCameraFront(productDetailDTO.getCamaraFront());
         productDetail.setCpu(productDetailDTO.getCpu());
         productDetail.setRam(productDetailDTO.getRam());
         productDetail.setRom(productDetailDTO.getRom());
         productDetail.setMicroUSB(productDetailDTO.getMicroUSB());
         productDetail.setBattery(productDetailDTO.getBattery());
-        productDetail.setColor(EColor.valueOf(productDetailDTO.getColor()));
+        productDetail.setColor(productDetailDTO.getColor());
+
 
         // Kiểm tra xem category đã tồn tại chưa
         Category category = categoryRepository.findByCategoryName(productDetail.getCategory());
@@ -66,11 +66,13 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             // Nếu chưa tồn tại, tạo mới
             category = new Category();
             category.setCategoryName(productDetail.getCategory());
+            category.setStatus("on");
             categoryRepository.save(category);
         }
         // Tạo mới product
         Product product = new Product();
         product.setProductDetail(productDetail);
+        product.setStatus("on");
         product.setCategory(category);
 
         // Lưu productDetail và product vào database
@@ -87,19 +89,19 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             existingProductDetail.setProductDetailId(productDetailDTO.getId());
             existingProductDetail.setName(productDetailDTO.getName());
             existingProductDetail.setCategory(productDetailDTO.getCategory());
-            existingProductDetail.setImageUrl(productDetailDTO.getImageUrl());
+//            existingProductDetail.setImageUrl(productDetailDTO.getImageUrl());
             existingProductDetail.setDescription(productDetailDTO.getDescription());
             existingProductDetail.setPrice(productDetailDTO.getPrice());
             existingProductDetail.setScreen(productDetailDTO.getScreen());
             existingProductDetail.setOs(productDetailDTO.getOs());
-            existingProductDetail.setCamara(productDetailDTO.getCamara());
-            existingProductDetail.setCamaraFront(productDetailDTO.getCamaraFront());
+            existingProductDetail.setCamera(productDetailDTO.getCamara());
+            existingProductDetail.setCameraFront(productDetailDTO.getCamaraFront());
             existingProductDetail.setCpu(productDetailDTO.getCpu());
             existingProductDetail.setRam(productDetailDTO.getRam());
             existingProductDetail.setRom(productDetailDTO.getRom());
             existingProductDetail.setMicroUSB(productDetailDTO.getMicroUSB());
             existingProductDetail.setBattery(productDetailDTO.getBattery());
-            existingProductDetail.setColor(EColor.valueOf(productDetailDTO.getColor()));
+//            existingProductDetail.setColor(EColor.valueOf(productDetailDTO.getColor()));
 
             productDetailRepository.save(existingProductDetail);
         }
@@ -146,5 +148,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<ProductDetail> getProductsContainingName(String productName) {
+        return this.productDetailRepository.findProductsByNameContaining(productName);
     }
 }

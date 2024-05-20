@@ -17,7 +17,7 @@ import java.util.Date;
 @Setter
 public class LineItem implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "quanlity")

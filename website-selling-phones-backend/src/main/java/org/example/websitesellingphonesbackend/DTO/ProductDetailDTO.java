@@ -14,13 +14,13 @@ public class ProductDetailDTO {
     private Long id;
     private String name;
     private String category;
-    private String imageUrl;
+
     private String description;
     private Float price;
     private String screen;
     private String os;
-    private String camara;
-    private String camaraFront;
+    private String camera;
+    private String cameraFront;
     private String cpu;
     private String ram;
     private String rom;
@@ -49,7 +49,7 @@ public class ProductDetailDTO {
     }
 
     public String getCamara() {
-        return camara;
+        return camera;
     }
 
     public String getBattery() {
@@ -57,7 +57,7 @@ public class ProductDetailDTO {
     }
 
     public String getCamaraFront() {
-        return camaraFront;
+        return cameraFront;
     }
 
     public String getColor() {
@@ -72,9 +72,6 @@ public class ProductDetailDTO {
         return description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
     public String getMicroUSB() {
         return microUSB;
@@ -96,9 +93,6 @@ public class ProductDetailDTO {
         return screen;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -109,11 +103,11 @@ public class ProductDetailDTO {
     }
 
     public void setCamara(String camara) {
-        this.camara = camara;
+        this.camera = camara;
     }
 
     public void setCamaraFront(String camaraFront) {
-        this.camaraFront = camaraFront;
+        this.cameraFront = camaraFront;
     }
 
     public void setColor(String color) {

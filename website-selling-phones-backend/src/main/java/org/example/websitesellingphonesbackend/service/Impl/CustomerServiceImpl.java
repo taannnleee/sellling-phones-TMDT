@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static org.example.websitesellingphonesbackend.Enum.EMessage.*;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
@@ -83,20 +85,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean checkCustomer(CustomerDTO customerDTO) {
+    public EMessage checkCustomer(CustomerDTO customerDTO) {
         try {
-            if (!customerDTO.getPassHash().equals(customerDTO.getRepeatPassword())) {
-                return false;
-            }
             Customer customer_exist = customerRepository.findByEmail(customerDTO.getEmail()).orElse(null);
             if(customer_exist!=null){
-                return false;
+                return CUSTOMER_EXIST;
+            }
+            if (!customerDTO.getPassHash().equals(customerDTO.getRepeatPassword())) {
+                return  CONFIRM_PASSWORD_NOT_MATCH;
             }
         }
         catch (Exception e){
-            return false;
+            return REGISTER_FAIL;
         }
-        return true;
+        return REGISTER_SUCCESS;
     }
 
     @Override

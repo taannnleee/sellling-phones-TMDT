@@ -13,7 +13,9 @@ public enum EMessage {
     CHANGE_PASS_WORD_NOT_SUCCESS("Thay đổi mật khẩu thất bại!!"),
     CUSTOMER_NOT_EXIST("Khách hàng không tồn tại!!"),
     REGISTER_FAIL("Đăng kí thất bại"),
-    REGISTER_SUCCESS("Đăng kí thành công");
+    REGISTER_SUCCESS("Đăng kí thành công"),
+    LOGIN_SUCCESS("Đăng nhập thành công"),
+    CUSTOMER_EXIST("Khách hàng đã tồn tại!!");
     private final String value;
 
     EMessage(String value) {

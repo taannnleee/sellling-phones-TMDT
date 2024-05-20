@@ -15,7 +15,7 @@ import java.util.Date;
 @Setter
 public class Evaluate implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long evaluateId;
 
     private int rating;

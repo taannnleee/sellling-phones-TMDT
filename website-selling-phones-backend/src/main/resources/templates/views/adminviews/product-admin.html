@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Danh sách nhân viên | Quản trị Admin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <style>
+
+        .bubble-form {
+            position: fixed;
+            top: 35px;
+            right: 20px;
+            background-color: #3e8e41;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Ban đầu ẩn */
+            z-index: 9999; /* Đảm bảo nằm trên các thành phần khác */
+        }
+
+        .close1 {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close1:hover,
+        .close1:focus {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body onload="time()" class="app sidebar-mini rtl">
+<!-- Navbar-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<div th:replace="~{view/sidebarAdmin :: sidebarAdmin}"></div>
+<div id="bubbleForm" class="bubble-form">
+    <span class="close1" onclick="closeBubble()">&times;</span>
+    <p>Thêm sảm phẩm thành công!</p>
+</div>
+<main class="app-content">
+    <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item active"><a href="#"><b>Danh sách sản phẩm</b></a></li>
+        </ul>
+        <div id="clock"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <div class="row element-button">
+                        <div class="col-sm-2">
+
+                            <a class="btn btn-add btn-sm" th:href="@{/admin_authentication/admin/product/create}" title="Thêm"><i
+                                    class="fas fa-plus"></i>
+                                Tạo mới sản phẩm</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <form th:action="@{/admin_authentication/admin/product/deleteAll}" method="post">
+                                <button style="color: rgb(191, 0, 0);background-color: rgb(239, 202, 202);"
+                                        class="btn btn-delete btn-sm" type="submit" title="Xóa tất cả">
+                                    <i class="fas fa-trash-alt"></i> Xóa tất cả
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-sm-2">
+                            <form style="display: flex;flex-direction: row;" th:action="@{/admin_authentication/admin/product}" method="post">
+
+                                <select style="width: 190px;height: 33px;" class="form-control" name="categoryId">
+                                    <option value="">Chọn danh mục</option>
+                                    <th:block th:each="category : ${categories}" th:if="${category.status == 'on'}">
+                                        <option th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                                    </th:block>
+                                </select>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-primary">Xem sản phẩm</button>
+
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-sm-2" >
+                            <!-- Form tìm kiếm -->
+                            <form style="display: flex; flex-direction: row;border-color: rgb(171, 165, 165);"
+                                  th:action="@{/admin_authentication/admin/product}" method="post">
+                                <div class="col-sm-2">
+                                    <input style="width: 150px;height: 33px;border-radius: 4px;border-color: rgb(171, 165, 165);"
+                                           type="text" name="productName" placeholder="Nhập tên sản phẩm">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button style="background-color: rgb(225, 236, 134);" type="submit"
+                                            class="btn btn-primary">Tìm</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <table class="table table-hover table-bordered" id="sampleTable">
+
+                        <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mô tả</th>
+                            <th>Giá tiền</th>
+                            <th>Danh mục</th>
+                            <th>Chức năng</th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        <th:block th:each="product : ${products}" th:if="${product.status == 'on'}" >
+                            <tr>
+                                <td th:text="${product.productID}"></td>
+                                <td><img th:src="@{/images/product/{image}(image=${product.productDetail.imageUrl})}" alt="" width="100px;"></td>
+                                <td th:text="${product.productDetail.name}"></td>
+                                <td th:text="${product.productDetail.description}"></td>
+                                <td th:text="${product.productDetail.price}"></td>
+                                <td th:text="${product.category.categoryName}"></td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                            onclick="myFunction(this, '${product.id}')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                    <form id="${product.id}" style="padding: 0;height: 31px;" class="btn btn-primary btn-sm trash"
+                                          th:action="@{/admin_authentication/admin/product/delete}" method="post">
+                                        <input type="hidden" th:name="id" th:value="${product.productID}" />
+                                    </form>
+                                    <a th:href="@{/admin_authentication/admin/product/update/{id}(id=${product.productID})}" class="btn btn-primary btn-sm edit"
+                                       title="Sửa"><i class="fas fa-edit"></i></a>
+
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    // Mở hộp thoại nổi lên
+    function openBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "block";
+        // Đóng khung sau 2 giây
+        setTimeout(function() {
+            closeBubble();
+        }, 2000); // 2000 miligiây = 2 giây
+    }
+
+    // Đóng hộp thoại nổi lên
+    function closeBubble() {
+        var bubbleForm = document.getElementById("bubbleForm");
+        bubbleForm.style.display = "none";
+    }
+
+    // Xử lý sự kiện khi click ra ngoài hộp thoại
+    window.onclick = function(event) {
+        var bubbleForm = document.getElementById("bubbleForm");
+        if (event.target == bubbleForm) {
+            closeBubble(); // Nếu click ra ngoài hộp thoại, đóng nó lại
+        }
+    }
+</script>
+<script th:inline="javascript">
+    var addProductSuccessMessage = /*[[${addProductSuccessMessage}]]*/ false; // Đảm bảo rằng loginSuccessMessage là boolean
+    if (addProductSuccessMessage) {
+        openBubble(); // Hiển thị hộp thoại nếu đăng nhập thành công
+    }
+</script>
+<script>
+    function myFunction(button, productId) {
+        event.preventDefault();
+        swal({
+            title: "Cảnh báo",
+            text: "Bạn có chắc chắn là muốn xóa sản phẩm này?",
+            buttons: ["Hủy bỏ", "Đồng ý"],
+        }).then((willDelete) => {
+            if (willDelete) {
+                var form = button.parentElement.querySelector("form");
+                form.submit();
+            }
+        });
+    }
+</script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="src/jquery.table2excel.js"></script>
+<script src="/js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="/js/plugins/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="/js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+    $('#sampleTable').DataTable({
+        searching: false
+    });
+
+    //Thời Gian
+    function time() {
+        var today = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Chủ Nhật";
+        weekday[1] = "Thứ Hai";
+        weekday[2] = "Thứ Ba";
+        weekday[3] = "Thứ Tư";
+        weekday[4] = "Thứ Năm";
+        weekday[5] = "Thứ Sáu";
+        weekday[6] = "Thứ Bảy";
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+            '</span>';
+        document.getElementById("clock").innerHTML = tmp;
+        clocktime = setTimeout("time()", "1000", "Javascript");
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+    }
+</script>
+
+</body>
+
+</html>

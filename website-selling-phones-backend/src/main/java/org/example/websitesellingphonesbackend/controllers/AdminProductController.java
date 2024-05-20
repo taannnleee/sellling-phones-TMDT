@@ -1,61 +1,77 @@
 package org.example.websitesellingphonesbackend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.websitesellingphonesbackend.DTO.ProductDetailDTO;
+import org.example.websitesellingphonesbackend.Enum.EMessage;
+import org.example.websitesellingphonesbackend.entities.Category;
 import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.entities.ProductDetail;
+import org.example.websitesellingphonesbackend.helper.HandleSaveUploadFile;
 import org.example.websitesellingphonesbackend.service.AccountService;
+import org.example.websitesellingphonesbackend.service.CategoryService;
 import org.example.websitesellingphonesbackend.service.Impl.ProductDetailServiceImpl;
 import org.example.websitesellingphonesbackend.service.ProductDetailService;
 import org.example.websitesellingphonesbackend.service.ProductService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/adminProduct")
+@RequestMapping("/admin_authentication/admin/product")
 public class AdminProductController {
     private final AccountService accountService;
     @Autowired
     ProductService productService;
 
+    @Autowired
+    HandleSaveUploadFile handleSaveUploadFile;
+
     private final ProductDetailServiceImpl productDetailService;
 
+    @Autowired
+    CategoryService categoryService;
 
-    @GetMapping()
-    public String Login(Model model) {
+
+    @GetMapping("/create")
+    public String handleCreateGetProduct(HttpSession session, Model model  ) {
+        List<Category> categories =  categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+        return "views/adminviews/create-product-admin";
+    }
+
+    @PostMapping("/create")
+    public String addProduct(HttpSession session, @ModelAttribute ProductDetailDTO productDetailDTO, @RequestParam("imageUrl") MultipartFile file, Model model) {
+
         try {
-            List<Product> listProduct = productService.getAllProducts();
+            String imageProduct = handleSaveUploadFile.handleSaveUploadFile(file, "product");
 
-            model.addAttribute("listProduct", listProduct);
-
-            return "views/adminviews/adminProduct";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
+            productDetailService.addProduct(productDetailDTO, imageProduct);
+            session.setAttribute("addProductSuccessMessage", "Tạo sản phẩm mới thành công");
+            return "redirect:/admin_authentication/admin/product";
+        }catch (Exception e){
+            model.addAttribute("error", "error"+ e);
             return "views/error";
         }
     }
-    @PostMapping("/add-product")
-    public ResponseEntity<String> addProduct(@RequestBody ProductDetailDTO productDetailDTO) {
-        productDetailService.addProduct(productDetailDTO);
-        return ResponseEntity.ok("Thêm sản phẩm thành công!");
+
+    @GetMapping("/update/{id}")
+    public String pageUpdateProduct(@PathVariable("id") Long id, Model model) {
+        Product currentProduct = productService.getProductById(id);
+
+        if (currentProduct != null) {
+            model.addAttribute("newProduct", currentProduct);
+            return "views/adminviews/update-product-admin";
+        }
+        model.addAttribute("error", "error");
+        return "views/error";
     }
-    @DeleteMapping("/delete-product/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-        productDetailService.deleteProduct(id);
-        return ResponseEntity.ok("Thêm sản phẩm thành công!");
-    }
-    @GetMapping("/{id}")
-    public ProductDetail getProductDetail(@PathVariable Long id) {
-        return productDetailService.getProductDetail(id);
-    }
-    @PutMapping("/update-product/{id}")
-    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody ProductDetailDTO productDetailDTO) {
-        productDetailService.updateProduct(id, productDetailDTO);
-        return ResponseEntity.ok("Cập nhật sản phẩm thành công!");    }
+
 }

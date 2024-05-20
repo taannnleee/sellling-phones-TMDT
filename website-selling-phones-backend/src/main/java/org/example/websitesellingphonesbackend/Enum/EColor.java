@@ -1,11 +1,11 @@
 package org.example.websitesellingphonesbackend.Enum;
-
-
+import lombok.Getter;
+@Getter
 public enum EColor {
-    RED(0),
-    WHITE(2),
-    BLACK(3),
-    BLUE(4);
+    BLACK(0),
+    WHITE(1),
+    BLUE(2),
+    RED(3);
     private final int value;
     EColor(int value) {
         this.value = value;

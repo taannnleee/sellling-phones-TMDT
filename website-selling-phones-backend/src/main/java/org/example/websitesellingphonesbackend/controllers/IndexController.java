@@ -1,5 +1,6 @@
 package org.example.websitesellingphonesbackend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.websitesellingphonesbackend.entities.ProductDetail;
 import org.example.websitesellingphonesbackend.service.Impl.ProductDetailServiceImpl;
@@ -24,10 +25,18 @@ public class IndexController {
     @Autowired
     ProductDetailService productDetailService;
     @GetMapping
-    public String index(Model model) {
+    public String index(HttpSession  session, Model model) {
+
         try {
             List<ProductDetail> list_Products = productDetailService.getAllProductDetails();
             model.addAttribute("list_Products", list_Products);
+
+            String loginSuccessMessage = (String) session.getAttribute("loginSuccessMessage"); // Lấy thông báo từ session
+            if (loginSuccessMessage != null) {
+                model.addAttribute("loginSuccessMessage", true); // Thêm thông báo vào model
+                session.removeAttribute("loginSuccessMessage"); // Xóa thông báo từ session sau khi đã sử dụng
+            }
+
             return "views/index";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
