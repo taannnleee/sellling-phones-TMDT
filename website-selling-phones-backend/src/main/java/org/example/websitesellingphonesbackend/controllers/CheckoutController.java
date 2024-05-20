@@ -37,19 +37,24 @@ public class CheckoutController {
         try {
             Cart cart = cartService.getCartByCartId(cartId);
             Order_Product order = orderService.insertOrder(cart,customer,paymentType);
-//            List<Order_Product> orders = orderService.getOrdersByCustomer(customer);
-//            model.addAttribute("orders", orders);
-//            if (!orders.isEmpty()) {
-//                Order_Product order = orders.get(orders.size() - 1);
-//                if (order.getOrderDetailLines() != null) {
-//                    model.addAttribute("order", order);
-//                }
-//            }
+            int paymentTypeInt = Integer.parseInt(paymentType);
+            if(paymentTypeInt == 1){
+                List<Order_Product> orders = orderService.getOrdersByCustomer(customer);
+                model.addAttribute("orders", orders);
+                if (!orders.isEmpty()) {
+                    Order_Product order1 = orders.get(orders.size() - 1);
+                    if (order.getOrderDetailLines() != null) {
+                        model.addAttribute("order", order1);
+                    }
+                }
+                return "views/invoice";
 
-//            String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
-//            String vnpayUrl = vnPayService.createOrder(Math.round(order.getTotal()), "Welcomme", baseUrl);
-//            return "redirect:" + vnpayUrl;
-            return  "views/success";
+            }
+            else {String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
+            String vnpayUrl = vnPayService.createOrder(Math.round(order.getTotal()), "Welcomme", baseUrl);
+            return "redirect:" + vnpayUrl;
+            }
+
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
             return "views/error";

@@ -34,62 +34,62 @@
 //    public void run(String... args) throws Exception {
 //        // Define Categories
 //        Category category1 = Category.builder()
-//                .urlImage("iphone-7-plus-32gb-hh-600x600.jpg")
+//                .urlImage("Apple.jpg")
 //                .categoryName("Apple")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category1);
 //
 //        Category category2 = Category.builder()
-//                .urlImage("samsung-galaxy-s21-600x600.jpg")
+//                .urlImage("Samsung.jpg")
 //                .categoryName("Samsung")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category2);
 //        Category category3 = Category.builder()
-//                .urlImage("google-pixel-5-600x600.jpg")
+//                .urlImage("google.png")
 //                .categoryName("Google")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category3);
 //
 //        Category category4 = Category.builder()
-//                .urlImage("oneplus-9-600x600.jpg")
+//                .urlImage("OnePlus.png")
 //                .categoryName("OnePlus")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category4);
 //
 //        Category category5 = Category.builder()
-//                .urlImage("huawei-p40-600x600.jpg")
+//                .urlImage("Huawei.jpg")
 //                .categoryName("Huawei")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category5);
 //
 //        Category category6 = Category.builder()
-//                .urlImage("xiaomi-mi-11-600x600.jpg")
+//                .urlImage("Xiaomi.png")
 //                .categoryName("Xiaomi")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category6);
 //
 //        Category category7 = Category.builder()
-//                .urlImage("oppo-find-x3-600x600.jpg")
+//                .urlImage("Oppo.jpg")
 //                .categoryName("Oppo")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category7);
 //
 //        Category category8 = Category.builder()
-//                .urlImage("sony-xperia-1-600x600.jpg")
+//                .urlImage("Sony.jpg")
 //                .categoryName("Sony")
 //                .status("on")
 //                .build();
 //        categoryRepository.save(category8);
 //
 //        Category category9 = Category.builder()
-//                .urlImage("lg-wing-600x600.jpg")
+//                .urlImage("LG.jpg")
 //                .categoryName("LG")
 //                .status("on")
 //                .build();
@@ -174,7 +174,7 @@
 //        ProductDetailDTO productDetail5 = new ProductDetailDTO();
 //        productDetail5.setName("Nokia 5.1 Plus");
 //        productDetail5.setCategory("Nokia");
-//        ImageUrl="nokia-51-plus-black-18thangbh-400x400.jpg";
+//        ImageUrl="nokia5.jfif";
 //        productDetail5.setDescription("OnePlus flagship offering with stunning design and performance");
 //        productDetail5.setPrice(899.99f);
 //        productDetail5.setScreen("6.7 inches");
@@ -246,7 +246,7 @@
 //        ProductDetailDTO productDetail9 = new ProductDetailDTO();
 //        productDetail9.setName("Samsung Galaxy J8");
 //        productDetail9.setCategory("Samsung");
-//        ImageUrl="samsung-galaxy-j8-600x600-600x600.jp";
+//        ImageUrl="samsung-galaxy-j8-600x600-600x600.jpg";
 //        productDetail9.setDescription("OnePlus flagship offering with stunning design and performance");
 //        productDetail9.setPrice(899.99f);
 //        productDetail9.setScreen("6.7 inches");
@@ -282,7 +282,7 @@
 //        ProductDetailDTO productDetail11 = new ProductDetailDTO();
 //        productDetail11.setName("Xiaomi Mi 11");
 //        productDetail11.setCategory("Xiaomi");
-//        ImageUrl = "xiaomi-mi-11-600x600.jpg";
+//        ImageUrl = "xiaomi-mi-11-600x600.jfif";
 //        productDetail11.setDescription("Flagship from Xiaomi with exceptional performance and camera");
 //        productDetail11.setPrice(749.99f);
 //        productDetail11.setScreen("6.81 inches");
@@ -300,7 +300,7 @@
 //        ProductDetailDTO productDetail12 = new ProductDetailDTO();
 //        productDetail12.setName("Google Pixel 6");
 //        productDetail12.setCategory("Google");
-//        ImageUrl = "google-pixel-6-600x600.jpg";
+//        ImageUrl = "google-pixel-6-600x600.jfif";
 //        productDetail12.setDescription("Google's latest Pixel with pure Android experience");
 //        productDetail12.setPrice(699.99f);
 //        productDetail12.setScreen("6.4 inches");
@@ -318,7 +318,7 @@
 //        ProductDetailDTO productDetail13 = new ProductDetailDTO();
 //        productDetail13.setName("OnePlus 9 Pro");
 //        productDetail13.setCategory("OnePlus");
-//        ImageUrl = "oneplus-9-pro-600x600.jpg";
+//        ImageUrl = "oneplus-9-pro-600x600.jfif";
 //        productDetail13.setDescription("OnePlus flagship with Hasselblad camera and top performance");
 //        productDetail13.setPrice(969.99f);
 //        productDetail13.setScreen("6.7 inches");
@@ -336,7 +336,7 @@
 //        ProductDetailDTO productDetail14 = new ProductDetailDTO();
 //        productDetail14.setName("Sony Xperia 1 III");
 //        productDetail14.setCategory("Sony");
-//        ImageUrl = "sony-xperia-1-iii-600x600.jpg";
+//        ImageUrl = "sony-xperia-1-iii-600x600.jfif";
 //        productDetail14.setDescription("Sony's flagship with 4K HDR OLED display and pro camera");
 //        productDetail14.setPrice(1199.99f);
 //        productDetail14.setScreen("6.5 inches");
@@ -354,7 +354,7 @@
 //        ProductDetailDTO productDetail15 = new ProductDetailDTO();
 //        productDetail15.setName("Huawei P50 Pro");
 //        productDetail15.setCategory("Huawei");
-//        ImageUrl = "huawei-p50-pro-600x600.jpg";
+//        ImageUrl = "huawei-p50-pro-600x600.jfif";
 //        productDetail15.setDescription("Huawei's premium phone with powerful camera setup");
 //        productDetail15.setPrice(1099.99f);
 //        productDetail15.setScreen("6.6 inches");
@@ -372,7 +372,7 @@
 //        ProductDetailDTO productDetail16 = new ProductDetailDTO();
 //        productDetail16.setName("Samsung Galaxy S21 Ultra");
 //        productDetail16.setCategory("Samsung");
-//        ImageUrl = "samsung-galaxy-s21-ultra-600x600.jpg";
+//        ImageUrl = "samsung-galaxy-s21-ultra-600x600.jfif";
 //        productDetail16.setDescription("Samsung's ultimate flagship with top-tier camera and performance");
 //        productDetail16.setPrice(1199.99f);
 //        productDetail16.setScreen("6.8 inches");
@@ -390,7 +390,7 @@
 //        ProductDetailDTO productDetail17 = new ProductDetailDTO();
 //        productDetail17.setName("Apple iPhone 12 Pro Max");
 //        productDetail17.setCategory("Apple");
-//        ImageUrl = "iphone-12-pro-max-600x600.jpg";
+//        ImageUrl = "iphone-12-pro-max-600x600.jfif";
 //        productDetail17.setDescription("Apple's top-tier iPhone with impressive camera and performance");
 //        productDetail17.setPrice(1099.99f);
 //        productDetail17.setScreen("6.7 inches");
@@ -408,7 +408,7 @@
 //        ProductDetailDTO productDetail18 = new ProductDetailDTO();
 //        productDetail18.setName("OnePlus 8T");
 //        productDetail18.setCategory("OnePlus");
-//        ImageUrl = "oneplus-8t-600x600.jpg";
+//        ImageUrl = "oneplus-8t-600x600.jfif";
 //        productDetail18.setDescription("OnePlus's high-end phone with fast charging and smooth performance");
 //        productDetail18.setPrice(749.99f);
 //        productDetail18.setScreen("6.55 inches");
@@ -426,7 +426,7 @@
 //        ProductDetailDTO productDetail19 = new ProductDetailDTO();
 //        productDetail19.setName("Google Pixel 5");
 //        productDetail19.setCategory("Google");
-//        ImageUrl = "google-pixel-5-600x600.jpg";
+//        ImageUrl = "google-pixel-5-600x600.jfif";
 //        productDetail19.setDescription("Google's mid-range offering with excellent camera performance");
 //        productDetail19.setPrice(699.99f);
 //        productDetail19.setScreen("6.0 inches");
@@ -444,7 +444,7 @@
 //        ProductDetailDTO productDetail20 = new ProductDetailDTO();
 //        productDetail20.setName("Sony Xperia 5 II");
 //        productDetail20.setCategory("Sony");
-//        ImageUrl = "sony-xperia-5-ii-600x600.jpg";
+//        ImageUrl = "sony-xperia-5-ii-600x600.jfif";
 //        productDetail20.setDescription("Sony's compact flagship with stunning display and camera");
 //        productDetail20.setPrice(949.99f);
 //        productDetail20.setScreen("6.1 inches");
@@ -462,7 +462,7 @@
 //        ProductDetailDTO productDetail21 = new ProductDetailDTO();
 //        productDetail21.setName("Huawei Mate 40 Pro");
 //        productDetail21.setCategory("Huawei");
-//        ImageUrl = "huawei-mate-40-pro-600x600.jpg";
+//        ImageUrl = "huawei-mate-40-pro-600x600.jfif";
 //        productDetail21.setDescription("Huawei's flagship with powerful camera and performance");
 //        productDetail21.setPrice(1099.99f);
 //        productDetail21.setScreen("6.76 inches");
@@ -480,7 +480,7 @@
 //        ProductDetailDTO productDetail22 = new ProductDetailDTO();
 //        productDetail22.setName("Xiaomi Mi 10 Ultra");
 //        productDetail22.setCategory("Xiaomi");
-//        ImageUrl = "xiaomi-mi-10-ultra-600x600.jpg";
+//        ImageUrl = "xiaomi-mi-10-ultra-600x600.jfif";
 //        productDetail22.setDescription("Xiaomi's premium phone with 120W fast charging and impressive camera");
 //        productDetail22.setPrice(899.99f);
 //        productDetail22.setScreen("6.67 inches");
@@ -498,7 +498,7 @@
 //        ProductDetailDTO productDetail23 = new ProductDetailDTO();
 //        productDetail23.setName("Oppo Find X3 Pro");
 //        productDetail23.setCategory("Oppo");
-//        ImageUrl = "oppo-find-x3-pro-600x600.jpg";
+//        ImageUrl = "oppo-find-x3-pro-600x600.jfif";
 //        productDetail23.setDescription("Oppo's flagship with unique design and exceptional display");
 //        productDetail23.setPrice(999.99f);
 //        productDetail23.setScreen("6.7 inches");
@@ -516,7 +516,7 @@
 //        ProductDetailDTO productDetail24 = new ProductDetailDTO();
 //        productDetail24.setName("Nokia 8.3 5G");
 //        productDetail24.setCategory("Nokia");
-//        ImageUrl = "nokia-8-3-5g-600x600.jpg";
+//        ImageUrl = "nokia-8-3-5g-600x600.jfif";
 //        productDetail24.setDescription("Nokia's 5G phone with solid performance and clean Android experience");
 //        productDetail24.setPrice(699.99f);
 //        productDetail24.setScreen("6.81 inches");
@@ -534,7 +534,7 @@
 //        ProductDetailDTO productDetail25 = new ProductDetailDTO();
 //        productDetail25.setName("Motorola Edge Plus");
 //        productDetail25.setCategory("Motorola");
-//        ImageUrl = "motorola-edge-plus-600x600.jpg";
+//        ImageUrl = "motorola-edge-plus-600x600.jfif";
 //        productDetail25.setDescription("Motorola's flagship with curved display and powerful performance");
 //        productDetail25.setPrice(999.99f);
 //        productDetail25.setScreen("6.7 inches");

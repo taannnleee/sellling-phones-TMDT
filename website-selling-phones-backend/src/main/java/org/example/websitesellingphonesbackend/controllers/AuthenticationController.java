@@ -40,7 +40,7 @@ public class AuthenticationController {
     public String checkLogin(@RequestParam(name = "email") String email, @RequestParam(name = "password")String password, Model model, HttpSession session) {
         boolean checkAdmin = adminService.checkAdmin(email, password);
         if(checkAdmin){
-            return "redirect:/admin_authentication/admin";
+            return "redirect:/admin_authentication/admin/dashboard";
         }
 
 

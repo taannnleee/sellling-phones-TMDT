@@ -158,7 +158,7 @@ public class AdminController {
     @GetMapping("/logout")
     public String logout(Model model) {
         try {
-            return "view/dashboard";
+            return "views/login";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
