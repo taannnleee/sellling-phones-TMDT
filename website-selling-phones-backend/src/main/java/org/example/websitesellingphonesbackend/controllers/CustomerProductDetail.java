@@ -44,9 +44,9 @@ public class CustomerProductDetail {
     @GetMapping("/{productId}")
     public String getProductDetail(HttpSession session,@PathVariable String productId, Model model) {
         try {
-            Product products =  productService.getProductByProductDetailId(Long.valueOf(productId));
-            List<Evaluate> evaluateList =  evaluateService.findEvaluateByProduct(products);
-            model.addAttribute("products", products);
+            Product product =  productService.getProductByProductDetailId(Long.valueOf(productId));
+            List<Evaluate> evaluateList =  evaluateService.findEvaluateByProduct(product);
+            model.addAttribute("product", product);
             model.addAttribute("evaluateList", evaluateList);
             return "views/chitietsanpham";
         } catch (Exception e) {
