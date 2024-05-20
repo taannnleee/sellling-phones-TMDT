@@ -109,8 +109,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             productRepository.save(product);
         }
     }
-    public List<ProductDetail> timKiemTheoTen( String ten) {
-        List<ProductDetail> list = getAllProductDetails();
+    public List<ProductDetail> timKiemTheoTen( String ten,List<ProductDetail> list) {
+//        List<ProductDetail> list = getAllProductDetails();
         List<ProductDetail> result = new ArrayList<>();
         String[] keywords = ten.split(" ");
 
@@ -128,8 +128,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         }
         return result;
     }
-    public List<ProductDetail> timKiemTheoGiaTien(double giaMin, double giaMax) {
-        List<ProductDetail> list = getAllProductDetails();
+    public List<ProductDetail> timKiemTheoGiaTien(double giaMin, double giaMax,List<ProductDetail> list) {
+//        List<ProductDetail> list = getAllProductDetails();
         List<ProductDetail> result = new ArrayList<>();
 
         for (ProductDetail productDetail : list) {
@@ -141,8 +141,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
         return result;
     }
-    public List<ProductDetail> timKiemTheoCongTySanXuat( String tenCongTy) {
-        List<ProductDetail> list = getAllProductDetails();
+    public List<ProductDetail> timKiemTheoCongTySanXuat( String tenCongTy,List<ProductDetail> list) {
+//        List<ProductDetail> list = getAllProductDetails();
         List<ProductDetail> result = new ArrayList<>();
 
         for (ProductDetail productDetail : list) {
