@@ -153,7 +153,11 @@
 
         <div class="chitietSanpham" style="margin-bottom: 100px">
             <h1>Điện thoại </h1>
+<<<<<<< HEAD
             <div class="rowdetail group" >
+=======
+            <div class="rowdetail group" th:each="${products}">
+>>>>>>> 0635301 (.....)
                 <div class="picture">
                     <img th:src="@{'/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
                 <div class="price_sale">
@@ -220,11 +224,19 @@
                             <td th:text="${product.productDetail.os}"></td>
                         </tr>
                         <tr>
+<<<<<<< HEAD
                             <th>Camera sau</th>
                             <td th:text="${product.productDetail.camera}"></td>
                         </tr>
                         <tr>
                             <th>Camera trước</th>
+=======
+                            <th>Camara sau</th>
+                            <td th:text="${product.productDetail.camera}"></td>
+                        </tr>
+                        <tr>
+                            <th>Camara trước</th>
+>>>>>>> 0635301 (.....)
                             <td th:text="${product.productDetail.cameraFront}"></td>
                         </tr>
                         <tr>

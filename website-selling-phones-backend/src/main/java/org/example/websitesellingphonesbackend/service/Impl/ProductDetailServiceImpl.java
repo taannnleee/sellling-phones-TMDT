@@ -67,6 +67,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             category = new Category();
             category.setCategoryName(productDetail.getCategory());
             category.setStatus("on");
+            category.setUrlImage(productDetail.getImageUrl());
             categoryRepository.save(category);
         }
         // Tạo mới product
