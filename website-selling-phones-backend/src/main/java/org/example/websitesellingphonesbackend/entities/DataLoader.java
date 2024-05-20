@@ -468,7 +468,7 @@
 //        productDetail25.setDescription("Motorola's flagship with curved display and powerful performance");
 //        productDetail25.setPrice(999.99f);
 //        productDetail25.setScreen("6.7 inches");
-//        productDetail25.setOs("Android 10");s
+//        productDetail25.setOs("Android 10");
 //        productDetail25.setCamara("Triple 108 MP");
 //        productDetail25.setCamaraFront("25 MP");
 //        productDetail25.setCpu("Snapdragon 865");
