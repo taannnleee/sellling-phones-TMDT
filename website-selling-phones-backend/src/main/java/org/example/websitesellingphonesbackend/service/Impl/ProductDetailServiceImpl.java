@@ -82,28 +82,31 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public ProductDetail getProductDetail(Long id) {
         return productDetailRepository.findById(id).orElse(null);
     }
-    public void updateProduct(Long id, ProductDetailDTO productDetailDTO) {
-        ProductDetail existingProductDetail = productDetailRepository.findById(id).orElse(null);
+    public void updateProduct(Long id, ProductDetail productDetail, Category category, String imageProduct) {
+        ProductDetail existingProductDetail = productDetailRepository.getProductDetailByProductProductID(id);
 
         if (existingProductDetail != null) {
-            existingProductDetail.setProductDetailId(productDetailDTO.getId());
-            existingProductDetail.setName(productDetailDTO.getName());
-            existingProductDetail.setCategory(productDetailDTO.getCategory());
-//            existingProductDetail.setImageUrl(productDetailDTO.getImageUrl());
-            existingProductDetail.setDescription(productDetailDTO.getDescription());
-            existingProductDetail.setPrice(productDetailDTO.getPrice());
-            existingProductDetail.setScreen(productDetailDTO.getScreen());
-            existingProductDetail.setOs(productDetailDTO.getOs());
-            existingProductDetail.setCamera(productDetailDTO.getCamara());
-            existingProductDetail.setCameraFront(productDetailDTO.getCamaraFront());
-            existingProductDetail.setCpu(productDetailDTO.getCpu());
-            existingProductDetail.setRam(productDetailDTO.getRam());
-            existingProductDetail.setRom(productDetailDTO.getRom());
-            existingProductDetail.setMicroUSB(productDetailDTO.getMicroUSB());
-            existingProductDetail.setBattery(productDetailDTO.getBattery());
-//            existingProductDetail.setColor(EColor.valueOf(productDetailDTO.getColor()));
+            existingProductDetail.setName(productDetail.getName());
+            existingProductDetail.setCategory(productDetail.getCategory());
+            existingProductDetail.setImageUrl(imageProduct);
+            existingProductDetail.setDescription(productDetail.getDescription());
+            existingProductDetail.setPrice(productDetail.getPrice());
+            existingProductDetail.setScreen(productDetail.getScreen());
+            existingProductDetail.setOs(productDetail.getOs());
+            existingProductDetail.setCamera(productDetail.getCamera());
+            existingProductDetail.setCameraFront(productDetail.getCameraFront());
+            existingProductDetail.setCpu(productDetail.getCpu());
+            existingProductDetail.setRam(productDetail.getRam());
+            existingProductDetail.setRom(productDetail.getRom());
+            existingProductDetail.setMicroUSB(productDetail.getMicroUSB());
+            existingProductDetail.setBattery(productDetail.getBattery());
+            existingProductDetail.setColor(productDetail.getColor());
+            existingProductDetail.setCategory(category.getCategoryName());
 
-            productDetailRepository.save(existingProductDetail);
+            Product product =  productRepository.getProductsByProductID(id);
+            product.setProductDetail(existingProductDetail);
+            product.setCategory(category);
+            productRepository.save(product);
         }
     }
     public List<ProductDetail> timKiemTheoTen( String ten) {

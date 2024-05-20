@@ -30,23 +30,23 @@ public class CustomerProductDetail {
     @Autowired
     EvaluateService  evaluateService;
 
-    @GetMapping()
-    public String getProductDetail1(HttpSession session, Model model,@RequestParam("productName") String productName) {
-        try {
-            System.out.println("hehe"+ productName);
-            return "views/error";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
-            return "views/error";
-        }
-
-    }
+//    @GetMapping()
+//    public String getProductDetail1(HttpSession session, Model model,@RequestParam("productName") String productName) {
+//        try {
+//            System.out.println("hehe"+ productName);
+//            return "views/error";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
+//            return "views/error";
+//        }
+//
+//    }
     @GetMapping("/{productId}")
     public String getProductDetail(HttpSession session,@PathVariable String productId, Model model) {
         try {
-            Product product =  productService.getProductByProductDetailId(Long.valueOf(productId));
-            List<Evaluate> evaluateList =  evaluateService.findEvaluateByProduct(product);
-            model.addAttribute("product", product);
+            Product products =  productService.getProductByProductDetailId(Long.valueOf(productId));
+            List<Evaluate> evaluateList =  evaluateService.findEvaluateByProduct(products);
+            model.addAttribute("products", products);
             model.addAttribute("evaluateList", evaluateList);
             return "views/chitietsanpham";
         } catch (Exception e) {

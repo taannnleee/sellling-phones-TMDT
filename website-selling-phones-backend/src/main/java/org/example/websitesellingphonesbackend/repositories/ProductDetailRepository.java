@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, Long> {
     List<ProductDetail> findProductsByNameContaining(String productName);
+    ProductDetail getProductDetailByProductProductID(Long id);
 }

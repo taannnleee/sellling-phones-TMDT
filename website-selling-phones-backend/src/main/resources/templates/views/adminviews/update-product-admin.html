@@ -168,62 +168,95 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form class="tile" th:action="@{/admin_authentication/admin/product/update}"  th:object="${newProduct}"   method="post"
+            <form class="tile" th:action="@{'/admin_authentication/admin/product/update/' + ${currentProduct.productID}}" method="post"
                   enctype="multipart/form-data">
                 <h3 class="tile-title">Update sản phẩm<h3>
-                <div class="tile-body">
-                    <div class="row element-button">
-                        <div class="col-sm-2">
-                            <a href="/admin/category/create" class="btn btn-add btn-sm"><i
-                                    class="fas fa-folder-plus"></i> Thêm danh
-                                mục</a>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-3">
-                            <label class="control-label">Mã sản phẩm</label>
-                            <input th:field="*{productID}" class="form-control" type="text" readonly>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label">Tên sản phẩm</label>
-<!--                            <input th:field="*{productDetail.name}" class="form-control" type="text">-->
-                        </div>
-
-                        <div class="form-group col-md-3">
-                            <label for="exampleSelect1" class="control-label">Danh mục</label>
-<!--                            <select th:field="*{category.categoryName}" class="form-control" id="exampleSelect1">-->
-<!--                                <option value="">&#45;&#45; Chọn danh mục &#45;&#45;</option>-->
-<!--                                <option th:each="category : ${categories}" th:value="${category.name}"-->
-<!--                                        th:text="${category.name}">-->
-<!--                                </option>-->
-<!--                            </select>-->
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label">Giá bán</label>
-<!--                            <input th:field="*{productDetail.price}" class="form-control" type="text">-->
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Ảnh sản phẩm</label>
-                            <div id="myfileupload">
-                                <input style="width: 250px;" class="form-control" type="file" id="avatarFile"
-                                       accept=".png, .jpg, .jpeg" name="imageProduct" />
-                                <input type="hidden" id="currentImage" th:field="*{productDetail.imageUrl}" />
-                            </div>
-                            <div id="thumbbox">
-                                <img height="450" width="400" alt="avatar preview" id="avatarPreview"
-                                     style="display: none" />
-                                <a class="removeimg" href="javascript:"></a>
+                    <div class="tile-body">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Tên sản phẩm</label>
+                                <input th:value="${currentProduct.productDetail.name}" class="form-control" name="name" id="name" type="text" required>
                             </div>
 
-                        </div>
-                        <div class="form-group col-md-12">
-                            <label class="control-label">Mô tả sản phẩm</label>
-<!--                            <textarea th:field="*{productDetail .description}" class="form-control" name="mota"-->
-<!--                                      id="mota"></textarea>-->
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Mô tả sản phẩm</label>
+                                <input th:value="${currentProduct.productDetail.description}"  class="form-control" name="description" id="description" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Giá sản phẩm</label>
+                                <input th:value="${currentProduct.productDetail.price}"  class="form-control" name="price" id="price" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Màn hình</label>
+                                <input th:value="${currentProduct.productDetail.screen}"  class="form-control" name="screen" id="screen" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Hệ thống</label>
+                                <input th:value="${currentProduct.productDetail.os}"  class="form-control" name="os" id="os" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Camera</label>
+                                <input th:value="${currentProduct.productDetail.camera}" class="form-control" name="camera" id="camera" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Camera trước</label>
+                                <input th:value="${currentProduct.productDetail.cameraFront}" class="form-control" name="cameraFront" id="cameraFront" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">CPU</label>
+                                <input th:value="${currentProduct.productDetail.cpu}" class="form-control" name="cpu" id="cpu" type="text" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label class="control-label">RAM</label>
+                                <input th:value="${currentProduct.productDetail.cpu}" class="form-control" name="ram" id="ram" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">ROM</label>
+                                <input th:value="${currentProduct.productDetail.rom}" class="form-control" name="rom" id="rom" type="text" required>
+                            </div>
+                            <div  class="form-group col-md-3">
+                                <label class="control-label">microUSB</label>
+                                <input th:value="${currentProduct.productDetail.microUSB}" class="form-control" name="microUSB" id="microUSB" type="text" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Battery</label>
+                                <input th:value="${currentProduct.productDetail.battery}" class="form-control" name="battery" id="battery" type="text" required>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="category" class="control-label">Danh mục</label>
+                                <select id="category" name="category" class="form-control">
+                                    <option th:value="${currentProduct.category.categoryId}" selected="selected" th:text="${currentProduct.category.categoryName}"></option>
+                                    <option  th:each="category : ${otherCategories}" th:if="${category.status == 'on'}" th:value="${category.categoryId}" th:text="${category.categoryName}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="color" class="control-label">Màu sắc</label>
+                                <select id="color" name="color" class="form-control">
+                                    <option th:value="${currentProduct.productDetail.color}" selected="selected" th:text="${currentProduct.productDetail.color}"></option>
+                                    <option th:each="color : ${otherColors}" th:value="${color}" th:text="${color}"></option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Ảnh sản phẩm</label>
+                                <div id="myfileupload">
+                                    <input style="width: 250px;" class="form-control" type="file" id="avatarFile"
+                                           accept=".png, .jpg, .jpeg" name="imageProduct" />
+                                    <input required type="hidden" id="currentImage" th:value="${currentProduct.productDetail.imageUrl}" />
+                                </div>
+                                <div id="thumbbox">
+                                    <img height="450" width="400" alt="avatar preview" id="avatarPreview"
+                                         style="display: none" />
+                                    <a class="removeimg" href="javascript:"></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 <button class="btn btn-save" type="submit">Lưu lại</button>
                 <a class="btn btn-cancel" th:href="@{/admin_authentication/admin/product}">Hủy bỏ</a>

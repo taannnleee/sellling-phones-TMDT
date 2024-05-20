@@ -70,4 +70,22 @@ public class ProductDetail implements Serializable {
     @JsonBackReference
     private Product product;
 
+
+    public ProductDetail(String name, String category, String imageUrl, String description, Float price, String screen, String os, String camera, String cameraFront, String cpu, String ram, String rom, String microUSB, String battery, String color) {
+        this.name = name;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
+        this.screen = screen;
+        this.os = os;
+        this.camera = camera;
+        this.cameraFront = cameraFront;
+        this.cpu = cpu;
+        this.ram = ram;
+        this.rom = rom;
+        this.microUSB = microUSB;
+        this.battery = battery;
+        this.color = color;
+    }
 }
