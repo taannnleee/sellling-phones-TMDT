@@ -153,7 +153,7 @@
 
         <div class="chitietSanpham" style="margin-bottom: 100px">
             <h1>Điện thoại </h1>
-            <div class="rowdetail group" th:each="product, iterStat : ${product}">
+            <div class="rowdetail group" th:each="product, iterStat : ${products}">
                 <div class="picture">
                     <img th:src="@{'/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
                 <div class="price_sale">
