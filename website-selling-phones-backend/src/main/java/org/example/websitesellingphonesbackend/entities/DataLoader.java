@@ -103,7 +103,7 @@
 //        productDetail1.setCategory("Apple");
 //        ImageUrl = "iphone-7-plus-32gb-hh-600x600.jpg";
 //        productDetail1.setDescription("Flagship smartphone from Apple");
-//        productDetail1.setPrice(999.99f);
+//        productDetail1.setPrice(9990.99f);
 //        productDetail1.setScreen("6.1 inches");
 //        productDetail1.setOs("iOS 14");
 //        productDetail1.setCamara("Dual 12 MP");
@@ -122,7 +122,7 @@
 //        productDetail2.setCategory("Samsung");
 //        ImageUrl = "samsung-galaxy-j4-plus-pink-400x400.jpg";
 //        productDetail2.setDescription("Top-tier Android smartphone from Samsung");
-//        productDetail2.setPrice(899.99f);
+//        productDetail2.setPrice(8990.99f);
 //        productDetail2.setScreen("6.2 inches");
 //        productDetail2.setOs("Android 11");
 //        productDetail2.setCamara("Triple 12 MP");
@@ -140,7 +140,7 @@
 //        productDetail3.setCategory("Google");
 //        ImageUrl = "xiaomi-mi-8-lite-black-1-600x600.jpg";
 //        productDetail3.setDescription("Google's flagship smartphone with top-notch camera capabilities");
-//        productDetail3.setPrice(799.99f);
+//        productDetail3.setPrice(7990.99f);
 //        productDetail3.setScreen("6.4 inches");
 //        productDetail3.setOs("Android 12");
 //        productDetail3.setCamara("Dual 50 MP");
@@ -158,7 +158,7 @@
 //        productDetail4.setCategory("OnePlus");
 //        ImageUrl = "oppo-f9-red-600x600.jpg";
 //        productDetail4.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail4.setPrice(899.99f);
+//        productDetail4.setPrice(8990.99f);
 //        productDetail4.setScreen("6.7 inches");
 //        productDetail4.setOs("OxygenOS 13");
 //        productDetail4.setCamara("Quad 108 MP");
@@ -176,7 +176,7 @@
 //        productDetail5.setCategory("Nokia");
 //        ImageUrl="nokia5.jfif";
 //        productDetail5.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail5.setPrice(899.99f);
+//        productDetail5.setPrice(8990.99f);
 //        productDetail5.setScreen("6.7 inches");
 //        productDetail5.setOs("OxygenOS 13");
 //        productDetail5.setCamara("Quad 108 MP");
@@ -194,7 +194,7 @@
 //        productDetail6.setCategory("Samsung");
 //        ImageUrl="samsung-galaxy-a8-plus-2018-gold-600x600.jpg";
 //        productDetail6.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail6.setPrice(899.99f);
+//        productDetail6.setPrice(8990.99f);
 //        productDetail6.setScreen("6.7 inches");
 //        productDetail6.setOs("OxygenOS 13");
 //        productDetail6.setCamara("Quad 108 MP");
@@ -212,7 +212,7 @@
 //        productDetail7.setCategory("Apple");
 //        ImageUrl="iphone-x-256gb-silver-400x400.jpg";
 //        productDetail7.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail7.setPrice(899.99f);
+//        productDetail7.setPrice(8990.99f);
 //        productDetail7.setScreen("6.7 inches");
 //        productDetail7.setOs("OxygenOS 13");
 //        productDetail7.setCamara("Quad 108 MP");
@@ -230,7 +230,7 @@
 //        productDetail8.setCategory("Oppo");
 //        ImageUrl="oppo-a3s-32gb-600x600.jpg";
 //        productDetail8.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail8.setPrice(899.99f);
+//        productDetail8.setPrice(8990.99f);
 //        productDetail8.setScreen("6.7 inches");
 //        productDetail8.setOs("OxygenOS 13");
 //        productDetail8.setCamara("Quad 108 MP");
@@ -248,7 +248,7 @@
 //        productDetail9.setCategory("Samsung");
 //        ImageUrl="samsung-galaxy-j8-600x600-600x600.jpg";
 //        productDetail9.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail9.setPrice(899.99f);
+//        productDetail9.setPrice(8990.99f);
 //        productDetail9.setScreen("6.7 inches");
 //        productDetail9.setOs("OxygenOS 13");
 //        productDetail9.setCamara("Quad 108 MP");
@@ -266,7 +266,7 @@
 //        productDetail10.setCategory("Apple");
 //        ImageUrl = "ipad-wifi-32gb-2018-thumb-600x600.jpg";
 //        productDetail10.setDescription("OnePlus flagship offering with stunning design and performance");
-//        productDetail10.setPrice(899.99f);
+//        productDetail10.setPrice(8990.99f);
 //        productDetail10.setScreen("6.7 inches");
 //        productDetail10.setOs("OxygenOS 13");
 //        productDetail10.setCamara("Quad 108 MP");
@@ -284,7 +284,7 @@
 //        productDetail11.setCategory("Xiaomi");
 //        ImageUrl = "xiaomi-mi-11-600x600.jfif";
 //        productDetail11.setDescription("Flagship from Xiaomi with exceptional performance and camera");
-//        productDetail11.setPrice(749.99f);
+//        productDetail11.setPrice(7490.99f);
 //        productDetail11.setScreen("6.81 inches");
 //        productDetail11.setOs("MIUI 12");
 //        productDetail11.setCamara("Triple 108 MP");
@@ -302,7 +302,7 @@
 //        productDetail12.setCategory("Google");
 //        ImageUrl = "google-pixel-6-600x600.jfif";
 //        productDetail12.setDescription("Google's latest Pixel with pure Android experience");
-//        productDetail12.setPrice(699.99f);
+//        productDetail12.setPrice(6990.99f);
 //        productDetail12.setScreen("6.4 inches");
 //        productDetail12.setOs("Android 12");
 //        productDetail12.setCamara("Dual 50 MP");
@@ -320,7 +320,7 @@
 //        productDetail13.setCategory("OnePlus");
 //        ImageUrl = "oneplus-9-pro-600x600.jfif";
 //        productDetail13.setDescription("OnePlus flagship with Hasselblad camera and top performance");
-//        productDetail13.setPrice(969.99f);
+//        productDetail13.setPrice(9690.99f);
 //        productDetail13.setScreen("6.7 inches");
 //        productDetail13.setOs("OxygenOS 11");
 //        productDetail13.setCamara("Quad 48 MP");
@@ -338,7 +338,7 @@
 //        productDetail14.setCategory("Sony");
 //        ImageUrl = "sony-xperia-1-iii-600x600.jfif";
 //        productDetail14.setDescription("Sony's flagship with 4K HDR OLED display and pro camera");
-//        productDetail14.setPrice(1199.99f);
+//        productDetail14.setPrice(11990.99f);
 //        productDetail14.setScreen("6.5 inches");
 //        productDetail14.setOs("Android 11");
 //        productDetail14.setCamara("Triple 12 MP");
@@ -356,7 +356,7 @@
 //        productDetail15.setCategory("Huawei");
 //        ImageUrl = "huawei-p50-pro-600x600.jfif";
 //        productDetail15.setDescription("Huawei's premium phone with powerful camera setup");
-//        productDetail15.setPrice(1099.99f);
+//        productDetail15.setPrice(10990.99f);
 //        productDetail15.setScreen("6.6 inches");
 //        productDetail15.setOs("HarmonyOS 2.0");
 //        productDetail15.setCamara("Quad 50 MP");
@@ -374,7 +374,7 @@
 //        productDetail16.setCategory("Samsung");
 //        ImageUrl = "samsung-galaxy-s21-ultra-600x600.jfif";
 //        productDetail16.setDescription("Samsung's ultimate flagship with top-tier camera and performance");
-//        productDetail16.setPrice(1199.99f);
+//        productDetail16.setPrice(11990.99f);
 //        productDetail16.setScreen("6.8 inches");
 //        productDetail16.setOs("Android 11");
 //        productDetail16.setCamara("Quad 108 MP");
@@ -392,7 +392,7 @@
 //        productDetail17.setCategory("Apple");
 //        ImageUrl = "iphone-12-pro-max-600x600.jfif";
 //        productDetail17.setDescription("Apple's top-tier iPhone with impressive camera and performance");
-//        productDetail17.setPrice(1099.99f);
+//        productDetail17.setPrice(10990.99f);
 //        productDetail17.setScreen("6.7 inches");
 //        productDetail17.setOs("iOS 14");
 //        productDetail17.setCamara("Triple 12 MP");
@@ -410,7 +410,7 @@
 //        productDetail18.setCategory("OnePlus");
 //        ImageUrl = "oneplus-8t-600x600.jfif";
 //        productDetail18.setDescription("OnePlus's high-end phone with fast charging and smooth performance");
-//        productDetail18.setPrice(749.99f);
+//        productDetail18.setPrice(7490.99f);
 //        productDetail18.setScreen("6.55 inches");
 //        productDetail18.setOs("OxygenOS 11");
 //        productDetail18.setCamara("Quad 48 MP");
@@ -428,7 +428,7 @@
 //        productDetail19.setCategory("Google");
 //        ImageUrl = "google-pixel-5-600x600.jfif";
 //        productDetail19.setDescription("Google's mid-range offering with excellent camera performance");
-//        productDetail19.setPrice(699.99f);
+//        productDetail19.setPrice(6990.99f);
 //        productDetail19.setScreen("6.0 inches");
 //        productDetail19.setOs("Android 11");
 //        productDetail19.setCamara("Dual 12.2 MP");
@@ -446,7 +446,7 @@
 //        productDetail20.setCategory("Sony");
 //        ImageUrl = "sony-xperia-5-ii-600x600.jfif";
 //        productDetail20.setDescription("Sony's compact flagship with stunning display and camera");
-//        productDetail20.setPrice(949.99f);
+//        productDetail20.setPrice(9490.99f);
 //        productDetail20.setScreen("6.1 inches");
 //        productDetail20.setOs("Android 10");
 //        productDetail20.setCamara("Triple 12 MP");
@@ -464,7 +464,7 @@
 //        productDetail21.setCategory("Huawei");
 //        ImageUrl = "huawei-mate-40-pro-600x600.jfif";
 //        productDetail21.setDescription("Huawei's flagship with powerful camera and performance");
-//        productDetail21.setPrice(1099.99f);
+//        productDetail21.setPrice(10990.99f);
 //        productDetail21.setScreen("6.76 inches");
 //        productDetail21.setOs("HarmonyOS 2.0");
 //        productDetail21.setCamara("Quad 50 MP");
@@ -482,7 +482,7 @@
 //        productDetail22.setCategory("Xiaomi");
 //        ImageUrl = "xiaomi-mi-10-ultra-600x600.jfif";
 //        productDetail22.setDescription("Xiaomi's premium phone with 120W fast charging and impressive camera");
-//        productDetail22.setPrice(899.99f);
+//        productDetail22.setPrice(8990.99f);
 //        productDetail22.setScreen("6.67 inches");
 //        productDetail22.setOs("MIUI 12");
 //        productDetail22.setCamara("Quad 48 MP");
@@ -500,7 +500,7 @@
 //        productDetail23.setCategory("Oppo");
 //        ImageUrl = "oppo-find-x3-pro-600x600.jfif";
 //        productDetail23.setDescription("Oppo's flagship with unique design and exceptional display");
-//        productDetail23.setPrice(999.99f);
+//        productDetail23.setPrice(9990.99f);
 //        productDetail23.setScreen("6.7 inches");
 //        productDetail23.setOs("ColorOS 11.2");
 //        productDetail23.setCamara("Quad 50 MP");
@@ -518,7 +518,7 @@
 //        productDetail24.setCategory("Nokia");
 //        ImageUrl = "nokia-8-3-5g-600x600.jfif";
 //        productDetail24.setDescription("Nokia's 5G phone with solid performance and clean Android experience");
-//        productDetail24.setPrice(699.99f);
+//        productDetail24.setPrice(6990.99f);
 //        productDetail24.setScreen("6.81 inches");
 //        productDetail24.setOs("Android 10");
 //        productDetail24.setCamara("Quad 64 MP");
@@ -536,7 +536,7 @@
 //        productDetail25.setCategory("Motorola");
 //        ImageUrl = "motorola-edge-plus-600x600.jfif";
 //        productDetail25.setDescription("Motorola's flagship with curved display and powerful performance");
-//        productDetail25.setPrice(999.99f);
+//        productDetail25.setPrice(9990.99f);
 //        productDetail25.setScreen("6.7 inches");
 //        productDetail25.setOs("Android 10");
 //        productDetail25.setCamara("Triple 108 MP");

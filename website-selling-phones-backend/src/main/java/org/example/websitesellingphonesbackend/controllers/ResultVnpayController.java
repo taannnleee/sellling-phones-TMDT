@@ -26,7 +26,8 @@ public class ResultVnpayController {
                                       @RequestParam("vnp_SecureHash") String vnpSecureHash) {
 
         // Đặt các thuộc tính của model với các giá trị từ URL
-        model.addAttribute("vnpAmount", vnpAmount);
+        String modifiedAmount = vnpAmount.substring(0, vnpAmount.length() - 2);
+        model.addAttribute("vnpAmount", modifiedAmount);
         model.addAttribute("vnpBankCode", vnpBankCode);
         model.addAttribute("vnpBankTranNo", vnpBankTranNo);
         model.addAttribute("vnpCardType", vnpCardType);
