@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Cart implements Serializable {
     private Date createDate;
 
     @Column(name = "total_price")
-    private Float totalPrice;
+    private BigDecimal totalPrice;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")

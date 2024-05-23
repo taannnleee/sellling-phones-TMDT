@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.websitesellingphonesbackend.Enum.EColor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ProductDetail")
@@ -33,7 +34,7 @@ public class ProductDetail implements Serializable {
     private String description;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @Column(name = "screen")
     private String screen;
@@ -71,7 +72,7 @@ public class ProductDetail implements Serializable {
     private Product product;
 
 
-    public ProductDetail(String name, String category, String imageUrl, String description, Float price, String screen, String os, String camera, String cameraFront, String cpu, String ram, String rom, String microUSB, String battery, String color) {
+    public ProductDetail(String name, String category, String imageUrl, String description, BigDecimal price, String screen, String os, String camera, String cameraFront, String cpu, String ram, String rom, String microUSB, String battery, String color) {
         this.name = name;
         this.category = category;
         this.imageUrl = imageUrl;

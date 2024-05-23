@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -94,7 +95,7 @@ public class AdminProductController {
 
         category.setUrlImage(image);
         // Tạo đối tượng ProductDetail với thông tin từ request
-        ProductDetail productDetail = new ProductDetail(name, null, null, description, (float) price, screen, os, camera, cameraFront, cpu, ram, rom, microUSB, battery, color);
+        ProductDetail productDetail = new ProductDetail(name, null, null, description, new BigDecimal(price), screen, os, camera, cameraFront, cpu, ram, rom, microUSB, battery, color);
 
         // Gọi service để cập nhật sản phẩm
         productDetailService.updateProduct(id, productDetail, category, image);

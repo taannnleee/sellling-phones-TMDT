@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -72,11 +73,12 @@ public class LineItemServiceImpl implements LineItemService {
     }
 
     @Override
-    public float updateTotalPrice(Cart cart){
-        float total = 0;
+    public BigDecimal updateTotalPrice(Cart cart){
+        BigDecimal total = BigDecimal.valueOf(0);
         List<LineItem> lineItemList = listLineItemOfCart(cart);
         for(LineItem lineItem : lineItemList){
-            total += lineItem.getPrice() * lineItem.getQuanlity();
+            BigDecimal itemTotal = lineItem.getPrice().multiply(BigDecimal.valueOf(lineItem.getQuanlity()));
+            total = total.add(itemTotal);
         }
         cart.setTotalPrice(total);
         cartRepository.save(cart);

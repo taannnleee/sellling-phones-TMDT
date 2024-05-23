@@ -156,6 +156,7 @@
 
             <div class="rowdetail group">
                 <div th:text="${product.productDetail.name}"></div>
+                <div th:text="'Giá: '+ ${#numbers.formatDecimal(product.productDetail.price.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></div>
                 <div class="picture">
                     <img th:src="@{'/img/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
                 <div class="price_sale">

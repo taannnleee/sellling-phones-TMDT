@@ -12,6 +12,7 @@ import org.example.websitesellingphonesbackend.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,13 +130,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         }
         return result;
     }
-    public List<ProductDetail> timKiemTheoGiaTien(double giaMin, double giaMax,List<ProductDetail> list) {
-//        List<ProductDetail> list = getAllProductDetails();
+
+
+    public List<ProductDetail> timKiemTheoGiaTien(BigDecimal giaMin, BigDecimal giaMax, List<ProductDetail> list) {
         List<ProductDetail> result = new ArrayList<>();
 
         for (ProductDetail productDetail : list) {
-            double gia = productDetail.getPrice();
-            if (gia >= giaMin && gia <= giaMax) {
+            BigDecimal gia = productDetail.getPrice();
+            if (gia.compareTo(giaMin) >= 0 && gia.compareTo(giaMax) <= 0) {
                 result.add(productDetail);
             }
         }

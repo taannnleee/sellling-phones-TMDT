@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class IndexController {
     }
 
     @GetMapping("/timKiemTheoGiaTien")
-    public ResponseEntity<List<ProductDetail>> searchProductDetailsByPrice(@RequestParam Double giaMin,@RequestParam Double giaMax,Model model) {
+    public ResponseEntity<List<ProductDetail>> searchProductDetailsByPrice(@RequestParam BigDecimal giaMin, @RequestParam BigDecimal giaMax, Model model) {
         List<ProductDetail> listSearchPriceProduct = productDetailService.timKiemTheoGiaTien(giaMin,giaMax,getProductsOn());
         model.addAttribute("listSearchPriceProduct", listSearchPriceProduct);
         return new ResponseEntity<>(listSearchPriceProduct, HttpStatus.OK);

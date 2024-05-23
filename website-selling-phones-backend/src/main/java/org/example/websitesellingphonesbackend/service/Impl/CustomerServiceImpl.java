@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -69,7 +70,8 @@ public class CustomerServiceImpl implements CustomerService {
 
                 cart.setCustomer(customer);
                 cart.setCreateDate(sdf.parse(formattedDate));
-                cart.setTotalPrice(0F);
+                cart.setTotalPrice(BigDecimal.ZERO);
+
                 customer.setCart(cart);
 
                 address.setCustomer(customer);

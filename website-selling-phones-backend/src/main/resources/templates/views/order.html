@@ -232,26 +232,32 @@
                         <!-- Thymeleaf data -->
                         <li class="list-group-item" th:each="item : ${listItem}">
                             <span class="title-6" th:text="${item.product.productDetail.name}"></span>
-                            <span class="title-6-1" th:text="${item.quanlity + ' x ' + item.price}"></span>
+                            <span class="title-6-1" th:text="${item.quanlity} + ' x ' + ${#numbers.formatDecimal(item.price.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')}"></span>
+
                         </li>
                         <li class="list-group-item divider-1"></li>
 
                         <li class="list-group-item text-2-3 payment-fee-input">
                             <span class="title-21">Đơn hàng</span>
-                            <span class="title-22" th:text="${cart_order.totalPrice}"><span class="card-fee">0</span> $</span>
+                            <span class="title-22" th:text="${#numbers.formatDecimal(cart_order.totalPrice.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                <span class="card-fee">0</span> $
+                            </span>
+
                         </li>
 
                         <li class="list-group-item divider-1"></li>
                         <li class="list-group-item">
                             <span class="title-5">TỔNG CỘNG</span>
                             <!-- Thymeleaf data -->
-                            <span class="title-5-2"><span class="total-price" th:text="${cart_order.totalPrice}"></span> đ</span>
-                        </li>
+                            <span class="title-5-2">
+                                <span class="total-price" th:text="${#numbers.formatDecimal(cart_order.totalPrice.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')}"></span>
+                                VND
+                            </span>
                         <li class="list-group-item">
                             <form th:action="@{/checkout}" method="post">
                                 <input type="hidden" name="cartId" th:value="${cart_order.cartId}" />
                                 <button type="submit" class="btn btn-cart ">
-                                    HOÀN TẤT ĐẶT HÀNG
+                                    Thanh toán
                                 </button>
                             </form>
                         </li>
