@@ -85,6 +85,38 @@ public class CustomerServiceImpl implements CustomerService {
             System.out.println("Error: "+e);
         }
     }
+    @Override
+    public void addCustomer(CustomerDTO customerDTO) {
+
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        // Định dạng lại ngày giờ để loại bỏ phần nghìn giây
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(currentDate);
+
+        try {
+            Customer customer = new Customer();
+            customer.setFirstName(customerDTO.getFirstName());
+            customer.setLastName(customerDTO.getLastName());
+            customer.setEmail(customerDTO.getEmail());
+            customer.setDateOfBirth(customerDTO.getDateOfBirth());
+            customer.setPhoneNumber(customerDTO.getPhoneNumber());
+            customer.setRole(ERole.USER);
+            customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
+
+            Cart cart = new Cart();
+            cart.setCreateDate(sdf.parse(formattedDate));
+            cart.setCustomer(customer);
+            cart.setTotalPrice(BigDecimal.ZERO);
+
+            customer.setCart(cart);
+            customerRepository.save(customer);
+        } catch (Exception e){
+            System.out.println("Error: "+e);
+        }
+    }
 
     @Override
     public EMessage checkCustomer(CustomerDTO customerDTO) {
@@ -181,19 +213,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
-    }
-    @Override
-    public void addCustomer(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setDateOfBirth(customerDTO.getDateOfBirth());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setRole(customerDTO.getRole());
-        customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
-
-        customerRepository.save(customer);
     }
     public void updateCustomer(Long id, CustomerDTO customerDTO) {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);

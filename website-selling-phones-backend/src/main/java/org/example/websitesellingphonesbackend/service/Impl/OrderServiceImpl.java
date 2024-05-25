@@ -107,4 +107,10 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByCustomer(customer);
     }
 
+    @Override
+    public List<Order_Product> getAllOrder(){
+        return orderRepository.findAll();
+    }
+
+
 }
