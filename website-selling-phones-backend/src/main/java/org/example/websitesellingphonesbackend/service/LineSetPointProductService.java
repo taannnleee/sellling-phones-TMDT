@@ -4,6 +4,7 @@ import org.example.websitesellingphonesbackend.entities.Cart;
 import org.example.websitesellingphonesbackend.entities.LineSetPointProduct;
 import org.example.websitesellingphonesbackend.entities.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface LineSetPointProductService {
@@ -12,7 +13,7 @@ public interface LineSetPointProductService {
     void decreaseQuantity(Cart cart, Product product);
     void increaseQuantity(Cart cart, Product product);
     void deleteLineSetPointProductById(Long lineItemId);
-    float updateTotalPrice(Cart cart);
+    BigDecimal updateTotalPrice(Cart cart);
 
     void deleteAllLineSetPointProductByCart(Cart delete_cart);
     void checkAndRemoveExpiredDeposits();

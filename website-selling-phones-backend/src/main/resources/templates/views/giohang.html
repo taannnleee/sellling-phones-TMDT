@@ -55,7 +55,9 @@
 			<tr th:each="lineItem, iterStat : ${lineItemList}">
 				<td th:text="${iterStat.index+1}"></td>
 				<td th:text="${lineItem.product.productDetail.name}"></td> <!-- Thay đổi để hiển thị tên sản phẩm -->
-				<td th:text="${lineItem.price}"></td> <!-- Thay đổi để hiển thị giá -->
+				<td th:text="${#numbers.formatDecimal(lineItem.price.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+
+
 				<td class="soluong">
 					<form action="load-cart/decreaseQuantity" method="post">
 						<input type="hidden" name="productId" th:value="${lineItem.product.productID}" />
@@ -68,7 +70,8 @@
 					</form>
 				</td>
 
-				<td th:text="${lineItem.price * lineItem.quanlity}"></td>
+				<td th:text="${#numbers.formatDecimal((lineItem.price.multiply(lineItem.quanlity)).stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+
 				<td th:text="${lineItem.createdDate}"></td>
 
 				<td>
@@ -83,7 +86,7 @@
 				<td class="alignRight" th:text="${cart.totalPrice}"></td> <!-- Cần thay đổi để hiển thị tổng tiền từ dữ liệu -->
 				<td class="thanhtoan">
 					<a th:href="@{/order}">
-						Thanh Toán
+						Đặt hàng
 					</a>
 				</td>
 				<td class="xoaHet">

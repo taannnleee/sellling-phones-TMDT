@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.websitesellingphonesbackend.entities.Product;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -24,7 +25,7 @@ public class LineItem implements Serializable {
     private int quanlity;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")

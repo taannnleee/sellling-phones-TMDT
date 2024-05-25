@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -69,7 +70,8 @@ public class CustomerServiceImpl implements CustomerService {
 
                 cart.setCustomer(customer);
                 cart.setCreateDate(sdf.parse(formattedDate));
-                cart.setTotalPrice(0F);
+                cart.setTotalPrice(BigDecimal.ZERO);
+
                 customer.setCart(cart);
 
                 address.setCustomer(customer);
@@ -80,6 +82,38 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         catch (Exception e){
+            System.out.println("Error: "+e);
+        }
+    }
+    @Override
+    public void addCustomer(CustomerDTO customerDTO) {
+
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        // Định dạng lại ngày giờ để loại bỏ phần nghìn giây
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(currentDate);
+
+        try {
+            Customer customer = new Customer();
+            customer.setFirstName(customerDTO.getFirstName());
+            customer.setLastName(customerDTO.getLastName());
+            customer.setEmail(customerDTO.getEmail());
+            customer.setDateOfBirth(customerDTO.getDateOfBirth());
+            customer.setPhoneNumber(customerDTO.getPhoneNumber());
+            customer.setRole(ERole.USER);
+            customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
+
+            Cart cart = new Cart();
+            cart.setCreateDate(sdf.parse(formattedDate));
+            cart.setCustomer(customer);
+            cart.setTotalPrice(BigDecimal.ZERO);
+
+            customer.setCart(cart);
+            customerRepository.save(customer);
+        } catch (Exception e){
             System.out.println("Error: "+e);
         }
     }
@@ -179,19 +213,6 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
-    }
-    @Override
-    public void addCustomer(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setDateOfBirth(customerDTO.getDateOfBirth());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setRole(customerDTO.getRole());
-        customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
-
-        customerRepository.save(customer);
     }
     public void updateCustomer(Long id, CustomerDTO customerDTO) {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);

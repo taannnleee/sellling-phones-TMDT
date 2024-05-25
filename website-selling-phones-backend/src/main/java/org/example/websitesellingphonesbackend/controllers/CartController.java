@@ -49,7 +49,6 @@ public class CartController {
             return "views/login";
         }else {
             try {
-
                 lineItemService.updateTotalPrice(cart);
                 List<LineItem> lineItemList =  lineItemService.listLineItemOfCart(cart);
                 model.addAttribute("lineItemList", lineItemList);

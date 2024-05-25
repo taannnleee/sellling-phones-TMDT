@@ -50,8 +50,8 @@ public class CheckoutController {
                 return "views/invoice";
 
             }
-            else {String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây
-            String vnpayUrl = vnPayService.createOrder(Math.round(order.getTotal()), "Welcomme", baseUrl);
+            else {String baseUrl = "http://localhost:8080"; // Điền đúng baseUrl của ứng dụng của bạn ở đây order.getTotal())
+            String vnpayUrl = vnPayService.createOrder(10, "Welcomme", baseUrl);
             return "redirect:" + vnpayUrl;
             }
 

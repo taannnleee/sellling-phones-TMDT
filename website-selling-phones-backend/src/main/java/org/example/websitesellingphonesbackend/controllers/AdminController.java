@@ -34,6 +34,9 @@ public class AdminController {
     CustomerService customerService;
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    OrderService orderService;
     @GetMapping("/dashboard")
     public String admin(Model model) {
         try {
@@ -101,7 +104,8 @@ public class AdminController {
     @GetMapping("/order")
     public String order(Model model) {
         try {
-            return "dashboard";
+            model.addAttribute("orders", orderService.getAllOrder());
+            return "views/adminviews/order-admin";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
@@ -149,6 +153,8 @@ public class AdminController {
     @GetMapping("/statistics")
     public String statistics(Model model) {
         try {
+            List<Customer> customersRecently = customerService.getAllCustomers();
+            model.addAttribute("customersRecently",customersRecently );
             return "view/dashboard";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());

@@ -4,6 +4,8 @@ import lombok.*;
 import org.example.websitesellingphonesbackend.Enum.EColor;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,7 +18,7 @@ public class ProductDetailDTO {
     private String category;
 
     private String description;
-    private Float price;
+    private BigDecimal price;
     private String screen;
     private String os;
     private String camera;
@@ -44,7 +46,7 @@ public class ProductDetailDTO {
 
     public void setCategory(String category) {this.category = category;}
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -130,7 +132,7 @@ public class ProductDetailDTO {
         this.os = os;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
