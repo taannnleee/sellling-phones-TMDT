@@ -53,6 +53,7 @@ function Product(productDetailId, name, imageUrl, price) {
 	this.name = name;
 	this.price = price;
 }
+
 // img th:src="@{/img/{image}(image=${category.urlImage})}" alt="NotFound"
 
 function formatPrice(price) {
@@ -80,19 +81,23 @@ function formatPrice(price) {
 function addToWeb(p, ele, returnString) {
 	var price = `<strong>` + formatPrice(p.price) + `</strong>`;
 	var chitietSp = '/product-detail/' + p.productDetailId; // Đường dẫn đến trang chi tiết sản phẩm
+	var productID = getProductIdByProductDetailId(p.productDetailId)
 	var newLi =
 		`<li class="sanPham">
             <a href="` + chitietSp + `">
-                <img src="img/${p.imageUrl}" alt="" onclick="redirectToProductDetail('${p.productDetailId}')">
+                <img src="img/${p.imageUrl}" alt="" >
 
                 <h3>` + p.name + `</h3>
                 <div class="price">
                     ` + price + `
                 </div>
-                <div class="tooltip">
-                   
-                </div>
+                
             </a>
+            <div>
+				<button class="muangay" onClick="redirectToCart('${p.productDetailId}')">
+						<i class="fas fa-shopping-cart"></i>
+				</button>
+			</div>
         </li>`;
 
 	if (returnString) return newLi;
@@ -102,4 +107,23 @@ function addToWeb(p, ele, returnString) {
 
 function redirectToProductDetail(productDetailId) {
 	window.location.href = "/product-detail/" + productDetailId;
+}
+
+// Thêm một hàm mới để xử lý việc chuyển hướng
+function redirectToCart(productDetailId) {
+	var productId = getProductIdByProductDetailId(productDetailId);
+	if (productId) {
+		window.location.href = "/cart/add-to-cart/" + productId;
+	} else {
+		// Xử lý trường hợp productId không tồn tại
+		console.error("Product ID not found for product detail ID:", productDetailId);
+	}
+}
+
+function getProductIdByProductDetailId(productDetailId) {
+	if (productIDMap && productIDMap.hasOwnProperty(productDetailId)) {
+		return productIDMap[productDetailId]; // trả về productID
+	} else {
+		return null;
+	}
 }

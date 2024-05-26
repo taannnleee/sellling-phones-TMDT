@@ -158,7 +158,7 @@
                 <div th:text="${product.productDetail.name}"></div>
                 <div th:text="'Giá: '+ ${#numbers.formatDecimal(product.productDetail.price.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></div>
                 <div class="picture">
-                    <img th:src="@{'/img/' + ${product.productDetail.imageUrl}}" onclick="opencertain()"/>                </div>
+                    <img th:src="@{'/img/' + ${product.productDetail.imageUrl}}" onclick=""/>                </div>
                 <div class="price_sale">
                     <div class="area_price"> </div>
                     <div class="ship" style="display: none;">
