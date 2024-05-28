@@ -13,4 +13,5 @@ public interface OrderService {
     Order_Product getOrderById(Long id);
     void updateStatusOrder(Long id);
     public  long countOrder();
+    List<Integer> getMonthlyRevenue(int year);
 }

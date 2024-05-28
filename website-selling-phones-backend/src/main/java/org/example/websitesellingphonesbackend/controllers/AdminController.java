@@ -31,15 +31,6 @@ public class AdminController {
 
     @Autowired
     OrderService orderService;
-    @GetMapping("/dashboard")
-    public String admin(Model model) {
-        try {
-            return "statistics";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
-            return "views/error";
-        }
-    }
     @GetMapping("/product")
     public String adminProduct(HttpSession session,Model model) {
         try {
@@ -161,6 +152,9 @@ public class AdminController {
             model.addAttribute("countCustomer",countCustomer );
             model.addAttribute("customersRecently",customersRecently );
 
+            List<Integer> monthlyRevenue = orderService.getMonthlyRevenue(2024); // Giả sử phương thức này trả về tổng doanh thu hàng tháng
+            model.addAttribute("monthlyRevenue", monthlyRevenue);
+
             model.addAttribute("orders", orderService.getAllOrder());
             return "view/statistics";
         } catch (Exception e) {
@@ -169,9 +163,10 @@ public class AdminController {
         }
     }
     @GetMapping("/logout")
-    public String logout(Model model) {
+    public String logout(HttpSession session,Model model) {
         try {
-            return "views/login";
+            session.setAttribute("admin", false);
+            return "redirect:customer_authentication/login";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";

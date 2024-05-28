@@ -130,5 +130,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-
+    @Override
+    public List<Integer> getMonthlyRevenue(int year){
+        List<Integer> monthlyRevenues = new ArrayList<>();
+        for (int month = 1; month <= 6; month++) {
+            Integer revenue = orderRepository.getMonthlyRevenue(year, month);
+            monthlyRevenues.add(revenue != null ? revenue : 0); // Thêm 0 nếu không có doanh thu cho tháng đó
+        }
+        return monthlyRevenues;
+    }
 }
