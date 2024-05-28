@@ -146,7 +146,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <h3 class="tile-title">Dữ liệu 6 tháng đầu vào</h3>
+                        <h3 class="tile-title">Thống kê 6 tháng doanh thu đầu tiên</h3>
                         <div class="embed-responsive embed-responsive-16by9">
                             <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
                         </div>
@@ -154,7 +154,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="tile">
-                        <h3 class="tile-title">Thống kê 6 tháng doanh thu</h3>
+                        <h3 class="tile-title">Thống kê 6 tháng doanh thu cuối</h3>
                         <div class="embed-responsive embed-responsive-16by9">
                             <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
                         </div>
@@ -171,7 +171,7 @@
         <p><b>Copyright
             <script type="text/javascript">
                 document.write(new Date().getFullYear());
-            </script> Phần mềm quản lý bán hàng | Dev By Trường
+            </script> Phần mềm quản lý bán hàng | Dev By Tân
         </b></p>
     </div>
 </main>
@@ -198,7 +198,7 @@
 <script type="text/javascript">
 
     var data = {
-        labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
+        labels: ["1", "2", "3", "4", "5", "6","7", "8", "9", "10", "11", "12"],
         datasets: [{
             label: "Dữ liệu đầu tiên",
             fillColor: "rgba(255, 213, 59, 0.767), 212, 59)",
@@ -213,6 +213,7 @@
     };
     var ctxl = $("#lineChartDemo").get(0).getContext("2d");
     var lineChart = new Chart(ctxl).Line(data);
+
 
     var ctxb = $("#barChartDemo").get(0).getContext("2d");
     var barChart = new Chart(ctxb).Bar(data);
