@@ -17,7 +17,7 @@
                         Hey <span id="customerFirstName" th:text="${order.customer.firstName}">John</span>,
                     </h2>
                     <p class="fs-sm">
-                        This is the total price <strong id="orderTotal" th:text="${order.total}">100.00</strong> (USD) you made to order.
+                        This is the total price <strong id="orderTotal" th:text="${order.total + ' VND'}">100.00 VND</strong> you made to order.
                     </p>
 
                     <div class="border-top border-gray-200 pt-4 mt-4">
@@ -71,7 +71,7 @@
                         <tr th:each="lineItem : ${order.orderDetailLines}">
                             <td class="px-0" th:text="${lineItem.product.productDetail.name}">Product Name</td>
                             <td class="text-end px-0" th:text="${lineItem.quanlity}">1</td>
-                            <td class="text-end px-0" th:text="${lineItem.price}">100.00</td>
+                            <td class="text-end px-0" th:text="${lineItem.price + ' VND'}">100.00 VND</td>
                         </tr>
                         </tbody>
                     </table>
@@ -79,12 +79,14 @@
                     <div class="mt-5">
                         <div class="d-flex justify-content-end mt-3">
                             <h5 class="me-3">Total:</h5>
-                            <h3 class="text-success" id="total" th:text="${order.total}">100.00</h3>
+                            <h3 class="text-success" id="total" th:text="${order.total + ' VND'}">100.00 VND</h3>
                         </div>
                     </div>
                     <h2 style="text-align: center;">Cảm ơn quý khách đã mua hàng. Chúc quý khách một ngày tốt đẹp</h2>
                 </div>
-                <button class="btn btn-secondary btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light" id="print-invoice">
+            </div>
+
+            <button class="btn btn-secondary btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light" id="print-invoice">
     <span class="svg-icon text-white me-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
             <title>ionicons-v5-g</title>
