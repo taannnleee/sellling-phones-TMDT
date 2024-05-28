@@ -23,5 +23,6 @@ public interface CustomerService {
     void deleteCustomer(Long id);
     void addCustomer(CustomerDTO customerDTO);
     void updateCustomer(Long id, CustomerDTO customerDTO);
+    long countCustomer();
 
 }

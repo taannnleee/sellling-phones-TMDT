@@ -19,4 +19,5 @@ public interface ProductService {
     List<Product> getProductsByCategoryId(Long id);
     List<Product> getAllProduct();
     int countProductByCategoryCategoryId(long id);
+    public  long countProduct();
 }

@@ -52,11 +52,11 @@
                         <tr th:each="order : ${orders}">
                             <td>Đơn hàng số <span th:text="${order.orderId}"></span></td>
                             <td th:text="${order.customer.lastName + ' ' + order.customer.firstName}"></td>
-                            <td th:text="${order.total}"></td>
+                            <td th:text="${#numbers.formatDecimal(order.total.stripTrailingZeros(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
                             <td th:text="${order.payment.epaymentMethod}"></td>
                             <td><span class="badge bg-success" th:text="${order.orderStatus}"></span></td>
                             <td>
-                                <a th:href="@{/admin/order/{id}(id=${order.orderId})}" class="btn btn-primary btn-sm edit">CẬP NHẬT TRẠNG THÁI ĐƠN HÀNG</a>
+                                <a th:href="@{/admin_authentication/admin/order/{id}(id=${order.orderId})}" class="btn btn-primary btn-sm edit">CẬP NHẬT TRẠNG THÁI ĐƠN HÀNG</a>
                             </td>
                         </tr>
                         </tbody>

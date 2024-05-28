@@ -2,18 +2,12 @@ package org.example.websitesellingphonesbackend.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.websitesellingphonesbackend.entities.Category;
-import org.example.websitesellingphonesbackend.entities.Customer;
-import org.example.websitesellingphonesbackend.entities.Product;
-import org.example.websitesellingphonesbackend.entities.ProductDetail;
+import org.example.websitesellingphonesbackend.entities.*;
 import org.example.websitesellingphonesbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,15 +31,6 @@ public class AdminController {
 
     @Autowired
     OrderService orderService;
-    @GetMapping("/dashboard")
-    public String admin(Model model) {
-        try {
-            return "view/dashboard";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
-            return "views/error";
-        }
-    }
     @GetMapping("/product")
     public String adminProduct(HttpSession session,Model model) {
         try {
@@ -111,6 +96,11 @@ public class AdminController {
             return "views/error";
         }
     }
+    @GetMapping("/order/{id}")
+    public String openUdateOrderStatusPage(@PathVariable int id, Model model) {
+        orderService.updateStatusOrder((long) id);
+        return "redirect:/admin_authentication/admin/order";
+    }
     @GetMapping("/category")
     public String category(HttpSession session, Model model) {
         String addProductSuccessMessage = (String) session.getAttribute("addCategorySuccessMessage"); // Lấy thông báo từ session
@@ -153,18 +143,30 @@ public class AdminController {
     @GetMapping("/statistics")
     public String statistics(Model model) {
         try {
+            int countCustomer = (int) customerService.countCustomer();
+            int countProduct = (int) productService.countProduct();
+            int countOrder = (int) orderService.countOrder();
             List<Customer> customersRecently = customerService.getAllCustomers();
+            model.addAttribute("countOrder",countOrder );
+            model.addAttribute("countProduct",countProduct );
+            model.addAttribute("countCustomer",countCustomer );
             model.addAttribute("customersRecently",customersRecently );
-            return "view/dashboard";
+
+            List<Integer> monthlyRevenue = orderService.getMonthlyRevenue(2024); // Giả sử phương thức này trả về tổng doanh thu hàng tháng
+            model.addAttribute("monthlyRevenue", monthlyRevenue);
+
+            model.addAttribute("orders", orderService.getAllOrder());
+            return "view/statistics";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
         }
     }
     @GetMapping("/logout")
-    public String logout(Model model) {
+    public String logout(HttpSession session,Model model) {
         try {
-            return "views/login";
+            session.setAttribute("admin", false);
+            return "redirect:customer_authentication/login";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";

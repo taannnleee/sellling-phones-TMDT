@@ -112,5 +112,31 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
+    @Override
+    public Order_Product getOrderById(Long id){
+        return orderRepository.findByOrderId(id);
+    }
 
+    @Override
+    public void updateStatusOrder(Long id){
+        Order_Product orderProduct =  getOrderById(id);
+        orderProduct.setOrderStatus(EStatus.COMPLETED);
+        orderRepository.save(orderProduct);
+    }
+
+    @Override
+    public  long countOrder(){
+        return orderRepository.count();
+    }
+
+
+    @Override
+    public List<Integer> getMonthlyRevenue(int year){
+        List<Integer> monthlyRevenues = new ArrayList<>();
+        for (int month = 1; month <= 6; month++) {
+            Integer revenue = orderRepository.getMonthlyRevenue(year, month);
+            monthlyRevenues.add(revenue != null ? revenue : 0); // Thêm 0 nếu không có doanh thu cho tháng đó
+        }
+        return monthlyRevenues;
+    }
 }

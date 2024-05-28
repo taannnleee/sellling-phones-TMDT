@@ -31,7 +31,7 @@ public class Order_Product implements Serializable {
     @Column(name = "order_status")
     private EStatus orderStatus    ;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
