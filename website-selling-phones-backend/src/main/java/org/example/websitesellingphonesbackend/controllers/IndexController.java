@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,6 +37,8 @@ public class IndexController {
         try {
             List<ProductDetail> list_Products = getProductsOn();
             model.addAttribute("list_Products", list_Products);
+            Map<Long, Long> productIDMap = getProductIDMap(list_Products);
+            model.addAttribute("productIDMap", productIDMap);
             String loginSuccessMessage = (String) session.getAttribute("loginSuccessMessage"); // Lấy thông báo từ session
             if (loginSuccessMessage != null) {
                 model.addAttribute("loginSuccessMessage", true); // Thêm thông báo vào model
@@ -77,5 +81,14 @@ public class IndexController {
             list_Products.add(p.getProductDetail());
         }
         return list_Products;
+    }
+    private Map<Long, Long> getProductIDMap(List<ProductDetail> list_Products) {
+        Map<Long, Long> productIDMap = new HashMap<>();
+        for (ProductDetail p : list_Products) {
+            Long productDetailId = p.getProductDetailId();
+            Long productId = productService.getProductByProductDetailId(productDetailId).getProductID();
+            productIDMap.put(productDetailId, productId);
+        }
+        return productIDMap;
     }
 }

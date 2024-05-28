@@ -150,7 +150,7 @@
 
 	/* ===== Them Vao Gio Hang ==== */
 		/* tooltip được css bên style.css */
-		.themvaogio {
+		.muangay {
 			z-index: 20;
 			border: 1px solid #e3e7eb;
 			border-radius: 50%;
@@ -162,14 +162,14 @@
 			transition-duration: .2s;
 			cursor: pointer;
 		}
-		.themvaogio:hover {
+		.muangay:hover {
 			color: black;
 			background-color: #e6e6e6;
 			box-shadow: 0px 8px 10px 0px rgba(0,0,0,0.2);
 		}
-		.themvaogio:active {
+		.muangay:active {
 			box-shadow: none;
 		}
-		
+
 	/* ===== End Them Vao Gio Hang ==== */
 /* ====== End Home Product ======= */
