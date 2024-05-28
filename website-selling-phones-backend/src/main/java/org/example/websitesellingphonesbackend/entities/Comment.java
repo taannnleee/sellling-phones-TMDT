@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 public class Comment implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentID;
 
     @ManyToOne

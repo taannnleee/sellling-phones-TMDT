@@ -18,7 +18,7 @@ window.onload = function () {
 		autoplay: true,
 		autoplayTimeout: 3500
 	});
-
+	console.log(productIDMap)
 	// autocomplete cho khung tim kiem
 	autocomplete(document.getElementById('search-box'), list_products);
 	// thêm tags (từ khóa) vào khung tìm kiếm

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -15,14 +16,14 @@ import java.io.Serializable;
 @Setter
 public class OrderDetailLine implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "quanlity")
     private int quanlity;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")

@@ -12,12 +12,41 @@
 	<!-- Load font awesome icons -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 	<!-- owl carousel libraries -->
 	<link rel="stylesheet" type="text/css" th:href="@{/js/owlcarousel/owl.carousel.min.css}">
 	<link rel="stylesheet" type="text/css" th:href="@{/js/owlcarousel/owl.theme.default.min.css}">
 	<script src="js/Jquery/Jquery.min.js"></script>
 	<script src="js/owlcarousel/owl.carousel.min.js"></script>
+	<style>
+		.bubble-form {
+			position: fixed;
+			top: 35px;
+			right: 20px;
+			background-color: #3e8e41;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			display: none; /* Ban đầu ẩn */
+			z-index: 9999; /* Đảm bảo nằm trên các thành phần khác */
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: black;
+			text-decoration: none;
+		}
+	</style>
 
 	<!-- tidio - live chat -->
 	<!-- <script src="//code.tidio.co/bfiiplaaohclhqwes5xivoizqkq56guu.js"></script> -->
@@ -43,6 +72,12 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var list_products = /*[[${list_Products}]]*/ [];
+		/*]]>*/
+	</script>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var productIDMap = /*[[${productIDMap}]]*/ [];
 		/*]]>*/
 	</script>
 
@@ -74,6 +109,11 @@
 <!--		<script> addHeader(); </script>-->
 		<div th:replace="~{view/header :: header}"></div>
 
+		<div id="bubbleForm" class="bubble-form">
+			<span class="close" onclick="closeBubble()">&times;</span>
+			<p>Đăng nhập thành công!</p>
+		</div>
+
 		<div class="banner">
 			<div class="owl-carousel owl-theme"></div>
 		</div> <!-- End Banner -->
@@ -96,6 +136,7 @@
 			</div>
 
 		</div> <!-- End khung chọn bộ lọc -->
+
 
 		<div class="choosedFilter flexContain">
 			<a id="deleteAllFilter" style="display: none;">
@@ -128,10 +169,44 @@
 <!--	<script>-->
 <!--		addContainTaiKhoan(); addPlc();-->
 <!--	</script>-->
+<!--	<div th:if="${loginSuccessMessage}" class="alert alert-success">-->
+<!--		<p th:text="${loginSuccessMessage}"></p>-->
+<!--	</div>-->
 
 	<div class="footer"><script>addFooter();</script></div>
 
 	<i class="fa fa-arrow-up" id="goto-top-page" onclick="gotoTop()"></i>
-</body>
+	<script>
+		// Mở hộp thoại nổi lên
+		// Mở hộp thoại nổi lên
+		function openBubble() {
+			var bubbleForm = document.getElementById("bubbleForm");
+			bubbleForm.style.display = "block";
+			// Đóng khung sau 2 giây
+			setTimeout(function() {
+				closeBubble();
+			}, 2000); // 2000 miligiây = 2 giây
+		}
 
+		// Đóng hộp thoại nổi lên
+		function closeBubble() {
+			var bubbleForm = document.getElementById("bubbleForm");
+			bubbleForm.style.display = "none";
+		}
+
+		// Xử lý sự kiện khi click ra ngoài hộp thoại
+		window.onclick = function(event) {
+			var bubbleForm = document.getElementById("bubbleForm");
+			if (event.target == bubbleForm) {
+				closeBubble(); // Nếu click ra ngoài hộp thoại, đóng nó lại
+			}
+		}
+	</script>
+	<script th:inline="javascript">
+		var loginSuccessMessage = /*[[${loginSuccessMessage}]]*/ false; // Đảm bảo rằng loginSuccessMessage là boolean
+		if (loginSuccessMessage) {
+			openBubble(); // Hiển thị hộp thoại nếu đăng nhập thành công
+		}
+	</script>
+</body>
 </html>

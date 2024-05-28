@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/invoice.css}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 <div class="container mt-6 mb-7">
@@ -13,21 +14,21 @@
             <div class="card">
                 <div class="card-body p-5">
                     <h2>
-                        Hey <span th:text="${order.customer.firstName}"></span>,
+                        Hey <span id="customerFirstName" th:text="${order.customer.firstName}">John</span>,
                     </h2>
                     <p class="fs-sm">
-                        This is the total price <strong th:text="${order.total}"></strong> (USD) you made to order.
+                        This is the total price <strong id="orderTotal" th:text="${order.total + ' VND'}">100.00 VND</strong> you made to order.
                     </p>
 
                     <div class="border-top border-gray-200 pt-4 mt-4">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="text-muted mb-2">Payment No.</div>
-                                <strong th:text="${order.orderId}"></strong>
+                                <strong id="orderId" th:text="${order.orderId}">12345</strong>
                             </div>
                             <div class="col-md-6 text-md-end">
                                 <div class="text-muted mb-2">Payment Date</div>
-                                <strong th:text="${order.orderDate}"></strong>
+                                <strong id="orderDate" th:text="${order.orderDate}">2024-05-23</strong>
                             </div>
                         </div>
                     </div>
@@ -36,15 +37,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="text-muted mb-2">Customer</div>
-                                <strong th:text="${order.customer.firstName + ' ' + order.customer.lastName}">
-                                </strong>
+                                <strong id="customerName" th:text="${order.customer.firstName + ' ' + order.customer.lastName}">John Doe</strong>
                                 <p class="fs-sm">
-                                    <!--                                    <div class="text-muted mb-2">Địa Chỉ</div>-->
-                                    <!--                                    <span th:text="${order.customer.addresss}"></span>-->
-                                    <br>
                                 <div class="text-muted mb-2">Email</div>
-                                <a href="#!" class="text-purple" th:text="${order.customer.email}">
-                                </a>
+                                <a href="#!" class="text-purple" id="customerEmail" th:text="${order.customer.email}">johndoe@example.com</a>
                                 </p>
                             </div>
                             <div class="col-md-6 text-md-end">
@@ -57,13 +53,11 @@
                                 13A, Đường 12D, Chân Phúc Cẩm, Long Thạnh Mỹ, Thủ Đức
                                 <br>
                                 <div class="text-muted mb-2">Email</div>
-                                <a href="#!" class="text-purple">trungpham160503@gmail.com
-                                </a>
+                                <a href="#!" class="text-purple">trungpham160503@gmail.com</a>
                                 </p>
                             </div>
                         </div>
                     </div>
-
 
                     <table class="table border-bottom border-gray-200 mt-3">
                         <thead>
@@ -73,34 +67,46 @@
                             <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Amount</th>
                         </tr>
                         </thead>
-                        <tbody th:each="lineItem : ${order.orderDetailLines}">
-                        <tr>
-                            <td class="px-0" th:text="${lineItem.product.productDetail.name}"></td>
-                            <td class="text-end px-0" th:text="${lineItem.quanlity}"></td>
-                            <td class="text-end px-0" th:text="${lineItem.price}"></td>
+                        <tbody>
+                        <tr th:each="lineItem : ${order.orderDetailLines}">
+                            <td class="px-0" th:text="${lineItem.product.productDetail.name}">Product Name</td>
+                            <td class="text-end px-0" th:text="${lineItem.quanlity}">1</td>
+                            <td class="text-end px-0" th:text="${lineItem.price + ' VND'}">100.00 VND</td>
                         </tr>
                         </tbody>
                     </table>
 
-
                     <div class="mt-5">
                         <div class="d-flex justify-content-end mt-3">
                             <h5 class="me-3">Total:</h5>
-                            <h3 class="text-success" th:text="${order.total}"></h3>
+                            <h3 class="text-success" id="total" th:text="${order.total + ' VND'}">100.00 VND</h3>
                         </div>
                     </div>
                     <h2 style="text-align: center;">Cảm ơn quý khách đã mua hàng. Chúc quý khách một ngày tốt đẹp</h2>
                 </div>
+            </div>
+
+            <button class="btn btn-secondary btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light" id="print-invoice">
+    <span class="svg-icon text-white me-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+            <title>ionicons-v5-g</title>
+            <path d="M336,208V113a80,80,0,0,0-160,0v95" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path>
+            <rect x="96" y="208" width="320" height="272" rx="48" ry="48" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></rect>
+        </svg>
+    </span>
+                    Print Invoice
+                </button>
+
                 <a href="#!"
                    class="btn btn-dark btn-lg card-footer-btn justify-content-center text-uppercase-bold-sm hover-lift-light"
                    th:href="@{/home}">
-    <span class="svg-icon text-white me-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"
-             viewBox="0 0 512 512"><title>ionicons-v5-g</title><path d="M336,208V113a80,80,0,0,0-160,0v95"
-                                                                     style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path><rect
-                x="96" y="208" width="320" height="272" rx="48" ry="48"
-                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></rect></svg>
-    </span>
+                    <span class="svg-icon text-white me-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                            <title>ionicons-v5-g</title>
+                            <path d="M336,208V113a80,80,0,0,0-160,0v95" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></path>
+                            <rect x="96" y="208" width="320" height="272" rx="48" ry="48" style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"></rect>
+                        </svg>
+                    </span>
                     Buy Continue
                 </a>
 
@@ -108,5 +114,44 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('print-invoice').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(20);
+            doc.text("Invoice", 10, 10);
+            doc.setFontSize(12);
+            doc.text("Hey " + document.getElementById('customerFirstName').textContent + ",", 10, 20);
+            doc.text("This is the total price: " + document.getElementById('orderTotal').textContent + " (USD) you made to order.", 10, 30);
+            doc.text("Payment No.: " + document.getElementById('orderId').textContent, 10, 40);
+            doc.text("Payment Date: " + document.getElementById('orderDate').textContent, 10, 50);
+            doc.text("Customer: " + document.getElementById('customerName').textContent, 10, 60);
+            doc.text("Email: " + document.getElementById('customerEmail').textContent, 10, 70);
+
+            let startY = 80;
+            doc.text("Product", 10, startY);
+            doc.text("Quantity", 100, startY);
+            doc.text("Amount", 150, startY);
+
+            let items = document.querySelectorAll('tbody tr');
+            items.forEach((item, index) => {
+                let product = item.querySelector('td:nth-child(1)').textContent;
+                let quantity = item.querySelector('td:nth-child(2)').textContent;
+                let amount = item.querySelector('td:nth-child(3)').textContent;
+
+                startY += 10;
+                doc.text(product, 10, startY);
+                doc.text(quantity, 100, startY);
+                doc.text(amount, 150, startY);
+            });
+
+            doc.text("Total: " + document.getElementById('total').textContent, 10, startY + 20);
+
+            doc.save('invoice.pdf');
+        });
+    });
+</script>
 </body>
 </html>

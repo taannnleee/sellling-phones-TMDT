@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.websitesellingphonesbackend.Enum.EColor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ProductDetail")
@@ -16,7 +17,7 @@ import java.io.Serializable;
 
 public class ProductDetail implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_detail_id")
     private Long productDetailId;
 
@@ -33,7 +34,7 @@ public class ProductDetail implements Serializable {
     private String description;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @Column(name = "screen")
     private String screen;
@@ -41,11 +42,11 @@ public class ProductDetail implements Serializable {
     @Column(name = "os")
     private String os;
 
-    @Column(name = "camara")
-    private String camara;
+    @Column(name = "camera")
+    private String camera;
 
-    @Column(name = "camaraFront")
-    private String camaraFront;
+    @Column(name = "cameraFront")
+    private String cameraFront;
 
     @Column(name = "cpu")
     private String cpu;
@@ -62,12 +63,30 @@ public class ProductDetail implements Serializable {
     @Column(name = "battery")
     private String battery;
 
-    @Enumerated(EnumType.STRING)
-    private EColor color;
+    @Column(name = "color")
+    private String color;
 
 
     @OneToOne(mappedBy = "productDetail", fetch = FetchType.EAGER)
     @JsonBackReference
     private Product product;
 
+
+    public ProductDetail(String name, String category, String imageUrl, String description, BigDecimal price, String screen, String os, String camera, String cameraFront, String cpu, String ram, String rom, String microUSB, String battery, String color) {
+        this.name = name;
+        this.category = category;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
+        this.screen = screen;
+        this.os = os;
+        this.camera = camera;
+        this.cameraFront = cameraFront;
+        this.cpu = cpu;
+        this.ram = ram;
+        this.rom = rom;
+        this.microUSB = microUSB;
+        this.battery = battery;
+        this.color = color;
+    }
 }

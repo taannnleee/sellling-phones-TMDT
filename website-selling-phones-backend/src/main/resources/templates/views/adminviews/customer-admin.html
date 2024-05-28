@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Danh sách khách hàng | Quản trị Admin</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- or -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin/progress.css}"/>
+
+    <script src="/data/products.js"></script>
+    <script src="/js/classes.js"></script>
+    <script src="/js/dungchung.js"></script>
+    <script src="/js/admin.js"></script>
+    <style>
+        .button {
+            background-color: #333; /* Màu nền */
+            color: #fff; /* Màu chữ */
+            padding: 10px 20px; /* Kích thước lề */
+            border-radius: 5px; /* Bo tròn góc */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+        }
+
+        .button:hover {
+            background-color: #555; /* Màu nền khi di chuột qua */
+        }
+
+        .button .nav-item {
+            list-style-type: none; /* Ẩn dấu chấm trước nút */
+        }
+
+        .button .nav-link {
+            text-decoration: none; /* Ẩn gạch chân của liên kết */
+            color: inherit; /* Màu chữ kế thừa từ cha */
+        }
+
+        .button .nav-link i {
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và văn bản */
+        }
+    </style>
+</head>
+
+<body onload="time()" class="app sidebar-mini rtl">
+
+<!-- Sidebar menu-->
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+<div th:replace="~{view/sidebarAdmin :: sidebarAdmin}"></div>
+
+<main class="app-content">
+    <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item active"><a href="#"><b>Danh SÁCH KHÁCH HÀNG</b></a></li>
+        </ul>
+        <div id="clock"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tile">
+                <div class="tile-body">
+                    <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0"
+                           border="0" id="sampleTable">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên</th>
+                            <th>Họ</th>
+                            <th>Email</th>
+                            <th>PassWord</th>
+                            <th>Số điện thoại</th>
+                            <th style="width: 15%">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="customer , iterStat : ${customers}">
+                            <tr>
+                                <td th:text="${iterStat.count}"></td>
+                                <td th:text="${customer.firstName}"></td>
+                                <td th:text="${customer.lastName}"></td>
+                                <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.passHash}"></td>
+                                <td th:text="${customer.phoneNumber}"></td>
+
+
+                                <td>
+                                    <div style="display: flex;align-items: center;gap: 10px;" >
+                                        <div
+                                                th:data-customer-id="${customer.customerId}"
+                                                th:data-first-name="${customer.firstName}"
+                                                th:data-last-name="${customer.lastName}"
+                                                th:data-email="${customer.email}"
+                                                th:data-phone-number="${customer.phoneNumber}"
+                                                th:data-pass-hash="${customer.passHash}">
+                                            <i class="fa fa-wrench" onclick="addKhungSuaKhachHang(this.parentElement)"></i>
+                                        </div>
+
+                                        <div
+                                                th:data-customer-id="${customer.customerId}"
+                                                th:data-customer-name="${customer.firstName} + ' ' + ${customer.lastName}">
+                                            <i class="fa fa-trash" onclick="xoaKhachHang(this.parentElement.dataset)"></i>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-footer">
+        <select name="kieuTimKhachHang">
+            <option value="ten">Tìm theo họ tên</option>
+            <option value="email">Tìm theo email</option>
+            <option value="taikhoan">Tìm theo tài khoản</option>
+        </select>
+        <input type="text" placeholder="Tìm kiếm..." onkeyup="if (event.keyCode === 13) timKiemNguoiDung(this)">
+        <button onclick="document.getElementById('khungThemKhachHang').style.transform = 'scale(1)';">
+            <i class="fa fa-plus-square"></i>
+            Thêm khách hàng
+        </button>
+    </div>
+
+    <div id="khungThemKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Thêm Khách Hàng</th>
+            </tr>
+            <tr>
+                <td>Họ:</td>
+                <td><input type="text" id="firstName"></td>
+            </tr>
+            <tr>
+                <td>Tên:</td>
+                <td><input type="text" id="lastName"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu:</td>
+                <td><input type="password" id="password"></td>
+            </tr>
+            <tr>
+                <td>Số Điện Thoại:</td>
+                <td><input type="text" id="phoneNumber"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="themKhachHang()">THÊM</button> </td>
+            </tr>
+        </table>
+    </div>
+<!--    Khung sửa thông tin khách hàng-->
+    <div id="khungSuaKhachHang" class="overlay">
+        <span class="close" onclick="this.parentElement.style.transform = 'scale(0)';">×</span>
+        <table class="overlayTable table-outline table-content table-header">
+            <tr>
+                <th colspan="2">Sửa Khách Hàng</th>
+            </tr>
+            <tr>
+                <td>Mã khách hàng:</td>
+                <td><input type="text" id="customerIdSua"></td>
+            </tr>
+            <tr>
+                <td>Họ:</td>
+                <td><input type="text" id="firstNameSua"></td>
+            </tr>
+            <tr>
+                <td>Tên:</td>
+                <td><input type="text" id="lastNameSua"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" id="emailSua"></td>
+            </tr>
+            <tr>
+                <td>Mật khẩu:</td>
+                <td><input type="password" id="passwordSua"></td>
+            </tr>
+            <tr>
+                <td>Số Điện Thoại:</td>
+                <td><input type="text" id="phoneNumberSua"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="table-footer"> <button onclick="suaKhachHang()">LƯU</button> </td>
+            </tr>
+        </table>
+    </div>
+</main>
+
+
+<script>
+    function toggleAddCustomerForm() {
+        var khungThemKhachHang = document.getElementById('khungThemKhachHang');
+        if (khungThemKhachHang.style.display === 'block') {
+            khungThemKhachHang.style.display = 'none';
+        } else {
+            khungThemKhachHang.style.display = 'block';
+        }
+    }
+</script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="src/jquery.table2excel.js"></script>
+<script src="/js/main.js"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="/js/plugins/pace.min.js"></script>
+<!-- Page specific javascripts-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<!-- Data table plugin-->
+<script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">$('#sampleTable').DataTable();</script>
+<script>
+    function deleteRow(r) {
+        var i = r.parentNode.parentNode.rowIndex;
+        document.getElementById("myTable").deleteRow(i);
+    }
+    jQuery(function () {
+        jQuery(".trash").click(function () {
+            swal({
+                title: "Cảnh báo",
+
+                text: "Bạn có chắc chắn là muốn xóa khách hàng này?",
+                buttons: ["Hủy bỏ", "Đồng ý"],
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Đã xóa thành công.!", {
+
+                        });
+                    }
+                });
+        });
+    });
+    oTable = $('#sampleTable').dataTable();
+    $('#all').click(function (e) {
+        $('#sampleTable tbody :checkbox').prop('checked', $(this).is(':checked'));
+        e.stopImmediatePropagation();
+    });
+
+
+    function time() {
+        var today = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Chủ Nhật";
+        weekday[1] = "Thứ Hai";
+        weekday[2] = "Thứ Ba";
+        weekday[3] = "Thứ Tư";
+        weekday[4] = "Thứ Năm";
+        weekday[5] = "Thứ Sáu";
+        weekday[6] = "Thứ Bảy";
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) {
+            dd = '0' + dd
+        }
+        if (mm < 10) {
+            mm = '0' + mm
+        }
+        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+            '</span>';
+        document.getElementById("clock").innerHTML = tmp;
+        clocktime = setTimeout("time()", "1000", "Javascript");
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+    }
+    var myApp = new function () {
+        this.printTable = function () {
+            var tab = document.getElementById('sampleTable');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(tab.outerHTML);
+            win.document.close();
+            win.print();
+        }
+    }
+
+    $("#show-emp").on("click", function () {
+        $("#ModalUP").modal({ backdrop: false, keyboard: false })
+    });
+</script>
+</body>
+
+</html>

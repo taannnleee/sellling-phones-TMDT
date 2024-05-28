@@ -30,17 +30,17 @@ public class CustomerProductDetail {
     @Autowired
     EvaluateService  evaluateService;
 
-    @GetMapping()
-    public String getProductDetail1(HttpSession session, Model model,@RequestParam("productName") String productName) {
-        try {
-            System.out.println("hehe"+ productName);
-            return "views/error";
-        } catch (Exception e) {
-            model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
-            return "views/error";
-        }
-
-    }
+//    @GetMapping()
+//    public String getProductDetail1(HttpSession session, Model model,@RequestParam("productName") String productName) {
+//        try {
+//            System.out.println("hehe"+ productName);
+//            return "views/error";
+//        } catch (Exception e) {
+//            model.addAttribute("error", "Lỗi tải trang: " + e.getMessage());
+//            return "views/error";
+//        }
+//
+//    }
     @GetMapping("/{productId}")
     public String getProductDetail(HttpSession session,@PathVariable String productId, Model model) {
         try {

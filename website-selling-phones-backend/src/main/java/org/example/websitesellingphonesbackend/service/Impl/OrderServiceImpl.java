@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     LineItemService lineItemService;
 
     @Override
-    public void insertOrder(Cart cart, Customer customer, String paymentType){
+    public Order_Product insertOrder(Cart cart, Customer customer, String paymentType){
         try {
 
 
@@ -95,14 +95,48 @@ public class OrderServiceImpl implements OrderService {
             lineItemService.deleteAllLineItemByCart(cart);
 
 
+            return order;
         } catch (Exception e) {
             // Xử lý ngoại lệ
             e.printStackTrace();
         }
+        return null;
     }
     @Override
     public List<Order_Product> getOrdersByCustomer(Customer customer) {
         return orderRepository.findByCustomer(customer);
     }
 
+    @Override
+    public List<Order_Product> getAllOrder(){
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public Order_Product getOrderById(Long id){
+        return orderRepository.findByOrderId(id);
+    }
+
+    @Override
+    public void updateStatusOrder(Long id){
+        Order_Product orderProduct =  getOrderById(id);
+        orderProduct.setOrderStatus(EStatus.COMPLETED);
+        orderRepository.save(orderProduct);
+    }
+
+    @Override
+    public  long countOrder(){
+        return orderRepository.count();
+    }
+
+
+    @Override
+    public List<Integer> getMonthlyRevenue(int year){
+        List<Integer> monthlyRevenues = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) {
+            Integer revenue = orderRepository.getMonthlyRevenue(year, month);
+            monthlyRevenues.add(revenue != null ? revenue : 0); // Thêm 0 nếu không có doanh thu cho tháng đó
+        }
+        return monthlyRevenues;
+    }
 }

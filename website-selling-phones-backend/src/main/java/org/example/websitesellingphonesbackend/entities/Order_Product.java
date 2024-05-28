@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.websitesellingphonesbackend.Enum.EStatus;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -25,12 +26,12 @@ public class Order_Product implements Serializable {
     private Date orderDate;
 
     @Column(name = "total")
-    private Float total;
+    private BigDecimal total;
 
     @Column(name = "order_status")
     private EStatus orderStatus    ;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 

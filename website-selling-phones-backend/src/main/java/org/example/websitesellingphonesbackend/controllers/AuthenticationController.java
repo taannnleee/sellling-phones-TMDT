@@ -6,15 +6,15 @@ import org.example.websitesellingphonesbackend.DTO.CustomerDTO;
 import org.example.websitesellingphonesbackend.Enum.EMessage;
 import org.example.websitesellingphonesbackend.Enum.ERole;
 import org.example.websitesellingphonesbackend.entities.Address;
+import org.example.websitesellingphonesbackend.entities.Admin;
 import org.example.websitesellingphonesbackend.entities.Cart;
 import org.example.websitesellingphonesbackend.entities.Customer;
-import org.example.websitesellingphonesbackend.service.CartService;
-import org.example.websitesellingphonesbackend.service.CustomerService;
-import org.example.websitesellingphonesbackend.service.AccountService;
-import org.example.websitesellingphonesbackend.service.EmailService;
+import org.example.websitesellingphonesbackend.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import static org.example.websitesellingphonesbackend.Enum.EMessage.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,6 +24,7 @@ public class AuthenticationController {
     private final AccountService accountService;
     private final EmailService emailService;
     private final CartService cartService;
+    private final AdminService adminService;
     @GetMapping("/login")
     public String Login(Model model) {
         try {
@@ -37,12 +38,20 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public String checkLogin(@RequestParam(name = "email") String email, @RequestParam(name = "password")String password, Model model, HttpSession session) {
+        boolean checkAdmin = adminService.checkAdmin(email, password);
+        if(checkAdmin){
+            session.setAttribute("admin",true);
+            return "redirect:/admin_authentication/admin/statistics";
+
+        }
+
 
         Customer customer = customerService.authenticateCustomer(email,password);
         Cart cart = cartService.getCartByCustomer(customer);
         if(customer != null){
             session.setAttribute("customer",customer);
             session.setAttribute("cart",cart);
+            session.setAttribute("loginSuccessMessage", EMessage.LOGIN_SUCCESS.getValue()); // Lưu thông báo vào session
             return "redirect:/index";
         } else {
             model.addAttribute("result", EMessage.OLD_PASS_NOT_MATCH.getValue());
@@ -64,11 +73,19 @@ public class AuthenticationController {
         Cart cart = new Cart();
         Address address = new Address(city, district,stress);
         try {
-            // đăng kí thanh cong thì tạo cái cart luôn
-            if(customerService.checkCustomer(customerDTO)){
+            EMessage status_register =  customerService.checkCustomer(customerDTO);
+            if(status_register == REGISTER_SUCCESS){
                 customerService.registerCustomer(customerDTO, cart,address);
                 model.addAttribute("result", EMessage.REGISTER_SUCCESS.getValue());
-                return "views/login";
+                return "views/register";
+            }
+            if(status_register == CUSTOMER_EXIST){
+                model.addAttribute("result", EMessage.CUSTOMER_EXIST.getValue());
+                return "views/register";
+            }
+            if(status_register == CONFIRM_PASSWORD_NOT_MATCH){
+                model.addAttribute("result", EMessage.CONFIRM_PASSWORD_NOT_MATCH.getValue());
+                return "views/register";
             }
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng kí: " + e.getMessage());
@@ -124,7 +141,7 @@ public class AuthenticationController {
             model.addAttribute("result", result.getValue());
         }else{
             url = "views/forgot-pass";
-            model.addAttribute("result", EMessage.CONFIRM_PASSWORD_NOT_MATCH.getValue());
+            model.addAttribute("result", CONFIRM_PASSWORD_NOT_MATCH.getValue());
         }
         return url;
     }

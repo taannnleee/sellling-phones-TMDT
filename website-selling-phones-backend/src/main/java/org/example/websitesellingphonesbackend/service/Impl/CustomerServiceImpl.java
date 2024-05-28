@@ -17,12 +17,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static org.example.websitesellingphonesbackend.Enum.EMessage.*;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -67,7 +70,8 @@ public class CustomerServiceImpl implements CustomerService {
 
                 cart.setCustomer(customer);
                 cart.setCreateDate(sdf.parse(formattedDate));
-                cart.setTotalPrice(0F);
+                cart.setTotalPrice(BigDecimal.ZERO);
+
                 customer.setCart(cart);
 
                 address.setCustomer(customer);
@@ -81,22 +85,54 @@ public class CustomerServiceImpl implements CustomerService {
             System.out.println("Error: "+e);
         }
     }
+    @Override
+    public void addCustomer(CustomerDTO customerDTO) {
+
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        // Định dạng lại ngày giờ để loại bỏ phần nghìn giây
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sdf.format(currentDate);
+
+        try {
+            Customer customer = new Customer();
+            customer.setFirstName(customerDTO.getFirstName());
+            customer.setLastName(customerDTO.getLastName());
+            customer.setEmail(customerDTO.getEmail());
+            customer.setDateOfBirth(customerDTO.getDateOfBirth());
+            customer.setPhoneNumber(customerDTO.getPhoneNumber());
+            customer.setRole(ERole.USER);
+            customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
+
+            Cart cart = new Cart();
+            cart.setCreateDate(sdf.parse(formattedDate));
+            cart.setCustomer(customer);
+            cart.setTotalPrice(BigDecimal.ZERO);
+
+            customer.setCart(cart);
+            customerRepository.save(customer);
+        } catch (Exception e){
+            System.out.println("Error: "+e);
+        }
+    }
 
     @Override
-    public boolean checkCustomer(CustomerDTO customerDTO) {
+    public EMessage checkCustomer(CustomerDTO customerDTO) {
         try {
-            if (!customerDTO.getPassHash().equals(customerDTO.getRepeatPassword())) {
-                return false;
-            }
             Customer customer_exist = customerRepository.findByEmail(customerDTO.getEmail()).orElse(null);
             if(customer_exist!=null){
-                return false;
+                return CUSTOMER_EXIST;
+            }
+            if (!customerDTO.getPassHash().equals(customerDTO.getRepeatPassword())) {
+                return  CONFIRM_PASSWORD_NOT_MATCH;
             }
         }
         catch (Exception e){
-            return false;
+            return REGISTER_FAIL;
         }
-        return true;
+        return REGISTER_SUCCESS;
     }
 
     @Override
@@ -178,18 +214,6 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
-    @Override
-    public void addCustomer(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setEmail(customerDTO.getEmail());
-        customer.setPhoneNumber(customerDTO.getPhoneNumber());
-        customer.setPassHash(accountService.hashPassword(customerDTO.getPassHash()));
-        // Add other fields as needed
-
-        customerRepository.save(customer);
-    }
     public void updateCustomer(Long id, CustomerDTO customerDTO) {
         Customer existingCustomer = customerRepository.findById(id).orElse(null);
 
@@ -206,6 +230,9 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-
+    @Override
+    public  long countCustomer(){
+        return customerRepository.count();
+    }
 
 }

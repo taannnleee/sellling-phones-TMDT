@@ -3,6 +3,7 @@ package org.example.websitesellingphonesbackend.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -15,14 +16,14 @@ import java.util.concurrent.TimeUnit;
 @Setter
 public class LineSetPointProduct implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "quanlity")
     private int quanlity;
 
     @Column(name = "price")
-    private Float price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")

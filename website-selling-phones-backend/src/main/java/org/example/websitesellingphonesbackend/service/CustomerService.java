@@ -9,7 +9,7 @@ import org.example.websitesellingphonesbackend.entities.Customer;
 import java.util.List;
 
 public interface CustomerService {
-    boolean checkCustomer(CustomerDTO customerDTO);
+    EMessage checkCustomer(CustomerDTO customerDTO);
     Customer authenticateCustomer(String email, String password);
     void registerCustomer(CustomerDTO customerDTO, Cart cart, Address address) ;
     Customer getCustomerById(Long customerDTO_id);
@@ -23,5 +23,6 @@ public interface CustomerService {
     void deleteCustomer(Long id);
     void addCustomer(CustomerDTO customerDTO);
     void updateCustomer(Long id, CustomerDTO customerDTO);
+    long countCustomer();
 
 }

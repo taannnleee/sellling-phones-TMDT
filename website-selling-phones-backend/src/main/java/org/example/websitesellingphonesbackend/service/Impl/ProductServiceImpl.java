@@ -1,5 +1,6 @@
 package org.example.websitesellingphonesbackend.service.Impl;
 
+import org.example.websitesellingphonesbackend.entities.Category;
 import org.example.websitesellingphonesbackend.entities.Product;
 import org.example.websitesellingphonesbackend.repositories.ProductRepository;
 import org.example.websitesellingphonesbackend.service.ProductService;
@@ -15,9 +16,20 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProductsByStatus(String status) {
+        return productRepository.getAllByStatus(status);
     }
+
+    @Override
+    public List<Product> getAllByCategoryAndStatus(Category category, String status){
+        return productRepository.getAllByCategoryAndStatus(category,status);
+    }
+
+    @Override
+    public List<Product> getAllByCategory(Category category){
+        return productRepository.getAllByCategory(category);
+    }
+
 
     @Override
     public Product getProductById(Long id) {
@@ -47,4 +59,31 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductByProductDetailId(Long productDetailId) {
         return productRepository.findByProductDetailProductDetailId(productDetailId);
     }
+    public int countProductByCategoryAndStatus(Category category, String string) {
+        return productRepository.countProductByCategoryAndStatus(category, string);
+    }
+    @Override
+    public void save(Product product){
+        productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> getProductsByCategoryId(Long id) {
+        return this.productRepository.findProductsByCategoryCategoryId(id);
+    }
+    @Override
+    public List<Product> getAllProduct() {
+        return this.productRepository.findAll();
+    }
+
+    @Override
+    public int countProductByCategoryCategoryId(long id) {
+        return this.productRepository.countProductByCategoryCategoryId(id);
+    }
+
+    @Override
+    public  long countProduct(){
+        return productRepository.count();
+    }
+
 }
