@@ -81,4 +81,9 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.countProductByCategoryCategoryId(id);
     }
 
+    @Override
+    public  long countProduct(){
+        return productRepository.count();
+    }
+
 }

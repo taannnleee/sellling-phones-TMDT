@@ -112,5 +112,23 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
+    @Override
+    public Order_Product getOrderById(Long id){
+        return orderRepository.findByOrderId(id);
+    }
+
+    @Override
+    public void updateStatusOrder(Long id){
+        Order_Product orderProduct =  getOrderById(id);
+        orderProduct.setOrderStatus(EStatus.COMPLETED);
+        orderRepository.save(orderProduct);
+    }
+
+    @Override
+    public  long countOrder(){
+        return orderRepository.count();
+    }
+
+
 
 }

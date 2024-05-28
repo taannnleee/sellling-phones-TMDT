@@ -2,18 +2,12 @@ package org.example.websitesellingphonesbackend.controllers;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.websitesellingphonesbackend.entities.Category;
-import org.example.websitesellingphonesbackend.entities.Customer;
-import org.example.websitesellingphonesbackend.entities.Product;
-import org.example.websitesellingphonesbackend.entities.ProductDetail;
+import org.example.websitesellingphonesbackend.entities.*;
 import org.example.websitesellingphonesbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +34,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     public String admin(Model model) {
         try {
-            return "view/dashboard";
+            return "statistics";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
@@ -111,6 +105,11 @@ public class AdminController {
             return "views/error";
         }
     }
+    @GetMapping("/order/{id}")
+    public String openUdateOrderStatusPage(@PathVariable int id, Model model) {
+        orderService.updateStatusOrder((long) id);
+        return "redirect:/admin_authentication/admin/order";
+    }
     @GetMapping("/category")
     public String category(HttpSession session, Model model) {
         String addProductSuccessMessage = (String) session.getAttribute("addCategorySuccessMessage"); // Lấy thông báo từ session
@@ -153,9 +152,17 @@ public class AdminController {
     @GetMapping("/statistics")
     public String statistics(Model model) {
         try {
+            int countCustomer = (int) customerService.countCustomer();
+            int countProduct = (int) productService.countProduct();
+            int countOrder = (int) orderService.countOrder();
             List<Customer> customersRecently = customerService.getAllCustomers();
+            model.addAttribute("countOrder",countOrder );
+            model.addAttribute("countProduct",countProduct );
+            model.addAttribute("countCustomer",countCustomer );
             model.addAttribute("customersRecently",customersRecently );
-            return "view/dashboard";
+
+            model.addAttribute("orders", orderService.getAllOrder());
+            return "view/statistics";
         } catch (Exception e) {
             model.addAttribute("error", "Lỗi đăng nhập: " + e.getMessage());
             return "views/error";
